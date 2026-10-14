@@ -1,0 +1,893 @@
+
+.rv3About {
+  --about-ink: #103541;
+  --about-teal: #078985;
+  --about-deep: #003f47;
+  --about-paper: #f7faf9;
+  --about-soft: #d8ece8;
+  --about-muted: #617b7c;
+
+  width: 100%;
+  overflow: clip;
+  color: var(--about-ink);
+  background: #ffffff;
+  font-family: "DM Sans", sans-serif;
+}
+
+.rv3About *,
+.rv3About *::before,
+.rv3About *::after {
+  box-sizing: border-box;
+}
+
+.rv3About h2,
+.rv3About h3 {
+  font-family: "Lora", Georgia, serif;
+}
+
+.rv3About img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rv3AboutContainer {
+  width: calc(100% - 60px);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* Introduction */
+
+.rv3AboutIntro {
+  position: relative;
+  padding: 20px 0;
+  background:
+    radial-gradient(
+      ellipse at 0% 50%,
+      rgba(216, 236, 232, 0.42),
+      transparent 45%
+    ),
+    #ffffff;
+}
+
+.rv3AboutIntroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 68px);
+}
+
+.rv3AboutIntroVisual {
+  position: relative;
+  min-width: 0;
+  padding: 0 12px 12px 0;
+}
+
+.rv3AboutImageFrame {
+  position: relative;
+  height: 440px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--about-soft);
+  box-shadow: 0 18px 45px rgba(16, 53, 65, 0.1);
+}
+
+.rv3AboutImageFrame::after {
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 40, 46, 0.52)
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.rv3AboutImageFrame img {
+  transition: transform 0.7s ease;
+}
+
+.rv3AboutImageFrame:hover img {
+  transform: scale(1.035);
+}
+
+.rv3AboutImageLabel {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  color: #ffffff;
+  background: rgba(0, 50, 56, 0.83);
+  backdrop-filter: blur(10px);
+}
+
+.rv3AboutLabelIcon {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 10px;
+  color: #ffffff;
+  background: var(--about-teal);
+}
+
+.rv3AboutImageLabel strong,
+.rv3AboutImageLabel small {
+  display: block;
+  line-height: 1.6;
+}
+
+.rv3AboutImageLabel strong {
+  font-size: 14px;
+}
+
+.rv3AboutImageLabel small {
+  color: #d8ece8;
+  font-size: 12px;
+}
+
+.rv3AboutImageAccent {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 48%;
+  height: 42%;
+  border-right: 3px solid var(--about-teal);
+  border-bottom: 3px solid var(--about-teal);
+  border-radius: 0 0 18px 0;
+  pointer-events: none;
+}
+
+.rv3AboutImageOrb {
+  position: absolute;
+  top: 20px;
+  left: -10px;
+  width: 22px;
+  height: 22px;
+  border: 5px solid var(--about-soft);
+  border-radius: 50%;
+  background: var(--about-teal);
+}
+
+.rv3AboutIntroContent {
+  min-width: 0;
+}
+
+.rv3AboutEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--about-teal);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 1.3px;
+}
+
+.rv3AboutEyebrow > span {
+  width: 25px;
+  height: 2px;
+  flex: 0 0 25px;
+  background: var(--about-teal);
+}
+
+.rv3AboutIntroContent h2,
+.rv3AboutSectionHeading h2,
+.rv3AboutTeamHeader h2 {
+  margin: 12px 0;
+  color: var(--about-ink);
+  font-size: clamp(27px, 3.1vw, 41px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.7px;
+}
+
+.rv3AboutLead {
+  margin: 0 0 12px;
+  color: var(--about-deep);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.75;
+}
+
+.rv3AboutBody {
+  margin: 0 0 12px;
+  color: var(--about-muted);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.rv3AboutIntroPoints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin: 15px 0;
+}
+
+.rv3AboutIntroPoints span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--about-ink);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.rv3AboutIntroPoints svg {
+  flex: 0 0 auto;
+  color: var(--about-teal);
+}
+
+.rv3AboutPrimaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 3px;
+  padding: 10px 17px;
+  border: 1px solid var(--about-teal);
+  border-radius: 8px;
+  color: #ffffff;
+  background: var(--about-teal);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.rv3AboutPrimaryLink:hover {
+  transform: translateY(-2px);
+  border-color: var(--about-deep);
+  background: var(--about-deep);
+}
+
+/* Shared section headings */
+
+.rv3AboutSectionHeading {
+  max-width: 700px;
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+.rv3AboutSectionHeading > .rv3AboutEyebrow {
+  justify-content: center;
+}
+
+.rv3AboutSectionHeading h2 {
+  margin: 10px 0;
+}
+
+.rv3AboutSectionHeading > p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--about-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Mission and vision */
+
+.rv3AboutPurpose {
+  padding: 20px 0;
+  background: var(--about-paper);
+}
+
+.rv3AboutPurposeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.rv3AboutPurposeCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 265px;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid #dcebe7;
+  border-radius: 15px;
+  background: #ffffff;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.rv3AboutPurposeCard:hover {
+  border-color: #9bcfc5;
+  box-shadow: 0 12px 30px rgba(16, 53, 65, 0.07);
+}
+
+.rv3AboutMission {
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(216, 236, 232, 0.68),
+      transparent 45%
+    ),
+    #ffffff;
+}
+
+.rv3AboutVision {
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(7, 137, 133, 0.09),
+      transparent 45%
+    ),
+    #ffffff;
+}
+
+.rv3AboutPurposeIcon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border: 1px solid #c9e4de;
+  border-radius: 13px;
+  color: var(--about-teal);
+  background: #eff8f5;
+}
+
+.rv3AboutCardLabel {
+  margin-top: 15px;
+  color: var(--about-teal);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+
+.rv3AboutPurposeCard h3 {
+  margin: 6px 0 8px;
+  color: var(--about-ink);
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.rv3AboutPurposeCard > p {
+  max-width: 480px;
+  margin: 0;
+  color: var(--about-muted);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.rv3AboutCardBottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+  color: var(--about-teal);
+}
+
+.rv3AboutCardBottom > span:first-child {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rv3AboutCardBottom > span:nth-child(2) {
+  width: 38px;
+  height: 1px;
+  background: #b9dcd5;
+}
+
+.rv3AboutCardBottom svg {
+  margin-left: auto;
+}
+
+/* Care values */
+
+.rv3AboutValues {
+  padding: 20px 0;
+  background: #ffffff;
+}
+
+.rv3AboutValuesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.rv3AboutValueCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 225px;
+  padding: 17px;
+  overflow: hidden;
+  border: 1px solid #deebe8;
+  border-radius: 13px;
+  background: #ffffff;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.rv3AboutValueCard:hover {
+  border-color: #8fc9bf;
+  box-shadow: 0 12px 28px rgba(16, 53, 65, 0.07);
+}
+
+.rv3AboutValueTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rv3AboutValueIcon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--about-teal);
+  background: var(--about-soft);
+}
+
+.rv3AboutValueNumber {
+  color: #a2c5be;
+  font-family: "Lora", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.rv3AboutValueCard h3 {
+  margin: 17px 0 8px;
+  color: var(--about-ink);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.rv3AboutValueCard p {
+  margin: 0;
+  color: var(--about-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.rv3AboutValueLine {
+  width: 35px;
+  height: 2px;
+  margin-top: auto;
+  padding-top: 0;
+  transform: translateY(10px);
+  background: var(--about-teal);
+  transition:
+    width 0.25s ease,
+    transform 0.25s ease;
+}
+
+.rv3AboutValueCard:hover .rv3AboutValueLine {
+  width: 65px;
+  transform: translateY(0);
+}
+
+/* Team */
+
+.rv3AboutTeam {
+  padding: 20px 0;
+  background: var(--about-paper);
+}
+
+.rv3AboutTeamHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.65fr);
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.rv3AboutTeamHeader h2 {
+  max-width: 570px;
+  margin-bottom: 0;
+}
+
+.rv3AboutTeamHeader > p {
+  margin: 0;
+  color: var(--about-muted);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.rv3AboutTeamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.rv3AboutTeamCard {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #dcebe7;
+  border-radius: 14px;
+  background: #ffffff;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.rv3AboutTeamCard:hover {
+  border-color: #9bcfc5;
+  box-shadow: 0 14px 32px rgba(16, 53, 65, 0.08);
+}
+
+.rv3AboutTeamImage {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: var(--about-soft);
+}
+
+.rv3AboutTeamImage img {
+  transition: transform 0.6s ease;
+}
+
+.rv3AboutTeamCard:hover .rv3AboutTeamImage img {
+  transform: scale(1.045);
+}
+
+.rv3AboutTeamIcon {
+  position: absolute;
+  right: 13px;
+  bottom: 13px;
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  color: #ffffff;
+  background: var(--about-teal);
+  box-shadow: 0 5px 18px rgba(0, 63, 71, 0.18);
+}
+
+.rv3AboutTeamContent {
+  padding: 16px;
+}
+
+.rv3AboutTeamRole {
+  display: inline-block;
+  color: var(--about-teal);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.rv3AboutTeamContent h3 {
+  margin: 7px 0 8px;
+  color: var(--about-ink);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.rv3AboutTeamContent > p {
+  min-height: 66px;
+  margin: 0;
+  color: var(--about-muted);
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.rv3AboutTeamLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  color: var(--about-teal);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.7;
+  text-decoration: none;
+}
+
+.rv3AboutTeamLink svg {
+  transition: transform 0.2s ease;
+}
+
+.rv3AboutTeamLink:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.rv3AboutTeamNote {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 18px;
+  padding: 15px 17px;
+  border: 1px solid #d7e9e4;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.rv3AboutTeamNoteIcon {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 11px;
+  color: var(--about-teal);
+  background: var(--about-soft);
+}
+
+.rv3AboutTeamNote > p {
+  flex: 1;
+  margin: 0;
+  color: var(--about-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.rv3AboutTeamNote > a {
+  display: grid;
+  flex: 0 0 37px;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  border-radius: 10px;
+  color: #ffffff;
+  background: var(--about-teal);
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.rv3AboutTeamNote > a:hover {
+  background: var(--about-deep);
+}
+
+/* Accessibility */
+
+.rv3About a:focus-visible {
+  outline: 2px solid var(--about-teal);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv3About *,
+  .rv3About *::before,
+  .rv3About *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 1000px) {
+  .rv3AboutContainer {
+    width: calc(100% - 40px);
+  }
+
+  .rv3AboutIntroGrid {
+    gap: 25px;
+  }
+
+  .rv3AboutImageFrame {
+    height: 380px;
+  }
+
+  .rv3AboutValuesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rv3AboutValueCard {
+    min-height: 205px;
+  }
+
+  .rv3AboutTeamImage {
+    height: 180px;
+  }
+
+  .rv3AboutTeamContent {
+    padding: 13px;
+  }
+
+  .rv3AboutTeamContent h3 {
+    font-size: 18px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 680px) {
+  .rv3AboutContainer {
+    width: calc(100% - 32px);
+  }
+
+  .rv3AboutIntro,
+  .rv3AboutPurpose,
+  .rv3AboutValues,
+  .rv3AboutTeam {
+    padding: 18px 0;
+  }
+
+  .rv3AboutIntroGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 23px;
+  }
+
+  .rv3AboutIntroVisual {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .rv3AboutImageFrame {
+    height: clamp(240px, 67vw, 350px);
+  }
+
+  .rv3AboutIntroContent h2,
+  .rv3AboutSectionHeading h2,
+  .rv3AboutTeamHeader h2 {
+    font-size: clamp(27px, 7vw, 35px);
+    letter-spacing: -0.4px;
+  }
+
+  .rv3AboutLead {
+    font-size: 14px;
+  }
+
+  .rv3AboutBody {
+    font-size: 12px;
+  }
+
+  .rv3AboutIntroPoints {
+    gap: 10px 15px;
+  }
+
+  .rv3AboutSectionHeading {
+    margin-bottom: 17px;
+  }
+
+  .rv3AboutPurposeGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+
+  .rv3AboutPurposeCard {
+    min-height: 235px;
+    padding: 17px;
+  }
+
+  .rv3AboutPurposeCard h3 {
+    font-size: 23px;
+  }
+
+  .rv3AboutValuesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .rv3AboutValueCard {
+    min-height: 220px;
+    padding: 13px;
+  }
+
+  .rv3AboutValueIcon {
+    width: 39px;
+    height: 39px;
+    flex-basis: 39px;
+  }
+
+  .rv3AboutValueCard h3 {
+    margin-top: 13px;
+    font-size: 17px;
+  }
+
+  .rv3AboutValueCard p {
+    font-size: 12px;
+  }
+
+  .rv3AboutTeamHeader {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-bottom: 17px;
+  }
+
+  .rv3AboutTeamGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .rv3AboutTeamCard {
+    display: grid;
+    grid-template-columns: minmax(105px, 0.8fr) minmax(0, 1.2fr);
+    align-items: stretch;
+  }
+
+  .rv3AboutTeamImage {
+    height: 100%;
+    min-height: 210px;
+  }
+
+  .rv3AboutTeamContent {
+    padding: 13px;
+  }
+
+  .rv3AboutTeamContent h3 {
+    font-size: 17px;
+  }
+
+  .rv3AboutTeamContent > p {
+    min-height: 0;
+    font-size: 12px;
+  }
+
+  .rv3AboutTeamIcon {
+    right: 8px;
+    bottom: 8px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .rv3AboutTeamNote {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .rv3AboutTeamNoteIcon {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .rv3AboutTeamNote > a {
+    flex-basis: 33px;
+    width: 33px;
+    height: 33px;
+  }
+}
+
+@media (max-width: 380px) {
+  .rv3AboutContainer {
+    width: calc(100% - 24px);
+  }
+
+  .rv3AboutValuesGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rv3AboutValueCard {
+    min-height: 190px;
+  }
+
+  .rv3AboutTeamCard {
+    grid-template-columns: minmax(90px, 0.75fr) minmax(0, 1.25fr);
+  }
+
+  .rv3AboutTeamContent {
+    padding: 11px;
+  }
+
+  .rv3AboutTeamContent h3 {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,731 @@
+
+/* REHABICS SERVICES PAGE */
+
+.rv3ServicesPage {
+  --rv3-service-primary: #123c46;
+  --rv3-service-teal: #247c7b;
+  --rv3-service-mint: #d8ece8;
+  --rv3-service-pearl: #f7faf9;
+  --rv3-service-text: #25343a;
+  --rv3-service-muted: #687a7d;
+  --rv3-service-border: #dde9e6;
+
+  overflow: hidden;
+  color: var(--rv3-service-text);
+  background: #ffffff;
+}
+
+.rv3ServicesPage *,
+.rv3ServicesPage *::before,
+.rv3ServicesPage *::after {
+  box-sizing: border-box;
+}
+
+.rv3ServicesPage img {
+  display: block;
+  max-width: 100%;
+}
+
+.rv3ServicesPage a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rv3ServicesPage .rv3Container {
+  width: min(100% - 40px, 1200px);
+  margin-inline: auto;
+}
+
+/* SECTION HEADING */
+
+.rv3ServicesHeading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 28px;
+}
+
+.rv3ServicesHeadingTitle {
+  min-width: 0;
+}
+
+.rv3ServicesEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 13px;
+  color: var(--rv3-service-teal);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.rv3ServicesEyebrowDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--rv3-service-teal);
+  box-shadow: 0 0 0 4px rgba(36, 124, 123, 0.12);
+}
+
+.rv3ServicesHeading h2 {
+  margin: 0;
+  color: var(--rv3-service-primary);
+  font-family: "Lora", Georgia, serif;
+  font-size: clamp(29px, 3.3vw, 42px);
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.8px;
+}
+
+.rv3ServicesHeading h2 span {
+  color: var(--rv3-service-teal);
+}
+
+.rv3ServicesHeading > p {
+  justify-self: end;
+  max-width: 430px;
+  margin: 0;
+  color: var(--rv3-service-muted);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* SERVICE CATALOG */
+
+.rv3ServicesCatalog {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background:
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(216, 236, 232, 0.52),
+      transparent 30%
+    ),
+    #ffffff;
+  scroll-margin-top: 90px;
+}
+
+.rv3ServicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.rv3ServiceCard {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--rv3-service-border);
+  border-radius: 19px;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(18, 60, 70, 0.045);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.rv3ServiceCard:hover {
+  border-color: rgba(36, 124, 123, 0.4);
+  box-shadow: 0 17px 35px rgba(18, 60, 70, 0.09);
+}
+
+.rv3ServiceCardImage {
+  position: relative;
+  overflow: hidden;
+  height: 205px;
+  background: var(--rv3-service-mint);
+}
+
+.rv3ServiceCardImage::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 60, 70, 0.02) 35%,
+    rgba(18, 60, 70, 0.32) 100%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.rv3ServiceCardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.65s ease;
+}
+
+.rv3ServiceCard:hover .rv3ServiceCardImage img {
+  transform: scale(1.055);
+}
+
+.rv3ServiceCardNumber {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  color: var(--rv3-service-primary);
+  background: rgba(255, 255, 255, 0.94);
+  font-size: 12px;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+}
+
+.rv3ServiceCardIcon {
+  position: absolute;
+  z-index: 1;
+  right: 13px;
+  bottom: 13px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  color: #ffffff;
+  background: rgba(18, 60, 70, 0.84);
+  backdrop-filter: blur(8px);
+}
+
+.rv3ServiceCardContent {
+  padding: 18px;
+}
+
+.rv3ServiceCardCategory {
+  display: inline-block;
+  margin-bottom: 9px;
+  color: var(--rv3-service-teal);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+}
+
+.rv3ServiceCardContent h3 {
+  margin: 0 0 10px;
+  color: var(--rv3-service-primary);
+  font-family: "Lora", Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.rv3ServiceCardContent > p {
+  min-height: 90px;
+  margin: 0;
+  color: var(--rv3-service-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.rv3ServiceCardLink {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid #e7efed;
+  color: var(--rv3-service-teal);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.rv3ServiceCardLink svg {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.rv3ServiceCardLink:hover {
+  color: var(--rv3-service-primary);
+}
+
+.rv3ServiceCardLink:hover svg {
+  transform: translate(3px, -3px);
+}
+
+/* SERVICE HELP STRIP */
+
+.rv3ServicesHelp {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--rv3-service-border);
+  border-radius: 16px;
+  background: #f2f8f6;
+}
+
+.rv3ServicesHelpIcon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 13px;
+  color: var(--rv3-service-teal);
+  background: #ffffff;
+}
+
+.rv3ServicesHelpText {
+  flex: 1;
+  min-width: 0;
+}
+
+.rv3ServicesHelpText h3 {
+  margin: 0 0 4px;
+  color: var(--rv3-service-primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rv3ServicesHelpText p {
+  margin: 0;
+  color: var(--rv3-service-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.rv3ServicesHelpLink {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--rv3-service-teal);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.rv3ServicesHelpLink:hover {
+  color: var(--rv3-service-primary);
+}
+
+/* CARE APPROACH */
+
+.rv3ServicesApproach {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: linear-gradient(
+    125deg,
+    #edf7f5 0%,
+    #f7faf9 52%,
+    #ffffff 100%
+  );
+}
+
+.rv3ServicesApproachGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 42px;
+}
+
+.rv3ServicesApproachVisual {
+  position: relative;
+  min-width: 0;
+  padding: 0 12px 12px 0;
+}
+
+.rv3ServicesApproachVisual > img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 430px;
+  border-radius: 22px;
+  object-fit: cover;
+  box-shadow: 0 20px 45px rgba(18, 60, 70, 0.12);
+}
+
+.rv3ServicesApproachAccent {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  width: 68%;
+  height: 68%;
+  border-right: 2px solid rgba(36, 124, 123, 0.55);
+  border-bottom: 2px solid rgba(36, 124, 123, 0.55);
+  border-radius: 0 0 22px 0;
+  pointer-events: none;
+}
+
+.rv3ServicesApproachLabel {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 27px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: fit-content;
+  max-width: calc(100% - 30px);
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 25px rgba(18, 60, 70, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.rv3ServicesApproachLabel > span {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--rv3-service-teal);
+  background: var(--rv3-service-mint);
+}
+
+.rv3ServicesApproachLabel strong,
+.rv3ServicesApproachLabel small {
+  display: block;
+}
+
+.rv3ServicesApproachLabel strong {
+  margin-bottom: 4px;
+  color: var(--rv3-service-primary);
+  font-size: 13px;
+}
+
+.rv3ServicesApproachLabel small {
+  color: var(--rv3-service-muted);
+  font-size: 12px;
+}
+
+.rv3ServicesApproachContent {
+  min-width: 0;
+}
+
+.rv3ServicesApproachContent > .rv3ServicesHeading {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.rv3ServicesApproachContent
+  > .rv3ServicesHeading
+  > p {
+  justify-self: start;
+  max-width: 500px;
+}
+
+.rv3ServicesCarePoints {
+  display: grid;
+  gap: 10px;
+}
+
+.rv3ServicesCarePoint {
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(221, 233, 230, 0.95);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.rv3ServicesCarePoint:hover {
+  transform: translateX(3px);
+  border-color: rgba(36, 124, 123, 0.4);
+  box-shadow: 0 8px 20px rgba(18, 60, 70, 0.05);
+}
+
+.rv3ServicesCarePointIcon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 13px;
+  color: var(--rv3-service-teal);
+  background: var(--rv3-service-mint);
+}
+
+.rv3ServicesCarePointText h3 {
+  margin: 0 0 5px;
+  color: var(--rv3-service-primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rv3ServicesCarePointText p {
+  margin: 0;
+  color: var(--rv3-service-muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.rv3ServicesCarePointNumber {
+  align-self: start;
+  color: #8ba8a5;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* TABLET */
+
+@media (max-width: 950px) {
+  .rv3ServicesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rv3ServicesApproachGrid {
+    gap: 25px;
+  }
+
+  .rv3ServicesApproachVisual > img {
+    height: 380px;
+  }
+
+  .rv3ServiceCardContent > p {
+    min-height: 90px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .rv3ServicesPage .rv3Container {
+    width: calc(100% - 32px);
+  }
+
+  .rv3ServicesHeading {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .rv3ServicesHeading h2 {
+    font-size: 30px;
+    letter-spacing: -0.5px;
+  }
+
+  .rv3ServicesHeading > p {
+    justify-self: start;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .rv3ServicesCatalog,
+  .rv3ServicesApproach {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .rv3ServicesGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .rv3ServiceCardImage {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .rv3ServiceCardContent {
+    padding: 15px;
+  }
+
+  .rv3ServiceCardContent h3 {
+    font-size: 18px;
+  }
+
+  .rv3ServiceCardContent > p {
+    min-height: 0;
+  }
+
+  .rv3ServicesHelp {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 13px;
+  }
+
+  .rv3ServicesHelpText {
+    flex-basis: calc(100% - 60px);
+  }
+
+  .rv3ServicesHelpLink {
+    margin-left: 56px;
+  }
+
+  .rv3ServicesApproachGrid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .rv3ServicesApproachVisual > img {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .rv3ServicesApproachLabel {
+    bottom: 25px;
+  }
+
+  .rv3ServicesApproachContent > .rv3ServicesHeading {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .rv3ServicesCarePoint {
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 11px;
+  }
+
+  .rv3ServicesCarePointIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .rv3ServicesCarePointText h3 {
+    font-size: 13px;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .rv3ServicesPage *,
+  .rv3ServicesPage *::before,
+  .rv3ServicesPage *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* SERVICES PAGE HERO FIX */
+
+.rv3ServicesPage > .rv3Hero {
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.rv3ServicesPage > .rv3Hero .backgroundimage {
+  width: 100%;
+  min-width: 0;
+}
+
+.rv3ServicesPage > .rv3Hero .rv3HeroContainer {
+  width: calc(100% - 48px);
+  max-width: 1400px;
+  margin-inline: auto;
+}
+
+.rv3ServicesPage > .rv3Hero .rv3HeroContent {
+  min-width: 0;
+}
+
+.rv3ServicesPage > .rv3Hero .rv3HeroVisual {
+  min-width: 0;
+}
+
+.rv3ServicesPage > .rv3Hero .rv3HeroImage {
+  object-fit: cover;
+}
+
+/* SERVICE SECTION SPACING */
+
+.rv3ServicesPage .rv3ServicesCatalog,
+.rv3ServicesPage .rv3ServicesApproach {
+  padding-block: 20px;
+}
+
+.rv3ServicesPage .rv3ServiceCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.rv3ServicesPage .rv3ServiceCardContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.rv3ServicesPage .rv3ServiceCardContent > p {
+  flex: 1;
+}
+
+.rv3ServicesPage .rv3ServiceCardLink {
+  margin-top: 15px;
+}
+
+.rv3ServicesPage .rv3ServicesApproachContent {
+  min-width: 0;
+}
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+  .rv3ServicesPage > .rv3Hero {
+    padding: 0;
+  }
+
+  .rv3ServicesPage > .rv3Hero .rv3HeroContainer {
+    width: calc(100% - 36px);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+  .rv3ServicesPage > .rv3Hero {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .rv3ServicesPage > .rv3Hero .backgroundimage {
+    width: 100%;
+  }
+
+  .rv3ServicesPage > .rv3Hero .rv3HeroContainer {
+    width: calc(100% - 32px);
+    min-height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding-block: 20px;
+  }
+
+  .rv3ServicesPage > .rv3Hero .rv3HeroVisual {
+    min-width: 0;
+  }
+
+  .rv3ServicesPage .rv3ServicesApproachGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rv3ServicesPage .rv3ServicesHelp {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .rv3ServicesPage > .rv3Hero .rv3HeroContainer {
+    width: calc(100% - 24px);
+  }
+}
+
