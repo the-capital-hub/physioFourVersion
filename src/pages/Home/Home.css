@@ -317,7 +317,7 @@
 
 /* Reuse the exact eyebrow line from HeroSection.css */
 
-.home-intro .rehab-hero-eyebrow-line {
+.rehab-hero-eyebrow-line {
   position: relative;
   display: inline-block;
   width: 34px;
@@ -328,7 +328,7 @@
   box-shadow: 0 0 12px rgba(124, 214, 7, 0.18);
 }
 
-.home-intro .rehab-hero-eyebrow-line::after {
+.rehab-hero-eyebrow-line::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -1571,7 +1571,7 @@
   min-width: 0;
 }
 
-.home-approach .home-eyebrow {
+.home-eyebrow {
   display: flex;
   align-items: center;
   gap: 13px;
@@ -3310,4 +3310,32 @@
   .home-service-link {
     transition: none;
   }
+}
+
+/* Common eyebrow line for all pages and sections */
+.rehab-hero-eyebrow-line {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 3px;
+  flex: 0 0 34px;
+  border-radius: 99px;
+  background: linear-gradient(
+    90deg,
+    #497f0b,
+    var(--approach-green, #7cd607)
+  );
+  box-shadow: 0 0 12px rgba(124, 214, 7, 0.18);
+}
+
+.rehab-hero-eyebrow-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--approach-green, #7cd607);
+  transform: translateY(-50%);
 }

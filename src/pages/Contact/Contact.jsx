@@ -1,26 +1,139 @@
-
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import {
+  ArrowRight,
+  ArrowUpRight,
   MapPin,
   Phone,
   Mail,
-  Clock,
-  MessageCircle,
-  ArrowUpRight,
-  CheckCircle2,
-  HeartPulse,
-  CalendarDays,
+  Clock3,
   Send,
+  HeartPulse,
+  CalendarCheck,
+  ShieldCheck,
+  Plus,
+  Minus,
+  CheckCircle2,
 } from "lucide-react";
 
-import HeroSection from "../../components/HeroSection/HeroSection";
-import CTASection from "../../components/CTASection/CTASection";
-import "./Contact.css";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaLinkedinIn,
+  FaYoutube,
+  FaWhatsapp,
+} from "react-icons/fa";
 
-// Replace this with the actual WhatsApp number.
-// Include the country code without + or spaces.
-const WHATSAPP_NUMBER = "919999999999";
+import "./Contact.css";
+import image1 from '../../assets/contact/image1.jpeg'
+import image2 from '../../assets/contact/image2.jpeg'
+import image3 from '../../assets/contact/image3.jpeg'
+import image4 from '../../assets/contact/image4.jpeg'
+
+import image5 from '../../assets/contact/image5.jpeg'
+const contactInfo = [
+  {
+    icon: Phone,
+    title: "Call Us",
+    value: "+91 XXXXXXXXXX",
+    note: "Speak with our team",
+    href: "tel:+91XXXXXXXXXX",
+  },
+  {
+    icon: Mail,
+    title: "Email Us",
+    value: "hello@rehabics.in",
+    note: "Send us your enquiry",
+    href: "mailto:hello@rehabics.in",
+  },
+  {
+    icon: MapPin,
+    title: "Visit Our Clinic",
+    value: "Add your clinic address",
+    note: "We look forward to meeting you",
+    href: "#clinic",
+  },
+  {
+    icon: Clock3,
+    title: "Clinic Hours",
+    value: "Monday to Saturday",
+    note: "Add your confirmed timings",
+    href: "#clinic",
+  },
+];
+
+const benefits = [
+  {
+    icon: HeartPulse,
+    title: "Personalised Guidance",
+    description:
+      "Tell us what support you are looking for and we will help you understand the next step.",
+  },
+  {
+    icon: CalendarCheck,
+    title: "Appointment Enquiries",
+    description:
+      "Ask about appointment availability and the services offered at our clinic.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Your Information Matters",
+    description:
+      "Share only the details needed for our team to understand your enquiry.",
+  },
+];
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    icon: FaInstagram,
+    href: "https://www.instagram.com/YOUR_HANDLE/",
+  },
+  {
+    name: "Facebook",
+    icon: FaFacebookF,
+    href: "https://www.facebook.com/YOUR_PAGE/",
+  },
+  {
+    name: "LinkedIn",
+    icon: FaLinkedinIn,
+    href: "https://www.linkedin.com/company/YOUR_PAGE/",
+  },
+  {
+    name: "YouTube",
+    icon: FaYoutube,
+    href: "https://www.youtube.com/@YOUR_CHANNEL",
+  },
+  {
+    name: "WhatsApp",
+    icon: FaWhatsapp,
+    href: "https://wa.me/91XXXXXXXXXX",
+  },
+];
+
+const faqs = [
+  {
+    question: "How do I book an appointment?",
+    answer:
+      "Send us an enquiry or call the clinic using the contact details above. Our team can guide you through the available booking options.",
+  },
+  {
+    question: "Which physiotherapy service is right for me?",
+    answer:
+      "Tell us about the type of support you are looking for. A suitable treatment plan may require an individual assessment by a qualified professional.",
+  },
+  {
+    question: "What should I bring to my first visit?",
+    answer:
+      "Follow the instructions shared when your appointment is confirmed. You may also bring relevant medical reports or previous assessment details if available.",
+  },
+  {
+    question: "Can I contact you with a general question?",
+    answer:
+      "Yes. You can use the enquiry form for general questions about clinic information, services and appointments.",
+  },
+];
 
 const Contact = () => {
   const reduceMotion = useReducedMotion();
@@ -33,9 +146,25 @@ const Contact = () => {
     message: "",
   });
 
-  const [formError, setFormError] = useState("");
+  const [openFaq, setOpenFaq] = useState(0);
+  const [formStatus, setFormStatus] = useState("");
 
-  const updateField = (event) => {
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: reduceMotion ? 0 : 22,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: reduceMotion ? 0 : 0.55,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormData((previous) => ({
@@ -43,432 +172,561 @@ const Contact = () => {
       [name]: value,
     }));
 
-    setFormError("");
+    if (formStatus) {
+      setFormStatus("");
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { name, email, phone, service, message } = formData;
-
-    if (
-      !name.trim() ||
-      !email.trim() ||
-      !phone.trim() ||
-      !service ||
-      !message.trim()
-    ) {
-      setFormError("Please complete all required fields.");
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setFormError("Please enter a valid email address.");
-      return;
-    }
-
-    if (WHATSAPP_NUMBER === "919999999999") {
-      setFormError(
-        "Please add your actual WhatsApp number in Contact.jsx first."
-      );
-      return;
-    }
-
-    const whatsappMessage = [
-      "Hello Rehabics Team!",
-      "",
-      "I would like to enquire about your physiotherapy services.",
-      "",
-      `Name: ${name.trim()}`,
-      `Email: ${email.trim()}`,
-      `Phone: ${phone.trim()}`,
-      `Service: ${service}`,
-      "",
-      "Message:",
-      message.trim(),
-    ].join("\n");
-
-    const whatsappURL =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=` +
-      encodeURIComponent(whatsappMessage);
-
-    window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    // This is a frontend demo.
+    // Connect an API or form service to actually deliver enquiries.
+    setFormStatus(
+      "Your details are ready. The form still needs to be connected to the clinic inbox before your enquiry can be sent."
+    );
   };
-
-  const fadeUp = {
-    hidden: {
-      opacity: 0,
-      y: reduceMotion ? 0 : 20,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: reduceMotion ? 0 : 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const contactCards = [
-    {
-      icon: Phone,
-      title: "Call our team",
-      description: "Speak with our team about your enquiry.",
-      value: "Add your phone number",
-      href: "",
-    },
-    {
-      icon: Mail,
-      title: "Email us",
-      description: "Send us your questions and enquiries.",
-      value: "Add your email address",
-      href: "",
-    },
-    {
-      icon: MapPin,
-      title: "Visit our clinic",
-      description: "Find the right care for your movement goals.",
-      value: "Add your clinic address",
-      href: "",
-    },
-  ];
 
   return (
-    <main className="rv3ContactPage">
-      <HeroSection
-        eyebrow="WE ARE HERE FOR YOU"
-        title="Let’s Start Your"
-        highlight="Recovery Journey"
-        secondLine="Together"
-        description="Have a question about physiotherapy or need help choosing the right care? Connect with our team and take your next step towards better movement."
-        primaryText="Send an Enquiry"
-        primaryLink="#contact-form"
-        secondaryText="Chat on WhatsApp"
-        secondaryLink={`https://wa.me/${WHATSAPP_NUMBER}`}
-        showSecondary
-        showStats={false}
-        showFloatingCards={false}
-        showBenefits={false}
-      />
+    <main className="rehab-contact">
+      {/* HERO */}
 
-      <section className="rv3ContactIntro">
-        <div className="rv3ContactContainer">
+      <section className="contact-hero">
+        <div className="contact-hero-content">
           <motion.div
-            className="rv3ContactIntroContent"
-            initial={reduceMotion ? false : "hidden"}
+            className="contact-hero-copy"
+            variants={reveal}
+            initial="hidden"
+            animate="visible"
+          >
+            <span className="contact-eyebrow">
+              <span className="contact-eyebrow-dot" />
+              CONTACT REHABICS
+            </span>
+
+            <h1>
+              Let’s Get You
+              <span> Moving Forward.</span>
+            </h1>
+
+            <p>
+              Have a question about physiotherapy, recovery or our services?
+              We’re here to help you understand your options and take the next
+              step with confidence.
+            </p>
+
+            <div className="contact-hero-actions">
+              <a className="contact-btn contact-btn-primary" href="#enquiry">
+                Send an Enquiry
+                <ArrowRight size={18} />
+              </a>
+
+              <Link className="contact-btn contact-btn-outline" to="/services">
+                Explore Services
+                <ArrowUpRight size={18} />
+              </Link>
+            </div>
+
+            <div className="contact-hero-note">
+              <span className="contact-note-icon">
+                <HeartPulse size={20} />
+              </span>
+              <div>
+                <strong>Here for your next step</strong>
+                <span>Support, clarity and better movement.</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="contact-hero-visual"
+            initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: reduceMotion ? 0 : 0.7 }}
+          >
+            <img
+              src={image1}
+              alt="Physiotherapist helping a patient with a guided mobility exercise"
+            />
+
+            <div className="contact-image-label">
+              <span className="contact-image-label-icon">
+                <HeartPulse size={21} />
+              </span>
+              <div>
+                <strong>Movement with purpose</strong>
+                <span>Care that starts with a conversation.</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CONTACT DETAILS */}
+
+      <section className="contact-info-section">
+        <div className="contact-info-grid">
+          {contactInfo.map((item, index) => {
+            const Icon = item.icon;
+
+            return (
+              <motion.a
+                href={item.href}
+                key={item.title}
+                className="contact-info-card"
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.06 }}
+              >
+                <span className="contact-info-icon">
+                  <Icon size={21} />
+                </span>
+
+                <div className="contact-info-copy">
+                  <span className="contact-info-title">{item.title}</span>
+                  <strong>{item.value}</strong>
+                  <span className="contact-info-note">{item.note}</span>
+                </div>
+
+                <ArrowUpRight
+                  className="contact-info-arrow"
+                  size={17}
+                />
+              </motion.a>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ENQUIRY FORM */}
+
+      <section className="contact-enquiry-section" id="enquiry">
+        <div className="contact-enquiry-layout">
+          <motion.div
+            className="contact-enquiry-copy"
+            variants={reveal}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            variants={fadeUp}
           >
-            <span className="rv3ContactEyebrow">
-              <HeartPulse size={15} />
-              PERSONAL SUPPORT
+            <span className="contact-eyebrow">
+              <span className="contact-eyebrow-dot" />
+              SEND US A MESSAGE
             </span>
 
             <h2>
-              Your questions matter.
-              <span> Let’s talk.</span>
+              Tell Us How
+              <span> We Can Help.</span>
             </h2>
 
-            <p>
-              Every recovery journey is different. Tell us what
-              you need, and our team will help you understand
-              the next steps.
+            <p className="contact-section-description">
+              Share your contact details and a brief message. Our team can
+              review your enquiry once the form is connected to the clinic’s
+              inbox.
             </p>
+
+            <div className="contact-benefits">
+              {benefits.map((benefit) => {
+                const Icon = benefit.icon;
+
+                return (
+                  <div className="contact-benefit" key={benefit.title}>
+                    <span className="contact-benefit-icon">
+                      <Icon size={19} />
+                    </span>
+
+                    <div>
+                      <h3>{benefit.title}</h3>
+                      <p>{benefit.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="contact-direct-card">
+              <span className="contact-direct-icon">
+                <Mail size={19} />
+              </span>
+              <div>
+                <span>Prefer email?</span>
+                <a href="mailto:hello@rehabics.in">
+                  hello@rehabics.in
+                </a>
+              </div>
+            </div>
           </motion.div>
 
-          <div className="rv3ContactCards">
-            {contactCards.map((card, index) => {
-              const Icon = card.icon;
+          <motion.div
+            className="contact-form-card"
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <div className="contact-form-heading">
+              <div>
+                <span className="contact-form-kicker">YOUR ENQUIRY</span>
+                <h3>Let’s start a conversation.</h3>
+              </div>
 
-              return (
-                <motion.div
-                  className="rv3ContactInfoCard"
-                  key={card.title}
-                  initial={reduceMotion ? false : "hidden"}
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={fadeUp}
-                  transition={{
-                    delay: reduceMotion ? 0 : index * 0.08,
-                  }}
-                >
-                  <span className="rv3ContactInfoIcon">
-                    <Icon size={21} />
-                  </span>
-
-                  <h3>{card.title}</h3>
-                  <p>{card.description}</p>
-
-                  {card.href ? (
-                    <a href={card.href}>{card.value}</a>
-                  ) : (
-                    <span className="rv3ContactInfoValue">
-                      {card.value}
-                    </span>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="rv3ContactMain"
-        id="contact-form"
-      >
-        <div className="rv3ContactContainer">
-          <div className="rv3ContactMainGrid">
-            <motion.div
-              className="rv3ContactAside"
-              initial={reduceMotion ? false : "hidden"}
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={fadeUp}
-            >
-              <span className="rv3ContactEyebrow">
-                <MessageCircle size={15} />
-                GET IN TOUCH
+              <span className="contact-form-heading-icon">
+                <Send size={20} />
               </span>
+            </div>
 
-              <h2>
-                Tell us how we can
-                <span> help you.</span>
-              </h2>
-
-              <p className="rv3ContactAsideDescription">
-                Fill in the form with a few details. We will
-                prepare your enquiry and open WhatsApp so you
-                can send it directly to our team.
-              </p>
-
-              <div className="rv3ContactBenefit">
-                <span>
-                  <CheckCircle2 size={18} />
-                </span>
-                <div>
-                  <h3>Simple enquiry process</h3>
-                  <p>Share your details in a few easy steps.</p>
-                </div>
-              </div>
-
-              <div className="rv3ContactBenefit">
-                <span>
-                  <CheckCircle2 size={18} />
-                </span>
-                <div>
-                  <h3>Personalised guidance</h3>
-                  <p>Tell us about the support you are seeking.</p>
-                </div>
-              </div>
-
-              <div className="rv3ContactBenefit">
-                <span>
-                  <CheckCircle2 size={18} />
-                </span>
-                <div>
-                  <h3>Direct WhatsApp connection</h3>
-                  <p>Review your message before sending it.</p>
-                </div>
-              </div>
-
-              <div className="rv3ContactHours">
-                <Clock size={20} />
-                <div>
-                  <h3>Need assistance?</h3>
-                  <p>
-                    Send your enquiry and our team can follow
-                    up with you.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="rv3ContactFormCard"
-              initial={reduceMotion ? false : "hidden"}
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
-              variants={fadeUp}
-            >
-              <div className="rv3ContactFormHeader">
-                <div>
-                  <span className="rv3ContactFormLabel">
-                    CONTACT FORM
-                  </span>
-                  <h2>Send us an enquiry</h2>
-                  <p>
-                    Complete the details below to continue on
-                    WhatsApp.
-                  </p>
-                </div>
-
-                <span className="rv3ContactFormHeaderIcon">
-                  <CalendarDays size={23} />
-                </span>
-              </div>
-
-              <form
-                className="rv3ContactForm"
-                onSubmit={handleSubmit}
-              >
-                <div className="rv3ContactField">
-                  <label htmlFor="contactName">
-                    Full name <span>*</span>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="contact-form-grid">
+                <div className="contact-field">
+                  <label htmlFor="contact-name">
+                    Full Name <span>*</span>
                   </label>
                   <input
-                    id="contactName"
+                    id="contact-name"
                     name="name"
                     type="text"
-                    autoComplete="name"
                     placeholder="Enter your full name"
                     value={formData.name}
-                    onChange={updateField}
+                    onChange={handleChange}
+                    autoComplete="name"
+                    minLength={2}
                     required
                   />
                 </div>
 
-                <div className="rv3ContactFormRow">
-                  <div className="rv3ContactField">
-                    <label htmlFor="contactEmail">
-                      Email address <span>*</span>
-                    </label>
-                    <input
-                      id="contactEmail"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="you@example.com"
-                      value={formData.email}
-                      onChange={updateField}
-                      required
-                    />
-                  </div>
-
-                  <div className="rv3ContactField">
-                    <label htmlFor="contactPhone">
-                      Phone number <span>*</span>
-                    </label>
-                    <input
-                      id="contactPhone"
-                      name="phone"
-                      type="tel"
-                      autoComplete="tel"
-                      placeholder="Your phone number"
-                      value={formData.phone}
-                      onChange={updateField}
-                      required
-                    />
-                  </div>
+                <div className="contact-field">
+                  <label htmlFor="contact-email">
+                    Email Address <span>*</span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                    required
+                  />
                 </div>
 
-                <div className="rv3ContactField">
-                  <label htmlFor="contactService">
-                    What do you need help with? <span>*</span>
+                <div className="contact-field">
+                  <label htmlFor="contact-phone">
+                    Phone Number <span>*</span>
+                  </label>
+                  <input
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    autoComplete="tel"
+                    required
+                  />
+                </div>
+
+                <div className="contact-field">
+                  <label htmlFor="contact-service">
+                    Enquiry Type <span>*</span>
                   </label>
                   <select
-                    id="contactService"
+                    id="contact-service"
                     name="service"
                     value={formData.service}
-                    onChange={updateField}
+                    onChange={handleChange}
                     required
                   >
-                    <option value="" disabled>
-                      Select a service
+                    <option value="">Select an option</option>
+                    <option value="appointment">
+                      Appointment enquiry
                     </option>
-                    <option value="Physiotherapy Consultation">
-                      Physiotherapy consultation
+                    <option value="physiotherapy">
+                      Physiotherapy services
                     </option>
-                    <option value="Pain Management">
-                      Pain management
+                    <option value="recovery">
+                      Recovery support
                     </option>
-                    <option value="Mobility and Rehabilitation">
-                      Mobility and rehabilitation
+                    <option value="general">
+                      General question
                     </option>
-                    <option value="Online Physiotherapy">
-                      Online physiotherapy
-                    </option>
-                    <option value="General Enquiry">
-                      General enquiry
-                    </option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
 
-                <div className="rv3ContactField">
-                  <label htmlFor="contactMessage">
-                    Your message <span>*</span>
+                <div className="contact-field contact-field-full">
+                  <label htmlFor="contact-message">
+                    Your Message <span>*</span>
                   </label>
                   <textarea
-                    id="contactMessage"
+                    id="contact-message"
                     name="message"
-                    rows="4"
-                    placeholder="Tell us how we can help you"
+                    rows="5"
+                    placeholder="Tell us a little about how we can help..."
                     value={formData.message}
-                    onChange={updateField}
+                    onChange={handleChange}
                     required
                   />
                 </div>
+              </div>
 
-                {formError && (
-                  <p
-                    className="rv3ContactFormError"
-                    role="alert"
-                  >
-                    {formError}
-                  </p>
-                )}
+              <p className="contact-form-privacy">
+                Please avoid sharing sensitive medical information in this
+                initial enquiry.
+              </p>
 
-                <button
-                  className="rv3ContactSubmitButton"
-                  type="submit"
-                >
-                  <MessageCircle size={18} />
-                  Continue on WhatsApp
-                  <ArrowUpRight size={18} />
-                </button>
+              <button
+                type="submit"
+                className="contact-btn contact-btn-primary contact-submit-btn"
+              >
+                Send Enquiry
+                <ArrowRight size={18} />
+              </button>
 
-                <p className="rv3ContactPrivacy">
-                  WhatsApp will open with your enquiry ready
-                  to review. You must press send in WhatsApp
-                  to deliver the message.
-                </p>
-              </form>
-            </motion.div>
-          </div>
+              {formStatus && (
+                <div className="contact-form-status" role="status">
+                  <CheckCircle2 size={20} />
+                  <p>{formStatus}</p>
+                </div>
+              )}
+            </form>
+          </motion.div>
         </div>
       </section>
 
-      <section className="rv3ContactBottom">
-        <div className="rv3ContactContainer">
-          <div className="rv3ContactBottomInner">
-            <span className="rv3ContactBottomIcon">
-              <HeartPulse size={25} />
+      {/* CLINIC */}
+
+      <section className="contact-clinic-section" id="clinic">
+        <div className="contact-clinic-image">
+          <img
+            src={image2}
+            alt="Modern physiotherapy clinic reception and waiting area"
+            loading="lazy"
+          />
+          <div className="contact-clinic-image-caption">
+            <MapPin size={18} />
+            <span>Your space for movement and recovery</span>
+          </div>
+        </div>
+
+        <motion.div
+          className="contact-clinic-copy"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25 }}
+        >
+          <span className="contact-eyebrow">
+            <span className="contact-eyebrow-dot" />
+            VISIT OUR CLINIC
+          </span>
+
+          <h2>
+            A Space Designed
+            <span> For Your Recovery.</span>
+          </h2>
+
+          <p>
+            We aim to provide a welcoming environment where you can ask
+            questions, understand your options and take your next step with
+            confidence.
+          </p>
+
+          <div className="contact-clinic-address">
+            <span className="contact-clinic-address-icon">
+              <MapPin size={21} />
+            </span>
+            <div>
+              <strong>Find Rehabics</strong>
+              <p>
+                Add your verified clinic address here before publishing the
+                website.
+              </p>
+            </div>
+          </div>
+
+          <a
+            className="contact-btn contact-btn-outline"
+            href="https://maps.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get Directions
+            <ArrowUpRight size={18} />
+          </a>
+        </motion.div>
+      </section>
+
+      {/* SOCIAL MEDIA */}
+
+      <section className="contact-social-map-section">
+        <div className="contact-social-card">
+          <span className="contact-eyebrow">
+            <span className="contact-eyebrow-dot" />
+            FOLLOW REHABICS
+          </span>
+
+          <h2>
+            Stay Connected
+            <span> With Us.</span>
+          </h2>
+
+          <p>
+            Follow our channels for clinic updates, movement education and
+            helpful recovery information.
+          </p>
+
+          <div className="contact-social-list">
+            {socialLinks.map(({ name, icon: Icon, href }) => (
+              <a
+                key={name}
+                href={href}
+                className="contact-social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit Rehabics on ${name}`}
+                title={name}
+              >
+                <Icon size={20} />
+              </a>
+            ))}
+          </div>
+
+          <span className="contact-social-note">
+            Replace these sample links with your official social profiles.
+          </span>
+        </div>
+
+        <div className="contact-map-card">
+          <img
+            src={image3}
+            alt="Bright physiotherapy treatment room with rehabilitation equipment"
+            loading="lazy"
+          />
+
+          <div className="contact-map-overlay">
+            <span className="contact-map-icon">
+              <MapPin size={22} />
             </span>
 
             <div>
-              <h2>Every step towards better movement counts.</h2>
-              <p>
-                Reach out today and let us help you explore
-                your next step.
-              </p>
-            </div>
+              <strong>Rehabics Clinic</strong>
+              <p>Add your verified address to help visitors find you.</p>
 
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rv3ContactBottomLink"
-            >
-              <MessageCircle size={17} />
-              Chat with us
-            </a>
+              <a
+                href="https://maps.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open Google Maps
+                <ArrowUpRight size={15} />
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <CTASection />
+      {/* FAQ */}
+
+      <section className="contact-faq-section">
+        <div className="contact-faq-heading">
+          <div>
+            <span className="contact-eyebrow">
+              <span className="contact-eyebrow-dot" />
+              FREQUENTLY ASKED QUESTIONS
+            </span>
+
+            <h2>
+              Quick Answers<span>.</span>
+            </h2>
+
+            <p>
+              A few helpful details before you get in touch with our team.
+            </p>
+          </div>
+
+          <div className="contact-faq-help">
+            <span>Still have a question?</span>
+            <a href="#enquiry">
+              Contact Us
+              <ArrowRight size={16} />
+            </a>
+          </div>
+        </div>
+
+        <div className="contact-faq-grid">
+          {faqs.map((faq, index) => {
+            const isOpen = openFaq === index;
+
+            return (
+              <div
+                className={`contact-faq-item ${isOpen ? "is-open" : ""}`}
+                key={faq.question}
+              >
+                <button
+                  className="contact-faq-question"
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                >
+                  <span className="contact-faq-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <span>{faq.question}</span>
+
+                  <span className="contact-faq-toggle">
+                    {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div className="contact-faq-answer">
+                    <p>{faq.answer}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+
+      {/* <section className="contact-final-cta">
+        <div className="contact-final-glow" />
+
+        <div className="contact-final-copy">
+          <span className="contact-eyebrow">
+            <span className="contact-eyebrow-dot" />
+            YOUR NEXT STEP STARTS HERE
+          </span>
+
+          <h2>
+            Ready to Move
+            <span> Forward?</span>
+          </h2>
+
+          <p>
+            Reach out to our team with your questions and learn more about
+            the support available to you.
+          </p>
+        </div>
+
+        <div className="contact-final-actions">
+          <a className="contact-btn contact-btn-primary" href="#enquiry">
+            Talk to Our Team
+            <ArrowRight size={18} />
+          </a>
+
+          <Link className="contact-btn contact-btn-outline" to="/services">
+            Explore Services
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section> */}
     </main>
   );
 };

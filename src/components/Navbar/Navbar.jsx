@@ -8,6 +8,7 @@ import {
   X,
   ChevronDown,
   MoveUpRight,
+  LogIn
 } from "lucide-react";
 import "./Navbar.css";
 
@@ -220,6 +221,15 @@ export default function Navbar() {
           </nav>
 
           <div className="rehab-nav-actions">
+              <Link
+    to="/login"
+    className="rehab-nav-login"
+    onClick={closeMenus}
+  >
+    <LogIn size={16} />
+    <span>Login</span>
+  </Link>
+
             <Link
               to="/appointment"
               className="rehab-nav-cta"
