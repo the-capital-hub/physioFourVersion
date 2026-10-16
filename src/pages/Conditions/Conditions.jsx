@@ -1,429 +1,410 @@
 
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  Activity,
   ArrowRight,
   ArrowUpRight,
-  Bone,
-  Brain,
-  CheckCircle2,
-  CircleHelp,
+  Activity,
+  Accessibility,
   Dumbbell,
-  Footprints,
-  HeartPulse,
-  Move,
   PersonStanding,
-  ShieldCheck,
-  Sparkles,
-  Stethoscope,
+  Search,
+  Bone,
+  Footprints,
+  RotateCcw,
 } from "lucide-react";
-
 import "./Conditions.css";
-import CTASection from "../../components/CTASection/CTASection";
 
 const conditions = [
   {
     number: "01",
     title: "Back Pain",
+    category: "Pain",
     description:
-      "Support for lower back discomfort, muscle tension and movement limitations through an individually planned physiotherapy approach.",
-    icon: Activity,
-    tags: ["Lower back", "Movement", "Strength"],
+      "Explore support for back discomfort, movement limitations and everyday activities that have become difficult.",
+    icon: Accessibility,
+    tags: ["Lower back", "Movement", "Daily function"],
   },
   {
     number: "02",
     title: "Neck Pain",
+    category: "Pain",
     description:
-      "Care focused on neck stiffness, posture related discomfort and improving comfortable movement in everyday activities.",
-    icon: PersonStanding,
-    tags: ["Neck stiffness", "Posture", "Mobility"],
+      "Understand possible approaches to neck discomfort, stiffness and challenges with comfortable movement.",
+    icon: RotateCcw,
+    tags: ["Stiffness", "Mobility", "Posture"],
   },
   {
     number: "03",
     title: "Shoulder Pain",
+    category: "Pain",
     description:
-      "Physiotherapy support to improve shoulder mobility, build strength and make reaching or lifting more comfortable.",
-    icon: Bone,
-    tags: ["Shoulder mobility", "Strength", "Flexibility"],
+      "Explore care options for shoulder discomfort that may affect reaching, lifting and everyday tasks.",
+    icon: Activity,
+    tags: ["Shoulder mobility", "Strength", "Function"],
   },
   {
     number: "04",
     title: "Knee Pain",
+    category: "Mobility",
     description:
-      "A personalised approach to knee discomfort, movement confidence and gradual improvement in daily physical activities.",
-    icon: Footprints,
-    tags: ["Knee mobility", "Walking", "Strength"],
+      "Find out how an individual assessment may help address knee related movement and functional concerns.",
+    icon: PersonStanding,
+    tags: ["Walking", "Stairs", "Movement"],
   },
   {
     number: "05",
     title: "Sports Injuries",
+    category: "Sports",
     description:
-      "Recovery support for sports related injuries, with a focus on restoring movement and progressing towards your activity goals.",
+      "Explore rehabilitation support focused on movement, physical function and a considered return to activity.",
     icon: Dumbbell,
-    tags: ["Recovery", "Movement", "Performance"],
+    tags: ["Training", "Recovery", "Performance"],
   },
   {
     number: "06",
-    title: "Arthritis",
+    title: "Joint Mobility",
+    category: "Mobility",
     description:
-      "Guided movement and strengthening strategies that may help you manage stiffness and maintain everyday function.",
-    icon: HeartPulse,
-    tags: ["Joint care", "Flexibility", "Daily activity"],
+      "Understand ways to work towards improved movement, flexibility and confidence with everyday activities.",
+    icon: Bone,
+    tags: ["Flexibility", "Joint function", "Movement"],
   },
   {
     number: "07",
-    title: "Post Surgery Recovery",
+    title: "Muscle Strain",
+    category: "Sports",
     description:
-      "Rehabilitation support designed around your procedure, recovery stage and the guidance provided by your healthcare team.",
-    icon: ShieldCheck,
-    tags: ["Rehabilitation", "Strength", "Recovery"],
+      "Explore appropriate assessment and rehabilitation guidance for muscle related discomfort and activity limitations.",
+    icon: Activity,
+    tags: ["Muscle function", "Strength", "Activity"],
   },
   {
     number: "08",
-    title: "Muscle and Joint Stiffness",
+    title: "Walking Difficulties",
+    category: "Mobility",
     description:
-      "Support to work on restricted movement, flexibility and functional strength through suitable exercises and guided care.",
-    icon: Move,
-    tags: ["Flexibility", "Joint movement", "Exercise"],
-  },
-  {
-    number: "09",
-    title: "Balance and Mobility",
-    description:
-      "Movement focused support to improve balance, coordination and confidence during everyday activities.",
-    icon: PersonStanding,
-    tags: ["Balance", "Coordination", "Confidence"],
+      "Discuss movement and balance concerns with a qualified professional to understand suitable next steps.",
+    icon: Footprints,
+    tags: ["Walking", "Balance", "Confidence"],
   },
 ];
 
-const careSteps = [
-  {
-    number: "01",
-    title: "Understand your concerns",
-    description:
-      "Discuss your symptoms, daily activities and movement goals with your physiotherapist.",
-    icon: Brain,
-  },
-  {
-    number: "02",
-    title: "Plan your care",
-    description:
-      "Your physiotherapist can recommend an approach based on your assessment and individual needs.",
-    icon: Stethoscope,
-  },
-  {
-    number: "03",
-    title: "Progress with guidance",
-    description:
-      "Follow your care plan and review your progress with your physiotherapist.",
-    icon: Sparkles,
-  },
-];
+const filters = ["All", "Pain", "Mobility", "Sports"];
 
-export default function Conditions() {
+const Conditions = () => {
   const reduceMotion = useReducedMotion();
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [search, setSearch] = useState("");
 
-  const fadeUp = {
-    hidden: {
-      opacity: 0,
-      y: reduceMotion ? 0 : 22,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: reduceMotion ? 0 : 0.55,
-        ease: "easeOut",
-      },
+  const filteredConditions = useMemo(() => {
+    const term = search.trim().toLowerCase();
+
+    return conditions.filter((item) => {
+      const matchesCategory =
+        activeFilter === "All" || item.category === activeFilter;
+
+      const matchesSearch =
+        !term ||
+        item.title.toLowerCase().includes(term) ||
+        item.description.toLowerCase().includes(term) ||
+        item.tags.some((tag) => tag.toLowerCase().includes(term));
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeFilter, search]);
+
+  const reveal = {
+    initial: reduceMotion ? false : { opacity: 0, y: 22 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.12 },
+    transition: {
+      duration: reduceMotion ? 0 : 0.6,
+      ease: [0.22, 1, 0.36, 1],
     },
   };
 
   return (
-    <main className="rehabConditions">
-      <section className="conditionsHero">
-        <div className="conditionsContainer conditionsHeroGrid">
-          <motion.div
-            className="conditionsHeroContent"
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-          >
-            <div className="conditionsEyebrow">
-              <span className="conditionsEyebrowIcon">
-                <HeartPulse size={17} />
-              </span>
-              PERSONALIZED PHYSIOTHERAPY CARE
-            </div>
+    <main className="rh-conditions">
+      <section className="rh-conditions-hero">
+        <div className="rh-conditions-hero__image" />
+        <div className="rh-conditions-hero__overlay" />
 
-            <h1 className="conditionsHeroTitle">
-              Understand your pain.
-              <span>Find your way forward.</span>
-            </h1>
-
-            <p className="conditionsHeroDescription">
-              Every movement matters. Explore common conditions we may
-              be able to support with personalised physiotherapy,
-              guided exercises and a care plan built around your needs.
+        <div className="rh-conditions-container rh-conditions-hero__content">
+          <motion.div {...reveal}>
+            <p className="rh-conditions-eyebrow">
+              <span />
+              UNDERSTAND YOUR MOVEMENT
             </p>
 
-            <div className="conditionsHeroActions">
-              <Link
-                to="/appointment"
-                className="conditionsButton conditionsButtonPrimary"
-              >
-                Book an Appointment
-                <ArrowUpRight size={18} />
-              </Link>
+            <h1 className="rh-conditions-title">
+              Every challenge
+              <br />
+              has a <em>starting point.</em>
+            </h1>
 
-              <a
-                href="#conditionsList"
-                className="conditionsTextLink"
-              >
-                Explore Conditions
-                <ArrowRight size={17} />
-              </a>
-            </div>
+            <p className="rh-conditions-lead">
+              Explore common movement concerns and discover how a personalised
+              physiotherapy approach may help you work towards your goals.
+            </p>
 
-            <div className="conditionsHeroNote">
-              <span className="conditionsNoteIcon">
-                <CheckCircle2 size={18} />
-              </span>
-              <p>
-                Care that considers your symptoms, goals and daily life.
-              </p>
-            </div>
+            <a
+              href="#explore-conditions"
+              className="rh-conditions-button"
+            >
+              Explore conditions <ArrowRight size={18} />
+            </a>
           </motion.div>
+        </div>
 
-          <motion.div
-            className="conditionsHeroVisual"
-            initial={
-              reduceMotion ? false : { opacity: 0, scale: 0.97 }
-            }
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.7,
-              ease: "easeOut",
-            }}
-          >
-            <div className="conditionsImageAccent" aria-hidden="true" />
-
-            <div className="conditionsHeroImageFrame">
-              <img
-                src="https://images.pexels.com/photos/4506109/pexels-photo-4506109.jpeg"
-                alt="Physiotherapist guiding a patient through rehabilitation"
-                className="conditionsHeroImage"
-                fetchPriority="high"
-              />
-
-              <div className="conditionsImageCaption">
-                <span className="conditionsCaptionIcon">
-                  <ShieldCheck size={20} />
-                </span>
-                <div>
-                  <strong>Care built around you</strong>
-                  <span>Guidance for your movement journey</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="conditionsFloatingCard">
-              <span className="conditionsFloatingIcon">
-                <Activity size={20} />
-              </span>
-              <div>
-                <strong>Move at your pace</strong>
-                <span>Individual care and guidance</span>
-              </div>
-            </div>
-          </motion.div>
+        <div className="rh-conditions-hero__bottom">
+          <span>UNDERSTAND</span>
+          <span className="rh-conditions-line" />
+          <span>MOVE FORWARD</span>
         </div>
       </section>
 
       <section
-        className="conditionsListSection"
-        id="conditionsList"
+        className="rh-conditions-explore"
+        id="explore-conditions"
       >
-        <div className="conditionsContainer">
+        <div className="rh-conditions-container">
           <motion.div
-            className="conditionsSectionHeading"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeUp}
+            className="rh-conditions-heading"
+            {...reveal}
           >
-            <span className="conditionsEyebrow">
-              CONDITIONS WE SUPPORT
-            </span>
+            <div>
+              <p className="rh-conditions-eyebrow">
+                <span />
+                EXPLORE YOUR OPTIONS
+              </p>
+              <h2 className="rh-conditions-title">
+                Find what matters
+                <br />
+                <em>to your movement.</em>
+              </h2>
+            </div>
 
-            <h2>
-              Support for your
-              <span> movement needs.</span>
-            </h2>
-
-            <p>
-              Explore common concerns and discover how physiotherapy
-              may help you work towards better movement and daily
-              function.
+            <p className="rh-conditions-body">
+              Every person's experience is different. Start by exploring the
+              area closest to your concern, then discuss your situation with
+              a qualified physiotherapy professional.
             </p>
           </motion.div>
 
-          <div className="conditionsGrid">
-            {conditions.map((condition, index) => {
-              const Icon = condition.icon;
+          <div className="rh-conditions-tools">
+            <div className="rh-conditions-filters" aria-label="Filter conditions">
+              {filters.map((filter) => (
+                <button
+                  type="button"
+                  key={filter}
+                  className={`rh-conditions-filter ${
+                    activeFilter === filter ? "is-active" : ""
+                  }`}
+                  onClick={() => setActiveFilter(filter)}
+                  aria-pressed={activeFilter === filter}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+
+            <label className="rh-conditions-search">
+              <Search size={18} aria-hidden="true" />
+              <input
+                type="search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search conditions"
+                aria-label="Search conditions"
+              />
+            </label>
+          </div>
+
+          <div className="rh-conditions-results" aria-live="polite" aria-atomic="true">
+            <span>{filteredConditions.length} {filteredConditions.length === 1 ? "condition" : "conditions"} found</span>
+            {(search || activeFilter !== "All") && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearch("");
+                  setActiveFilter("All");
+                }}
+                className="rh-conditions-reset"
+              >
+                Reset search and filters
+              </button>
+            )}
+          </div>
+
+          <div className="rh-conditions-grid" aria-live="polite">
+            {filteredConditions.map((item, index) => {
+              const Icon = item.icon;
 
               return (
                 <motion.article
-                  className="conditionCard"
-                  key={condition.number}
-                  initial={{
-                    opacity: 0,
-                    y: reduceMotion ? 0 : 20,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                    amount: 0.12,
-                  }}
+                  className="rh-condition-card"
+                  key={item.number}
+                  initial={
+                    reduceMotion ? false : { opacity: 0, y: 18 }
+                  }
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
                   transition={{
                     duration: reduceMotion ? 0 : 0.45,
-                    delay: reduceMotion ? 0 : (index % 3) * 0.08,
-                    ease: "easeOut",
+                    delay: reduceMotion ? 0 : (index % 4) * 0.06,
                   }}
                 >
-                  <div className="conditionCardTop">
-                    <span className="conditionIcon">
-                      <Icon size={23} strokeWidth={1.7} />
-                    </span>
-
-                    <span className="conditionNumber">
-                      {condition.number}
-                    </span>
+                  <div className="rh-condition-card__top">
+                    <span>{item.number}</span>
+                    <Icon size={25} strokeWidth={1.35} />
                   </div>
 
-                  <h3>{condition.title}</h3>
+                  <div className="rh-condition-card__rule" />
 
-                  <p className="conditionDescription">
-                    {condition.description}
+                  <p className="rh-condition-card__category">
+                    {item.category}
                   </p>
 
-                  <div className="conditionTags">
-                    {condition.tags.map((tag) => (
+                  <h3>{item.title}</h3>
+                  <p className="rh-condition-card__description">
+                    {item.description}
+                  </p>
+
+                  <div className="rh-condition-card__tags">
+                    {item.tags.map((tag) => (
                       <span key={tag}>{tag}</span>
                     ))}
                   </div>
 
                   <Link
-                    to="/appointment"
-                    className="conditionCardLink"
-                    aria-label={`Book an appointment about ${condition.title}`}
+                    to="/contact"
+                    className="rh-condition-card__link"
+                    aria-label={`Ask about support for ${item.title}`}
                   >
-                    Discuss your concern
-                    <ArrowUpRight size={16} />
+                    Discuss your concern <ArrowUpRight size={17} />
                   </Link>
                 </motion.article>
               );
             })}
           </div>
 
-          <div className="conditionsDisclaimer">
-            <CircleHelp size={19} />
-            <p>
-              The conditions listed are common examples, not a
-              diagnosis or a guarantee of treatment suitability.
-              Your physiotherapist can assess your needs and advise
-              on appropriate care.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="conditionsCareSection">
-        <div className="conditionsContainer">
-          <div className="conditionsCareLayout">
-            <motion.div
-              className="conditionsCareIntro"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={fadeUp}
-            >
-              <span className="conditionsEyebrow">
-                YOUR CARE JOURNEY
-              </span>
-
-              <h2>
-                A thoughtful approach to
-                <span> better movement.</span>
-              </h2>
-
-              <p>
-                Your needs are individual. Your physiotherapy journey
-                should reflect your symptoms, comfort and personal
-                goals.
-              </p>
-
-              <Link
-                to="/appointment"
-                className="conditionsCareLink"
+          {filteredConditions.length === 0 && (
+            <div className="rh-conditions-empty">
+              <Search size={25} />
+              <h3>No matching conditions found</h3>
+              <p>Try another search term or choose a different category.</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearch("");
+                  setActiveFilter("All");
+                }}
               >
-                Start your journey
-                <ArrowRight size={17} />
-              </Link>
-            </motion.div>
-
-            <div className="conditionsSteps">
-              {careSteps.map((step, index) => {
-                const Icon = step.icon;
-
-                return (
-                  <motion.article
-                    className="conditionsStep"
-                    key={step.number}
-                    initial={{
-                      opacity: 0,
-                      x: reduceMotion ? 0 : 18,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      x: 0,
-                    }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{
-                      duration: reduceMotion ? 0 : 0.45,
-                      delay: reduceMotion ? 0 : index * 0.1,
-                    }}
-                  >
-                    <div className="conditionsStepIcon">
-                      <Icon size={21} strokeWidth={1.7} />
-                    </div>
-
-                    <div className="conditionsStepContent">
-                      <span>STEP {step.number}</span>
-                      <h3>{step.title}</h3>
-                      <p>{step.description}</p>
-                    </div>
-                  </motion.article>
-                );
-              })}
+                Clear filters
+              </button>
             </div>
-          </div>
+          )}
+
+          <p className="rh-conditions-disclaimer">
+            This information is for general guidance only and is not a
+            diagnosis. A qualified professional can assess your individual
+            needs and recommend appropriate care.
+          </p>
         </div>
       </section>
 
-      <CTASection
-        eyebrow="YOUR MOVEMENT MATTERS"
-        title="Ready to Move with More Confidence?"
-        description="Tell us about your concerns and explore the physiotherapy support that may be right for you."
-        buttonText="Book an Appointment"
-        buttonLink="/appointment"
-        secondaryText="Explore Our Services"
-        secondaryLink="/services"
-      />
+      <section className="rh-conditions-process">
+        <div className="rh-conditions-container rh-conditions-process__grid">
+          <motion.div {...reveal}>
+            <p className="rh-conditions-eyebrow">
+              <span />
+              A THOUGHTFUL START
+            </p>
+            <h2 className="rh-conditions-title">
+              Understand the concern.
+              <br />
+              <em>Plan the next step.</em>
+            </h2>
+            <p className="rh-conditions-body">
+              The right next step starts with understanding your experience,
+              movement goals and individual circumstances.
+            </p>
+            <Link to="/approach" className="rh-conditions-inline-link">
+              Discover our approach <ArrowUpRight size={18} />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            className="rh-conditions-process__steps"
+            {...reveal}
+          >
+            {[
+              {
+                number: "01",
+                title: "Share your experience",
+                text: "Discuss your concerns, daily activities and personal goals.",
+              },
+              {
+                number: "02",
+                title: "Understand your needs",
+                text: "A qualified professional can assess your situation and movement.",
+              },
+              {
+                number: "03",
+                title: "Explore suitable care",
+                text: "Discuss an individual plan and how progress can be reviewed.",
+              },
+            ].map((step) => (
+              <article
+                className="rh-conditions-step"
+                key={step.number}
+              >
+                <span>{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </div>
+              </article>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="rh-conditions-cta">
+        <div className="rh-conditions-cta__image" />
+        <div className="rh-conditions-cta__overlay" />
+
+        <motion.div
+          className="rh-conditions-container rh-conditions-cta__content"
+          {...reveal}
+        >
+          <p className="rh-conditions-eyebrow">
+            <span />
+            YOUR NEXT STEP
+          </p>
+          <h2 className="rh-conditions-title">
+            Start with a conversation.
+            <br />
+            <em>Move forward with clarity.</em>
+          </h2>
+          <p className="rh-conditions-lead">
+            Tell us what you are experiencing and explore the support that
+            may be suitable for your needs.
+          </p>
+          <div className="rh-conditions-cta__actions">
+            <Link to="/contact" className="rh-conditions-button">
+              Get in touch <ArrowUpRight size={18} />
+            </Link>
+            <Link to="/services" className="rh-conditions-text-link">
+              Explore services <ArrowRight size={17} />
+            </Link>
+          </div>
+        </motion.div>
+      </section>
     </main>
   );
-}
+};
+
+export default Conditions;

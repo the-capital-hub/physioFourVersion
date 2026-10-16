@@ -1,121 +1,188 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
-  ArrowRight,
-  ArrowUpRight,
-  Activity,
-  HeartPulse,
   ShieldCheck,
   Target,
-  ClipboardCheck,
-  ChevronDown,
-  CalendarCheck,
+  Activity,
+  MoveUpRight,
+  ArrowUpRight,
+  ArrowRight,
+  Check,
+  Plus,
+  Quote,
+  HeartPulse,
   Dumbbell,
+  Bone,
   Footprints,
-  Sparkles,
-  CheckCircle2,
-  TrendingUp,
-  MessageCircle,
+  ClipboardCheck,
+  Stethoscope,
 } from "lucide-react";
 
+import image1 from '../../assets/home/image1.jpeg'
+import image2 from '../../assets/home/image2.jpeg'
+import image3 from '../../assets/home/image3.jpeg'
+import image4 from '../../assets/home/image4.jpeg'
+import image5 from '../../assets/home/image5.jpeg'
+
+import image6 from '../../assets/home/image6.jpeg'
+import image7 from '../../assets/home/image7.jpeg'
+import image8 from '../../assets/home/image8.jpeg'
+import image9 from '../../assets/home/image9.jpeg'
 import "./Home.css";
 import HeroSection from "../../components/HeroSection/HeroSection";
-import intro from "../../assets/home/intro.jpeg";
-import serviceImg1 from "../../assets/services/image1.jpeg";
-import serviceImg2 from "../../assets/services/image2.jpeg";
-import serviceImg3 from "../../assets/services/image3.jpeg";
-import serviceImg4 from "../../assets/services/image4.jpeg";
-import image from "../../assets/approch.png";
-const services = [
+// Add an image property to each existing condition object.
+// Keep your existing number, icon, title and text values.
+
+const conditionImages = {
+  "Sports Injuries":
+    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=85",
+
+  "Back & Neck Pain":
+    "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1000&q=85",
+
+  "Joint & Knee Pain":
+    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=85",
+
+  "Mobility & Recovery":
+    "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=85",
+};
+const trustItems = [
   {
-    number: "01",
-    title: "Sports Physiotherapy",
-    description:
-      "Personalised care to help you recover, improve performance and return to the sport you love.",
-    icon: Footprints,
-    link: "/services/sports-physiotherapy",
+    icon: ShieldCheck,
+    title: "Personalised care",
+    text: "Built around your needs",
   },
   {
-    number: "02",
-    title: "Pain Management",
-    description:
-      "Understand the source of discomfort and work towards better movement with guided care.",
-    icon: HeartPulse,
-    link: "/services/pain-management",
+    icon: Target,
+    title: "Purposeful recovery",
+    text: "A plan with direction",
   },
   {
-    number: "03",
-    title: "Injury Rehabilitation",
-    description:
-      "Build strength, improve mobility and progress through a structured recovery programme.",
     icon: Activity,
-    link: "/services/injury-rehabilitation",
+    title: "Better movement",
+    text: "Focused on daily function",
   },
   {
-    number: "04",
-    title: "Strength and Mobility",
-    description:
-      "Improve balance, flexibility and movement confidence with a personalised approach.",
-    icon: Dumbbell,
-    link: "/services/strength-mobility",
+    icon: MoveUpRight,
+    title: "Steady progress",
+    text: "One step at a time",
   },
 ];
 
-const steps = [
+const conditions = [
   {
     number: "01",
-    title: "Understand",
-    description:
-      "We begin by understanding your concerns, movement patterns and recovery goals.",
+    icon: Activity,
+    title: "Back and neck pain",
+    text: "Work towards improved mobility and everyday comfort.",
+  },
+  {
+    number: "02",
+    icon: Dumbbell,
+    title: "Sports injuries",
+    text: "Build strength and work towards returning to activity.",
+  },
+  {
+    number: "03",
+    icon: Bone,
+    title: "Joint and muscle pain",
+    text: "Improve movement, control and physical confidence.",
+  },
+  {
+    number: "04",
+    icon: HeartPulse,
+    title: "Post surgery recovery",
+    text: "Follow a guided rehabilitation plan suited to your needs.",
+  },
+];
+
+const services = [
+  {
+    number: "01",
+    icon: Stethoscope,
+    title: "Physiotherapy",
+    text: "Individual assessment and care shaped around your goals.",
+  },
+  {
+    number: "02",
+    icon: HandIcon,
+    title: "Manual therapy",
+    text: "Hands on techniques selected for your individual needs.",
+  },
+  {
+    number: "03",
+    icon: Dumbbell,
+    title: "Exercise rehabilitation",
+    text: "Progressive movement to develop strength and control.",
+  },
+  {
+    number: "04",
+    icon: ClipboardCheck,
+    title: "Recovery planning",
+    text: "A clear approach with goals you can work towards.",
+  },
+];
+
+function HandIcon(props) {
+  return <Footprints {...props} />;
+}
+
+const methodSteps = [
+  {
+    number: "01",
+    title: "Assess",
+    text: "Understand your concerns, movement and personal goals.",
   },
   {
     number: "02",
     title: "Plan",
-    description:
-      "Your physiotherapist creates a care plan suited to your needs and daily routine.",
+    text: "Build a practical plan around your individual needs.",
   },
   {
     number: "03",
     title: "Recover",
-    description:
-      "Progress through guided exercises and personalised support at every stage.",
+    text: "Work through guided movement and progressive exercises.",
   },
   {
     number: "04",
-    title: "Move Forward",
-    description:
-      "Build confidence in your movement and work towards a more active lifestyle.",
+    title: "Progress",
+    text: "Review your progress and build lasting confidence.",
   },
 ];
 
-const benefits = [
-  "Personalised treatment plans",
-  "Movement focused rehabilitation",
-  "Guided exercise programmes",
-  "Support throughout recovery",
+const carePrinciples = [
+  "Care centred around your goals",
+  "Clear guidance throughout recovery",
+  "A focus on movement and function",
 ];
 
 const faqs = [
   {
-    question: "When should I visit a physiotherapist?",
+    question: "What happens during my first appointment?",
     answer:
-      "You can consult a physiotherapist for pain, stiffness, movement difficulties, sports injuries or support after an injury or surgery. A professional assessment can help determine the right next steps.",
+      "Your appointment may include a discussion of your concerns and goals, a relevant movement assessment and a proposed care plan. The process depends on your individual needs.",
   },
   {
-    question: "Will my treatment plan be personalised?",
+    question: "Will my rehabilitation plan be personalised?",
     answer:
-      "Your care plan should be based on your symptoms, assessment, movement goals and progress. Your physiotherapist can adjust the plan as your needs change.",
+      "Your plan should reflect your goals, current abilities and progress. Your physiotherapist can adjust it as your needs change.",
   },
   {
     question: "How long does recovery take?",
     answer:
-      "Recovery varies depending on your condition, its severity and your individual progress. Your physiotherapist can discuss realistic milestones after assessing your needs.",
+      "Recovery varies depending on your condition, its severity and individual factors. Your clinician can discuss realistic milestones after assessing your needs.",
   },
   {
-    question: "Can physiotherapy help improve mobility?",
+    question: "Can I exercise while recovering?",
     answer:
-      "Physiotherapy may help improve mobility, strength, balance and movement confidence through appropriate exercises and professional guidance.",
+      "That depends on your condition and symptoms. Ask your treating clinician which activities are appropriate and how to modify them safely.",
+  },
+  {
+    question: "How can I get started?",
+    answer:
+      "Visit our contact page to enquire about services, availability and the next steps for arranging an appointment.",
   },
 ];
 
@@ -124,682 +191,736 @@ const reveal = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
-export default function HomePage() {
-  const [activeFaq, setActiveFaq] = useState(0);
+export default function Home() {
+  const [openFaq, setOpenFaq] = useState(0);
+  const reduceMotion = useReducedMotion();
+
+  const revealProps = reduceMotion
+    ? {}
+    : {
+        initial: "hidden",
+        whileInView: "visible",
+        viewport: { once: true, amount: 0.15 },
+        variants: reveal,
+      };
 
   return (
-    <main className="rehab-home">
-      {/* HERO SECTION */}
-      <HeroSection />
+    <div className="rh-home">
+      {/* 01. EXISTING HERO */}
+      <HeroSection/>
 
-      {/* INTRODUCTION */}
+      {/* 02. TRUST STRIP */}
+      
+<section
+  className="rh-trust"
+  aria-label="The Rehabics difference"
+>
+  <div className="rh-container">
+    <div className="rh-trust__header">
+      <span className="rh-trust__eyebrow">
+        THE REHABICS DIFFERENCE
+      </span>
 
-      <section className="home-intro home-section">
-        <div className="home-container">
-          <motion.div
-            className="home-intro-grid"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {/* Image area */}
-            <div className="home-intro-visual">
-              <img
-                src={intro}
-                alt="Personalised physiotherapy and guided rehabilitation"
-                loading="lazy"
+      <p className="rh-trust__intro">
+        Thoughtful care. Expert guidance. Progress that matters.
+      </p>
+    </div>
+
+    <div className="rh-trust__grid">
+      {trustItems.map(({ icon: Icon, title, text }, index) => (
+        <motion.article
+          key={title}
+          className="rh-trust__item"
+          {...revealProps}
+          transition={{
+            delay: index * 0.1,
+            duration: 0.65,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <div className="rh-trust__top">
+            <span className="rh-trust__number">
+              0{index + 1}
+            </span>
+
+            <span className="rh-trust__icon">
+              <Icon
+                size={24}
+                strokeWidth={1.4}
+                aria-hidden="true"
               />
+            </span>
+          </div>
 
-              <div className="home-intro-image-overlay" />
+          <div className="rh-trust__content">
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
 
-              <div className="home-intro-image-top">
-                <span className="home-intro-live-dot" />
-                <span>PERSONALISED RECOVERY</span>
-              </div>
+          <span
+            className="rh-trust__accent"
+            aria-hidden="true"
+          />
+        </motion.article>
+      ))}
+    </div>
+  </div>
+</section>
 
-              <div className="home-intro-image-bottom">
-                <div>
-                  <span className="home-intro-image-label">
-                    THE REHABICS PHILOSOPHY
-                  </span>
 
-                  <h3>
-                    Every movement
-                    <br />
-                    has a purpose.
-                  </h3>
-                </div>
+      {/* 03. OUR PHILOSOPHY */}
+      
+<section className="rh-philosophy rh-section">
+  <div className="rh-container rh-split">
+    <motion.div
+      className="rh-image-frame"
+      {...revealProps}
+    >
+      <img
+        src={image2}
+        alt="Athlete training to improve strength, control and movement"
+        loading="lazy"
+      />
 
-                <span className="home-intro-image-arrow">
-                  <ArrowUpRight size={22} />
-                </span>
-              </div>
+      <div className="rh-image-overlay" />
 
-              <span className="home-intro-image-number">
-                01 <span /> 04
-              </span>
-            </div>
+      <div className="rh-image-topline">
+        <span className="rh-image-dot" />
+        <span>REHABICS / MOVEMENT SCIENCE</span>
+      </div>
 
-            {/* Text area */}
-            <div className="home-intro-content">
-              {/* <div className="home-eyebrow">
-          <span className="rehab-hero-eyebrow-line" />
-          A BETTER WAY TO MOVE
-        </div> */}
+      <div className="rh-image-caption">
+        <span className="rh-image-label">
+          THE ART OF RECOVERY
+        </span>
+        <p>
+          Better movement.
+          <br />
+          <em>Stronger living.</em>
+        </p>
+      </div>
 
-              <h2>
-                Your body.
-                <br />
-                Your movement.
-                <br />
-                <span>Your comeback.</span>
-              </h2>
+      <span className="rh-image-index">
+        01 <span /> 04
+      </span>
+    </motion.div>
 
-              <div className="home-intro-divider">
-                <span />
-                <span />
-                <span />
-              </div>
+    <motion.div
+      className="rh-copy rh-philosophy__copy"
+      {...revealProps}
+      transition={{
+        duration: 0.75,
+        delay: 0.15,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      <p className="rh-eyebrow">
+        <span aria-hidden="true" />
+        OUR PHILOSOPHY
+      </p>
 
-              <div className="home-intro-copy">
-                <span className="home-intro-index">01 / OUR PHILOSOPHY</span>
+      <h2 className="rh-heading">
+        Recovery is not just
+        <br />
+        getting back.
+        <em> It is moving forward.</em>
+      </h2>
 
-                <p className="home-intro-lead">
-                  Recovery is more than getting out of pain. It is about getting
-                  back to the life you love.
-                </p>
+      <div className="rh-philosophy__divider" />
 
-                <p className="home-intro-description">
-                  Every recovery journey is different. We take the time to
-                  understand your movement, your challenges and your goals, then
-                  guide you with personalised physiotherapy that helps you build
-                  strength and move with confidence.
-                </p>
+      <p className="rh-body rh-philosophy__lead">
+        Your body has a story. Your recovery should too.
+      </p>
 
-                <Link to="/about" className="home-text-link">
-                  <span>Discover our approach</span>
-                  <ArrowUpRight size={18} />
-                </Link>
-              </div>
+      <p className="rh-body">
+        Every person moves differently, faces different challenges
+        and works towards different goals. We believe rehabilitation
+        should look beyond the problem and focus on the person.
+      </p>
 
-              {/* Recovery journey */}
-              <div className="home-intro-highlights">
-                <div className="home-intro-highlight">
-                  <span className="home-intro-step">01</span>
-                  <div>
-                    <strong>Understand</strong>
-                    <small>Know your movement</small>
-                  </div>
-                </div>
+      <p className="rh-body">
+        Through thoughtful guidance, purposeful movement and
+        progressive care, we help you build confidence in your body
+        and take the next step towards the life you want to live.
+      </p>
 
-                <div className="home-intro-highlight">
-                  <span className="home-intro-step">02</span>
-                  <div>
-                    <strong>Rebuild</strong>
-                    <small>Restore your strength</small>
-                  </div>
-                </div>
+      <Link className="rh-text-link rh-philosophy__link" to="/approach">
+        <span>Discover our approach</span>
+        <span className="rh-philosophy__link-icon">
+          <ArrowUpRight size={19} strokeWidth={1.5} />
+        </span>
+      </Link>
 
-                <div className="home-intro-highlight">
-                  <span className="home-intro-step">03</span>
-                  <div>
-                    <strong>Move forward</strong>
-                    <small>Build lasting confidence</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <div className="rh-philosophy__footnote">
+        <span>01</span>
+        <span>PERSON FIRST. PROGRESS ALWAYS.</span>
+      </div>
+    </motion.div>
+  </div>
+</section>
 
-      {/* SERVICES */}
-      <section className="home-services home-section">
-        <div className="home-container">
-          <motion.div
-            className="home-services-heading"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+
+      {/* 04. CONDITIONS */}
+      
+<section className="rh-conditions rh-section">
+  <div className="rh-container">
+    <motion.div
+      className="rh-conditions__header"
+      {...revealProps}
+    >
+      <div className="rh-conditions__heading-group">
+        <p className="rh-eyebrow">
+          <span aria-hidden="true" />
+          WHO WE HELP
+        </p>
+
+        <h2 className="rh-heading">
+          Move beyond
+          <br />
+          <em>limitations.</em>
+        </h2>
+      </div>
+
+      <p className="rh-conditions__intro">
+        Personalised support for the challenges that affect
+        how you move, work, train and live. Every recovery
+        journey starts with understanding what matters to you.
+      </p>
+    </motion.div>
+
+    <div className="rh-condition-grid">
+      {conditions.map(({ number, title, text }, index) => {
+        const image =
+          conditionImages[title] ||
+          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=85";
+
+        return (
+          <motion.article
+            key={number}
+            className="rh-condition-card"
+            {...revealProps}
+            transition={{
+              delay: index * 0.08,
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
-            <div className="home-services-heading-copy">
-              <span className="home-eyebrow">
-                <span className="rehab-hero-eyebrow-line" />
-                HOW WE CAN HELP
-              </span>
-
-              <h2>
-                Care designed around
-                <br />
-                <span>your movement.</span>
-              </h2>
-
-              <p>
-                Personalised physiotherapy to help you recover, rebuild strength
-                and get back to doing what you love.
-              </p>
-            </div>
-
-            <Link to="/services" className="home-services-view-all">
-              <span>View all services</span>
-              <ArrowUpRight size={19} />
-            </Link>
-          </motion.div>
-
-          <div className="home-service-grid">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-
-              const images = [
-                serviceImg1,
-                serviceImg2,
-                serviceImg3,
-                serviceImg4,
-              ];
-
-              return (
-                <motion.article
-                  className="home-service-card"
-                  key={service.number}
-                  variants={reveal}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ delay: index * 0.09 }}
-                >
-                  <Link
-                    to={service.link}
-                    className="home-service-card-image"
-                    aria-label={`Explore ${service.title}`}
-                    tabIndex={-1}
-                  >
-                    <img
-                      src={images[index % images.length]}
-                      alt={service.title}
-                      loading="lazy"
-                    />
-
-                    <span className="home-service-image-overlay" />
-
-                    <span className="home-service-number">
-                      {service.number}
-                    </span>
-
-                    <span className="home-service-icon">
-                      <Icon size={23} strokeWidth={1.7} />
-                    </span>
-
-                    <span className="home-service-image-arrow">
-                      <ArrowUpRight size={21} />
-                    </span>
-                  </Link>
-
-                  <div className="home-service-card-content">
-                    <h3>{service.title}</h3>
-
-                    <p>{service.description}</p>
-
-                    <Link
-                      to={service.link}
-                      className="home-service-link"
-                      aria-label={`Explore ${service.title}`}
-                    >
-                      <span>Explore service</span>
-                      <ArrowRight size={17} />
-                    </Link>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
-
-          <div className="home-services-footer">
-            <span>REHABICS</span>
-            <span className="home-services-footer-line" />
-            <span>MOVE BETTER. LIVE STRONGER.</span>
-          </div>
-        </div>
-      </section>
-
-      {/* OUR APPROACH */}
-
-      <section className="home-approach home-section">
-        <div className="home-container">
-          <div className="home-approach-grid">
-            {/* Visual side */}
-
-            <motion.div
-              className="home-approach-visual"
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
+            <Link
+              to="/conditions"
+              className="rh-condition-card__image-link"
+              aria-label={`Explore ${title}`}
             >
               <img
-                className="home-approach-image"
+                className="rh-condition-card__image"
                 src={image}
-                alt="Physiotherapist guiding a patient through a rehabilitation exercise"
+                alt={`${title} physiotherapy and rehabilitation`}
                 loading="lazy"
               />
 
-              <div className="home-approach-image-overlay" />
+              <span className="rh-condition-card__image-shade" />
 
-              <div className="home-approach-top-label">
-                <span className="home-approach-status-dot" />
-                CARE BUILT AROUND YOU
-              </div>
-
-              <div className="home-approach-image-caption">
-                <span>THE REHABICS METHOD</span>
-                <h3>
-                  Small steps.
-                  <br />
-                  Stronger tomorrows.
-                </h3>
-              </div>
-
-              <div className="home-approach-progress-card">
-                <span className="home-approach-progress-icon">
-                  <Activity size={23} />
-                </span>
-                <span>
-                  <strong>Progress with purpose</strong>
-                  <small>Your journey, at your pace</small>
-                </span>
-                <CheckCircle2 className="home-approach-check" size={20} />
-              </div>
-
-              <span className="home-approach-index">
-                OUR APPROACH <span /> 02
-              </span>
-            </motion.div>
-
-            {/* Content side */}
-
-            <motion.div
-              className="home-approach-content"
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <span className="home-eyebrow">
-                <span className="rehab-hero-eyebrow-line" />
-                THE REHABICS APPROACH
+              <span className="rh-condition-card__image-label">
+                REHABICS / MOVEMENT CARE
               </span>
 
-              <h2>
-                Your journey.
-                <br />
-                Your goals.
-                <br />
-                <span>Your recovery.</span>
-              </h2>
+              <span className="rh-condition-card__image-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            </Link>
 
-              <div className="home-approach-accent">
-                <span />
-                <span />
-                <span />
+            <div className="rh-condition-card__body">
+              <div className="rh-condition-card__content">
+                <span className="rh-condition-card__number">
+                  {String(number).padStart(2, "0")}
+                </span>
+
+                <h3>{title}</h3>
+
+                <p>{text}</p>
               </div>
 
-              <p className="home-approach-lead">
-                No two recovery journeys are the same. Your care should reflect
-                that.
-              </p>
+              <Link
+                className="rh-condition-card__link"
+                to="/conditions"
+                aria-label={`Explore ${title}`}
+              >
+                <span>Explore condition</span>
 
-              <p className="home-approach-description">
-                We begin by understanding your movement, your challenges and
-                what you want to achieve. From there, we help you work towards
-                your goals with personalised physiotherapy and guided
-                rehabilitation.
-              </p>
-
-              <ul className="home-benefit-list">
-                {benefits.map((benefit, index) => (
-                  <li key={benefit}>
-                    <span className="home-benefit-icon">
-                      <CheckCircle2 size={17} />
-                    </span>
-                    <span>{benefit}</span>
-                    <span className="home-benefit-number">0{index + 1}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link to="/about" className="home-primary-link">
-                <span>Learn about Rehabics</span>
-                <ArrowRight size={18} />
+                <span className="rh-condition-card__arrow">
+                  <ArrowUpRight
+                    size={19}
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                </span>
               </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* RECOVERY PROCESS */}
-
-      <section className="home-process home-section">
-        <div className="home-container">
-          <motion.div
-            className="home-process-heading"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="home-process-heading-copy">
-              
-
-              <span className="home-eyebrow">
-                <span className="rehab-hero-eyebrow-line" />
-                                YOUR PATH TO PROGRESS
-
-              </span>
-
-              <h2>
-                Better movement.
-                <br />
-                <span>One step at a time.</span>
-              </h2>
-
-              <p>
-                Recovery feels easier when you know what comes next. We guide
-                you through every stage with a clear plan built around your
-                goals.
-              </p>
             </div>
+          </motion.article>
+        );
+      })}
+    </div>
 
-            <div className="home-process-heading-note">
-              <span className="home-process-note-icon">
-                <Activity size={21} />
-              </span>
-              <span>
-                <strong>Progress with purpose</strong>
-                <small>Your recovery, guided by you</small>
-              </span>
-            </div>
-          </motion.div>
+    <div className="rh-conditions__footer">
+      <span className="rh-conditions__footer-line" />
 
-          <div className="home-process-grid">
-            {steps.map((step, index) => {
-              const icons = [ClipboardCheck, Activity, Target, TrendingUp];
+      <p>
+        EVERY BODY IS DIFFERENT. EVERY RECOVERY JOURNEY IS PERSONAL.
+      </p>
+    </div>
+  </div>
+</section>
 
-              const StepIcon = icons[index % icons.length];
 
-              return (
-                <motion.article
-                  className="home-process-card"
-                  key={step.number}
-                  variants={reveal}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <div className="home-process-card-top">
-                    <span className="home-process-number">
-                      {String(step.number).padStart(2, "0")}
-                    </span>
+      {/* 05. SERVICES */}
+      
+<section className="rh-services rh-section">
+  <div className="rh-container rh-services__layout">
+    <motion.div
+      className="rh-services__intro"
+      {...revealProps}
+    >
+      <p className="rh-eyebrow">
+        <span aria-hidden="true" />
+        WHAT WE DO
+      </p>
 
-                    <span className="home-process-icon">
-                      <StepIcon size={23} strokeWidth={1.7} />
-                    </span>
-                  </div>
+      <h2 className="rh-heading">
+        Care that moves
+        <br />
+        <em>with you.</em>
+      </h2>
 
-                  <div className="home-process-track">
-                    <span className="home-process-track-fill" />
-                  </div>
+      <p className="rh-body">
+        Practical rehabilitation guided by your needs, your
+        abilities and the activities that matter to you.
+        Our approach combines expert guidance with purposeful
+        movement to support your progress.
+      </p>
 
-                  <span className="home-process-step-label">
-                    STEP {String(index + 1).padStart(2, "0")}
-                  </span>
+      <Link to="/services" className="rh-button rh-button--light">
+        <span>Explore services</span>
+        <ArrowUpRight size={18} strokeWidth={1.6} />
+      </Link>
 
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
+      <div className="rh-services__note">
+        <span className="rh-services__note-line" />
+        <span>PERSONALISED CARE. PURPOSEFUL PROGRESS.</span>
+      </div>
+    </motion.div>
 
-                  <div className="home-process-card-bottom">
-                    <span>BUILT AROUND YOU</span>
-                    <CheckCircle2 size={17} />
-                  </div>
-                </motion.article>
-              );
-            })}
+    <div className="rh-services__list">
+      {services.map(({ number, icon: Icon, title, text }, index) => (
+        <motion.article
+          className="rh-service-row"
+          key={number}
+          {...revealProps}
+          transition={{
+            delay: index * 0.08,
+            duration: 0.55,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <span className="rh-service-row__number">
+            {String(number).padStart(2, "0")}
+          </span>
+
+          <div className="rh-service-row__icon">
+            <Icon size={22} strokeWidth={1.4} aria-hidden="true" />
           </div>
 
-          <motion.div
-            className="home-process-footer"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+          <div className="rh-service-row__copy">
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+
+          <Link
+            to="/services"
+            className="rh-service-row__link"
+            aria-label={`Explore ${title}`}
           >
-            <p>Every step brings you closer to moving with confidence.</p>
+            <ArrowUpRight size={20} strokeWidth={1.5} />
+          </Link>
+        </motion.article>
+      ))}
+    </div>
+  </div>
+</section>
 
-            <Link to="/contact" className="home-process-cta">
-              <span>Start your recovery</span>
-              <ArrowUpRight size={19} />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* TRUST */}
+      {/* 06. THE REHABICS METHOD */}
+      
 
-      <section className="home-trust home-section">
-        <div className="home-container home-trust-inner">
-          <motion.div
-            className="home-trust-copy"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <span className="home-eyebrow">
-              <span className="rehab-hero-eyebrow-line" />
-              CARE WITH PURPOSE
+{/* 06. THE REHABICS METHOD */}
+
+<section className="rh-method rh-section">
+  <div className="rh-container">
+    <motion.div
+      className="rh-method__heading"
+      {...revealProps}
+    >
+      <p className="rh-eyebrow">
+        <span aria-hidden="true" />
+        THE REHABICS METHOD
+      </p>
+
+      <div className="rh-method__title-wrap">
+        <h2 className="rh-heading">
+          Recovery with
+          <br />
+          <em>a clear direction.</em>
+        </h2>
+
+        <p className="rh-body">
+          Thoughtful assessment. A plan built around you.
+          Progress guided by your individual needs,
+          abilities and goals.
+        </p>
+      </div>
+    </motion.div>
+
+    <div className="rh-method__grid">
+      {methodSteps.map((step, index) => (
+        <motion.article
+          className="rh-method-card"
+          key={step.number}
+          {...revealProps}
+          transition={{
+            delay: index * 0.09,
+            duration: 0.55,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <div className="rh-method-card__top">
+            <span className="rh-method-card__number">
+              {String(step.number).padStart(2, "0")}
             </span>
 
-            <h2>
-              Move beyond
-              <br />
-              <span>your limitations.</span>
-            </h2>
-
-            <p>
-              Your recovery deserves a thoughtful approach. Get personalised
-              guidance, understand your progress and work towards the activities
-              that matter most to you.
-            </p>
-
-            <Link to="/appointment" className="home-primary-link">
-              <span>Start your journey</span>
-              <ArrowUpRight size={18} />
-            </Link>
-
-            <div className="home-trust-note">
-              <span className="home-trust-note-icon">
-                <ShieldCheck size={19} />
-              </span>
-              <span>
-                <strong>Your goals come first</strong>
-                <small>Care shaped around your needs</small>
-              </span>
-            </div>
-          </motion.div>
-
-          <div className="home-trust-cards">
-            <motion.article
-              className="home-trust-card"
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.08 }}
+            <span
+              className="rh-method-card__check"
+              aria-hidden="true"
             >
-              <div className="home-trust-card-top">
-                <span className="home-trust-icon">
-                  <ShieldCheck size={24} strokeWidth={1.7} />
-                </span>
-                <span className="home-trust-card-number">01</span>
-              </div>
-
-              <h3>Individualised care</h3>
-              <p>
-                A treatment approach shaped around your needs, abilities and
-                recovery goals.
-              </p>
-
-              <span className="home-trust-card-line" />
-            </motion.article>
-
-            <motion.article
-              className="home-trust-card"
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.16 }}
-            >
-              <div className="home-trust-card-top">
-                <span className="home-trust-icon">
-                  <ClipboardCheck size={24} strokeWidth={1.7} />
-                </span>
-                <span className="home-trust-card-number">02</span>
-              </div>
-
-              <h3>Clear guidance</h3>
-              <p>
-                Understand your recovery plan and why each step matters to your
-                progress.
-              </p>
-
-              <span className="home-trust-card-line" />
-            </motion.article>
-
-            <motion.article
-              className="home-trust-card home-trust-card-wide"
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.24 }}
-            >
-              <div className="home-trust-card-top">
-                <span className="home-trust-icon">
-                  <Sparkles size={24} strokeWidth={1.7} />
-                </span>
-                <span className="home-trust-card-number">03</span>
-              </div>
-
-              <h3>Progress with confidence</h3>
-              <p>
-                Develop healthier movement habits with appropriate professional
-                support at every stage.
-              </p>
-
-              <span className="home-trust-card-line" />
-            </motion.article>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-
-      <section className="home-faq home-section">
-        <div className="home-container home-faq-grid">
-          <motion.div
-            className="home-faq-heading"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <span className="home-eyebrow">
-              <span className="rehab-hero-eyebrow-line" />
-              GOOD TO KNOW
+              <Check size={17} strokeWidth={1.6} />
             </span>
+          </div>
 
-            <h2>
-              Questions about
-              <br />
-              <span>physiotherapy?</span>
-            </h2>
+          <div className="rh-method-card__rule" />
 
-            <p>
-              Find helpful answers about your treatment, recovery journey and
-              how Rehabics can support your movement goals.
+          <div className="rh-method-card__content">
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+
+          <span
+            className="rh-method-card__index"
+            aria-hidden="true"
+          >
+            STEP {String(index + 1).padStart(2, "0")}
+          </span>
+        </motion.article>
+      ))}
+    </div>
+
+    <div className="rh-method__foot">
+      <span>ASSESSMENT</span>
+      <span className="rh-method__foot-line" />
+      <span>PERSONALISED PLAN</span>
+      <span className="rh-method__foot-line" />
+      <span>GUIDED PROGRESS</span>
+    </div>
+  </div>
+</section>
+
+
+      {/* 07. OUR APPROACH */}
+      
+{/* 07. PEOPLE FIRST */}
+<section className="rh-team rh-section">
+  <div className="rh-container rh-split">
+
+    <motion.div
+      className="rh-image-frame rh-team__image"
+      {...revealProps}
+    >
+      <img
+        src={image4}
+        alt="Healthcare professionals discussing patient care"
+        loading="lazy"
+      />
+
+      <div className="rh-team__image-overlay" />
+
+      <span className="rh-image-label">
+        CARE WITH PURPOSE
+      </span>
+
+      <div className="rh-team__image-note">
+        <span className="rh-team__note-line" />
+        <p>PERSONAL ATTENTION. THOUGHTFUL REHABILITATION.</p>
+      </div>
+    </motion.div>
+
+    <motion.div
+      className="rh-copy rh-team__copy"
+      {...revealProps}
+    >
+      <p className="rh-eyebrow">
+        <span aria-hidden="true" />
+        PEOPLE FIRST
+      </p>
+
+      <h2 className="rh-heading">
+        Expertise matters.
+        <em> So does listening.</em>
+      </h2>
+
+      <p className="rh-body">
+        Good rehabilitation starts with understanding the person
+        behind the problem. Clear communication, individual attention
+        and realistic goals should guide every step of recovery.
+      </p>
+
+      <ul className="rh-check-list rh-team__principles">
+        {carePrinciples.map((point, index) => (
+          <li key={point}>
+            <span className="rh-team__check">
+              <Check size={15} strokeWidth={1.8} />
+            </span>
+            <span>{point}</span>
+            <span className="rh-team__principle-number">
+              0{index + 1}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <Link to="/about" className="rh-text-link rh-team__link">
+        Discover Rehabics
+        <ArrowUpRight size={18} />
+      </Link>
+    </motion.div>
+
+  </div>
+</section>
+
+
+      {/* 08. MOVEMENT AND PROGRESS */}
+     
+{/* 08. PROGRESS AND POSSIBILITIES */}
+<section className="rh-progress rh-section" style={{color:"black"}}>
+  <div className="rh-container rh-progress__layout">
+
+    <motion.div
+      className="rh-progress__copy"
+      {...revealProps}
+    >
+      <p className="rh-eyebrow">
+        <span aria-hidden="true" />
+        THE BIGGER PICTURE
+      </p>
+
+      <div className="rh-progress__quote-mark" aria-hidden="true">
+        <Quote size={32} strokeWidth={1.3} />
+      </div>
+
+      <h2 className="rh-heading">
+        Small steps.
+        <br />
+        Stronger movement.
+        <br />
+        <em>More possibilities.</em>
+      </h2>
+
+      <p className="rh-body">
+        Progress is not always a straight line. With consistency,
+        thoughtful guidance and realistic goals, every step can
+        become part of a stronger relationship with movement.
+      </p>
+
+      <Link to="/approach" className="rh-text-link rh-progress__link">
+        Explore our approach
+        <ArrowUpRight size={18} />
+      </Link>
+
+      <div className="rh-progress__principle">
+        <span className="rh-progress__principle-line" />
+        <span>PROGRESS AT YOUR OWN PACE</span>
+      </div>
+    </motion.div>
+
+    <motion.div
+      className="rh-progress__visual"
+      {...revealProps}
+    >
+      <img
+        src={image6}
+        alt="Runner training outdoors"
+        loading="lazy"
+      />
+
+      <div className="rh-progress__image-shade" />
+
+      <span className="rh-progress__caption">
+        <span className="rh-progress__caption-dot" />
+        EVERY STEP COUNTS
+      </span>
+
+      <div className="rh-progress__side-label">
+        MOVEMENT / STRENGTH / CONFIDENCE
+      </div>
+
+      <div className="rh-progress__image-index" aria-hidden="true">
+        <span>08</span>
+        <span className="rh-progress__index-line" />
+        <span>10</span>
+      </div>
+    </motion.div>
+
+  </div>
+</section>
+
+
+      {/* 09. FAQ */}
+     <section className="rh-faq rh-section">
+        <div className="rh-container rh-faq__layout">
+          <motion.div className="rh-faq__intro" {...revealProps}>
+            <p className="rh-eyebrow">
+              <span /> QUESTIONS AND ANSWERS
             </p>
 
-            <Link to="/contact" className="home-faq-contact">
-              <span>Still have questions?</span>
-              <span className="home-faq-contact-link">
-                Talk to our team
-                <ArrowUpRight size={18} />
-              </span>
-            </Link>
+            <h2 className="rh-heading">
+              Good questions.
+              <em> Clear answers.</em>
+            </h2>
 
-            <div className="home-faq-note">
-              <span className="home-faq-note-icon">
-                <MessageCircle size={20} />
-              </span>
-              <span>
-                <strong>We are here to help</strong>
-                <small>Get guidance for your next step</small>
-              </span>
-            </div>
+            <p className="rh-body">
+              Learn a little more about the process before taking your next
+              step.
+            </p>
+
+            <Link to="/contact" className="rh-text-link">
+              Ask us a question <ArrowUpRight size={18} />
+            </Link>
           </motion.div>
 
-          <div className="home-faq-list">
+          <div className="rh-faq__list">
             {faqs.map((faq, index) => {
-              const isOpen = activeFaq === index;
+              const isOpen = openFaq === index;
 
               return (
-                <motion.article
-                  className={`home-faq-item ${isOpen ? "is-open" : ""}`}
+                <article
+                  className={`rh-faq-item ${isOpen ? "is-open" : ""}`}
                   key={faq.question}
-                  variants={reveal}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ delay: index * 0.06 }}
                 >
                   <button
-                    className="home-faq-question"
-                    type="button"
+                    className="rh-faq-item__question"
+                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
                     aria-expanded={isOpen}
-                    onClick={() => setActiveFaq(isOpen ? -1 : index)}
                   >
-                    <span className="home-faq-question-number">
-                      {String(index + 1).padStart(2, "0")}
+                    <span className="rh-faq-item__number">
+                      0{index + 1}
                     </span>
 
-                    <span className="home-faq-question-text">
+                    <span className="rh-faq-item__title">
                       {faq.question}
                     </span>
 
-                    <span className="home-faq-chevron-wrap">
-                      <ChevronDown size={19} className="home-faq-chevron" />
-                    </span>
+                    <Plus
+                      className="rh-faq-item__icon"
+                      size={20}
+                      strokeWidth={1.5}
+                    />
                   </button>
 
-                  {isOpen && (
-                    <div className="home-faq-answer">
-                      <p>{faq.answer}</p>
-                    </div>
-                  )}
-                </motion.article>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        className="rh-faq-item__answer"
+                        initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.25 }}
+                      >
+                        <p>{faq.answer}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </article>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-    </main>
+      {/* 10. FINAL CTA */}
+      
+{/* 10. FINAL CALL TO ACTION */}
+<section className="rh-final-cta">
+
+  <div
+    className="rh-final-cta__image"
+    aria-hidden="true"
+  />
+
+  <div className="rh-final-cta__overlay" />
+
+  <motion.div
+    className="rh-container rh-final-cta__content"
+    {...revealProps}
+  >
+    <p className="rh-eyebrow">
+      <span aria-hidden="true" />
+      YOUR NEXT CHAPTER
+    </p>
+
+    <h2 className="rh-heading">
+      Your next chapter
+      <br />
+      starts with <em>movement.</em>
+    </h2>
+
+    <p className="rh-body">
+      Every journey begins somewhere. Start with a conversation
+      about your goals, your challenges and the support that may
+      help you move forward with greater confidence.
+    </p>
+
+    <div className="rh-final-cta__actions">
+      <Link
+        to="/contact"
+        className="rh-button rh-button--light rh-final-cta__primary"
+      >
+        Get in touch
+        <ArrowUpRight size={18} />
+      </Link>
+
+      <Link
+        to="/approach"
+        className="rh-final-cta__secondary"
+      >
+        Our approach
+        <ArrowRight size={18} />
+      </Link>
+    </div>
+
+    <div className="rh-final-cta__bottom">
+      <span className="rh-final-cta__bottom-line" />
+      <span>PERSONALISED CARE. PURPOSEFUL MOVEMENT.</span>
+    </div>
+  </motion.div>
+
+  <span className="rh-final-cta__index">
+    REHABICS <span aria-hidden="true">/</span> MOVE FORWARD
+  </span>
+
+  <span className="rh-final-cta__corner" aria-hidden="true">
+    10
+  </span>
+</section>
+
+    </div>
   );
 }

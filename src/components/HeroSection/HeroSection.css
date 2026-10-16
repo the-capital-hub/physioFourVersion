@@ -1,878 +1,1026 @@
 
-.rehab-hero {
-  --hero-carbon: #101112;
-  --hero-green: #7cd607;
-  --hero-graphite: #292e37;
-  --hero-ivory: #f9f9f8;
-  --hero-muted: #aeb4be;
-  --hero-border: #3b414c;
+/* =========================================
+   REHABICS V5
+   CINEMATIC MONOCHROME HERO
+   ========================================= */
+
+.rehabics-hero {
+  --rh-black: #0b0d0e;
+  --rh-graphite: #202427;
+  --rh-steel: #aeb5b9;
+  --rh-white: #ffffff;
+  --rh-porcelain: #f3f4f2;
 
   position: relative;
   isolation: isolate;
-  height: calc(100svh - 100px);
-  min-height: 660px;
-  /* max-height: 900px; */
-  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 78px);
+  height: calc(100svh - 78px);
+  min-height: 560px;
+  max-height: 920px;
   overflow: hidden;
-  background: var(--hero-carbon);
-  color: var(--hero-ivory);
-  font-family: var(--font-body, "DM Sans", sans-serif);
+  color: var(--rh-white);
+  background: var(--rh-black);
+  font-family: "Inter", sans-serif;
 }
 
-.rehab-hero *,
-.rehab-hero *::before,
-.rehab-hero *::after {
+.rehabics-hero *,
+.rehabics-hero *::before,
+.rehabics-hero *::after {
   box-sizing: border-box;
 }
 
-.rehab-hero a {
-  color: inherit;
-  text-decoration: none;
-}
+/* =========================================
+   BACKGROUND IMAGE
+   ========================================= */
 
-.rehab-hero-background {
+
+
+.rehabics-hero__image {
   position: absolute;
   z-index: -5;
-  inset: 0;
-  background:
-    radial-gradient(
-      ellipse at 77% 38%,
-      rgba(124, 214, 7, 0.075),
-      transparent 39%
-    ),
-    linear-gradient(115deg, #101112, #151716 65%, #101112);
+  inset: -2%;
+
+  background-image: url("/src/assets/home/image.jpeg");
+  background-repeat: no-repeat;
+
+  /* Image ko right side shift karne ke liye */
+  background-position: -3% 10%;
+object-fit: cover;
+
+  transform: scale(1.04);
+  animation:
+    rh-image-enter 1.5s ease-out both,
+    rh-image-drift 24s ease-in-out 1.5s infinite alternate;
+
+  will-change: transform;
 }
 
-.rehab-hero-grid {
+
+
+/* =========================================
+   CINEMATIC DARK OVERLAY
+   ========================================= */
+
+.rehabics-hero__overlay {
   position: absolute;
   z-index: -4;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 56px 56px;
-  opacity: 0.32;
   pointer-events: none;
-}
-
-.rehab-hero-image {
-  position: absolute;
-  z-index: -3;
-  top: 0;
-  right: 0;
-  width: 68%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.rehab-hero-image img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 34%;
-  filter: brightness(0.88) contrast(1.07) saturate(0.88);
-}
-
-.rehab-hero-image-overlay {
-  position: absolute;
-  inset: 0;
   background:
     linear-gradient(
       90deg,
-      #101112 0%,
-      rgba(16, 17, 18, 0.94) 9%,
-      rgba(16, 17, 18, 0.57) 34%,
-      rgba(16, 17, 18, 0.06) 69%
+      rgba(11, 13, 14, 0.97) 0%,
+      rgba(11, 13, 14, 0.9) 27%,
+      rgba(11, 13, 14, 0.65) 46%,
+      rgba(11, 13, 14, 0.18) 75%,
+      rgba(11, 13, 14, 0.3) 100%
     ),
     linear-gradient(
       0deg,
-      #101112 0%,
-      rgba(16, 17, 18, 0.7) 17%,
-      transparent 50%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(16, 17, 18, 0.2),
-      transparent 25%
+      rgba(11, 13, 14, 0.98) 0%,
+      rgba(11, 13, 14, 0.55) 17%,
+      transparent 46%,
+      rgba(11, 13, 14, 0.22) 100%
     );
 }
 
-.rehab-hero-watermark {
-  position: absolute;
-  z-index: -2;
-  top: 22px;
-  right: -15px;
-  color: rgba(249, 249, 248, 0.035);
-  font-family: var(--font-heading, "Manrope", sans-serif);
-  font-size: clamp(100px, 17vw, 245px);
-  font-weight: 900;
-  letter-spacing: -10px;
-  line-height: 1;
-  pointer-events: none;
-}
+/* =========================================
+   ATMOSPHERIC SMOKE
+   Uses CSS only. No extra image or video.
+   ========================================= */
 
-.rehab-hero-inner {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: min(calc(100% - 60px), 1400px);
-  height: 100%;
-  min-height: 0;
-  margin: 0 auto;
-}
-
-.rehab-hero-main {
-  position: relative;
-  z-index: 2;
-  width: 68%;
-  padding-top: clamp(24px, 5vh, 56px);
-}
-
-.rehab-hero-copy {
-  max-width: 800px;
-}
-
-.rehab-hero-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 18px;
-  color: var(--hero-green);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  line-height: 1.5;
-}
-
-.rehab-hero-eyebrow-line {
-  position: relative;
-  display: inline-block;
-  width: 34px;
-  height: 3px;
-  flex: 0 0 34px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, #497f0b, var(--hero-green));
-  box-shadow: 0 0 12px rgba(124, 214, 7, 0.18);
-}
-
-.rehab-hero-eyebrow-line::after {
+.rehabics-hero::before {
   content: "";
   position: absolute;
-  top: 50%;
-  right: -7px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--hero-green);
-  transform: translateY(-50%);
+  z-index: -2;
+  inset: -30%;
+  pointer-events: none;
+  opacity: 0.27;
+  background:
+    radial-gradient(
+      ellipse at 28% 48%,
+      rgba(205, 211, 214, 0.24) 0%,
+      rgba(150, 158, 163, 0.1) 18%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 66% 28%,
+      rgba(205, 211, 214, 0.18) 0%,
+      rgba(120, 128, 132, 0.08) 22%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 72% 75%,
+      rgba(190, 195, 198, 0.15) 0%,
+      transparent 38%
+    );
+  filter: blur(42px);
+  transform: translate3d(-4%, 2%, 0) scale(1);
+  animation: rh-smoke-drift 19s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
-.rehab-hero-copy h1 {
-  margin: 0;
-  color: var(--hero-ivory);
-  font-family: var(--font-heading, "Manrope", sans-serif);
-  font-size: clamp(42px, 4.7vw, 70px);
-  font-weight: 800;
-  letter-spacing: -2.8px;
-  line-height: 1.07;
-  text-wrap: balance;
+.rehabics-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -35%;
+  pointer-events: none;
+  opacity: 0.16;
+  background:
+    radial-gradient(
+      ellipse at 48% 60%,
+      rgba(245, 246, 246, 0.18) 0%,
+      rgba(190, 195, 198, 0.07) 20%,
+      transparent 43%
+    ),
+    radial-gradient(
+      ellipse at 80% 38%,
+      rgba(255, 255, 255, 0.14) 0%,
+      transparent 35%
+    );
+  filter: blur(58px);
+  transform: translate3d(4%, -3%, 0) scale(1.05);
+  animation: rh-smoke-drift-two 25s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
-.rehab-hero-heading-second {
-  display: inline-block;
+/* Soft moving light on top of the image */
+
+.rehabics-hero__grain {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 72% 42%,
+      rgba(255, 255, 255, 0.09),
+      transparent 43%
+    );
+  background-size: 150% 150%;
+  animation: rh-spotlight 15s ease-in-out infinite alternate;
 }
 
-.rehab-hero-heading-second > span {
-  color: var(--hero-green);
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+
+.rehabics-hero__content {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  width: 100%;
+  max-width: 1500px;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 28px 6%;
 }
 
-.rehab-hero-description {
-  max-width: 530px;
-  margin-top: 16px;
-  color: #b9bec5;
-  font-size: 15px;
-  line-height: 1.75;
+.rehabics-hero__copy {
+  width: min(700px, 67%);
+  padding-top: 4px;
 }
 
-.rehab-hero-actions {
+/* Eyebrow */
+
+.rehabics-hero__eyebrow {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 22px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  color: #d0d3d4;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  animation: rh-fade-up 0.8s 0.1s both;
 }
 
-.rehab-hero-button {
+
+.rehabics-hero__eyebrow-line {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 1px;
+  margin-right: 7px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.22);
+  transform-origin: left center;
+  animation: rh-line-grow 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.rehabics-hero__eyebrow-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.45),
+    #ffffff 70%,
+    rgba(255, 255, 255, 0.65)
+  );
+  transform: translateX(-101%);
+  animation: rh-line-shimmer 1.2s ease-out 0.8s both;
+}
+
+@keyframes rh-line-shimmer {
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rehabics-hero__eyebrow-line,
+  .rehabics-hero__eyebrow-line::after {
+    animation: none;
+    transform: none;
+  }
+}
+
+
+.rehabics-hero__dot {
+  color: #8d9498;
+}
+
+/* Heading */
+
+.rehabics-hero__title {
+  max-width: 760px;
+  margin: 0;
+  color: var(--rh-white);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(48px, 6vw, 82px);
+  font-weight: 800;
+  line-height: 0.99;
+  letter-spacing: -3.8px;
+  animation: rh-fade-up 0.9s 0.18s both;
+}
+
+.rehabics-hero__title span {
+  display: block;
+  color: #b7bdc0;
+}
+
+/* Description */
+
+.rehabics-hero__description {
+  max-width: 485px;
+  margin: 22px 0 0;
+  color: #d1d4d5;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.8;
+  animation: rh-fade-up 0.9s 0.32s both;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.rehabics-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px;
+  margin-top: 27px;
+  animation: rh-fade-up 0.9s 0.46s both;
+}
+
+.rehabics-hero__primary {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 17px;
-  min-height: 50px;
-  padding: 8px 13px 8px 17px;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  font-size: 13px;
-  font-weight: 800;
-  transition:
-    transform 220ms ease,
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
-}
-
-.rehab-hero-button:hover {
-  transform: translateY(-3px);
-}
-
-.rehab-hero-button-primary {
-  background: var(--hero-green);
-  color: #101112;
-  box-shadow: 0 5px 20px rgba(124, 214, 7, 0.08);
-}
-
-.rehab-hero-button-primary:hover {
-  background: #91e52b;
-  color: #101112;
-  box-shadow: 0 8px 24px rgba(124, 214, 7, 0.17);
-}
-
-.rehab-hero-button-secondary {
-  border-color: rgba(249, 249, 248, 0.22);
-  background: rgba(16, 17, 18, 0.42);
-  color: var(--hero-ivory);
-}
-
-.rehab-hero-button-secondary:hover {
-  border-color: var(--hero-green);
-  color: var(--hero-green);
-}
-
-/* Statistics */
-
-.rehab-hero-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: min(100%, 620px);
-  margin-top: clamp(24px, 4vh, 42px);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.rehab-hero-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-  padding: 12px 12px 0 0;
-}
-
-.rehab-hero-stat + .rehab-hero-stat {
-  padding-left: 18px;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.rehab-hero-stat strong {
-  color: var(--hero-ivory);
-  font-family: var(--font-heading, "Manrope", sans-serif);
-  font-size: clamp(25px, 2.5vw, 34px);
-  font-weight: 800;
-  letter-spacing: -1px;
-}
-
-.rehab-hero-stat span {
-  color: var(--hero-muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-/* Image labels */
-
-.rehab-hero-image-note {
-  position: absolute;
-  z-index: 3;
-  top: 35%;
-  right: 1%;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 11px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 13px;
-  background: rgba(16, 17, 18, 0.68);
-  backdrop-filter: blur(12px);
-}
-
-.rehab-hero-image-note-icon {
-  display: grid;
-  place-items: center;
-  width: 39px;
-  height: 39px;
-  border-radius: 11px;
-  background: rgba(124, 214, 7, 0.12);
-  color: var(--hero-green);
-}
-
-.rehab-hero-image-note > span:last-child {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.rehab-hero-image-note small {
-  color: var(--hero-muted);
-  font-size: 12px;
-}
-
-.rehab-hero-image-note strong {
-  color: var(--hero-ivory);
-  font-size: 12px;
-}
-
-.rehab-hero-story {
-  position: absolute;
-  z-index: 3;
-  top: 55%;
-  right: 1%;
-}
-
-.rehab-hero-story-link {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 9px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 13px;
-  background: rgba(16, 17, 18, 0.72);
-  transition: border-color 200ms ease, background 200ms ease;
-  backdrop-filter: blur(12px);
-}
-
-.rehab-hero-story-link:hover {
-  border-color: rgba(124, 214, 7, 0.4);
-  background: rgba(41, 46, 55, 0.88);
-}
-
-.rehab-hero-story-play {
-  display: grid;
-  place-items: center;
-  width: 39px;
-  height: 39px;
-  flex: 0 0 39px;
-  border: 1px solid var(--hero-green);
-  border-radius: 50%;
-  color: var(--hero-green);
-  transition: background 200ms ease, color 200ms ease;
-}
-
-.rehab-hero-story-link:hover .rehab-hero-story-play {
-  background: var(--hero-green);
-  color: var(--hero-carbon);
-}
-
-.rehab-hero-story-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.rehab-hero-story-copy small {
-  color: var(--hero-muted);
-  font-size: 12px;
-}
-
-.rehab-hero-story-copy strong {
-  color: var(--hero-ivory);
-  font-size: 13px;
-}
-
-.rehab-hero-story-arrow {
-  color: var(--hero-muted);
-}
-
-/* Service cards */
-
-.rehab-hero-services {
-  position: absolute;
-  z-index: 5;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.rehab-hero-service-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 168px;
-  padding: 15px;
+  min-height: 52px;
+  padding: 0 21px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.085);
-  border-radius: 15px;
-  background:
-    radial-gradient(
-      circle at 0% 0%,
-      rgba(124, 214, 7, 0.055),
-      transparent 55%
-    ),
-    linear-gradient(145deg, rgba(35, 39, 36, 0.97), rgba(19, 21, 22, 0.98));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.035),
-    0 10px 25px rgba(0, 0, 0, 0.16);
-  transition:
-    transform 230ms ease,
-    border-color 230ms ease,
-    box-shadow 230ms ease;
-}
-
-.rehab-hero-service-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 14px;
-  left: 14px;
-  height: 2px;
-  border-radius: 0 0 8px 8px;
-  background: linear-gradient(90deg, transparent, var(--hero-green), transparent);
-  opacity: 0;
-  transition: opacity 230ms ease;
-}
-
-.rehab-hero-service-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(124, 214, 7, 0.45);
-  box-shadow:
-    0 16px 32px rgba(0, 0, 0, 0.25),
-    0 0 22px rgba(124, 214, 7, 0.04);
-}
-
-.rehab-hero-service-card:hover::before {
-  opacity: 1;
-}
-
-.rehab-hero-service-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.rehab-hero-service-icon {
-  display: grid;
-  place-items: center;
-  width: 43px;
-  height: 43px;
-  flex: 0 0 43px;
-  border: 1px solid rgba(124, 214, 7, 0.12);
-  border-radius: 12px;
-  background: rgba(124, 214, 7, 0.105);
-  color: var(--hero-green);
-  transition: background 220ms ease, transform 220ms ease;
-}
-
-.rehab-hero-service-card:hover .rehab-hero-service-icon {
-  transform: scale(1.04);
-  background: rgba(124, 214, 7, 0.17);
-}
-
-.rehab-hero-service-number {
-  color: rgba(249, 249, 248, 0.46);
-  font-family: var(--font-heading, "Manrope", sans-serif);
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.rehab-hero-service-card h2 {
-  color: var(--hero-ivory);
-  font-family: var(--font-heading, "Manrope", sans-serif);
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  line-height: 1.4;
-}
-
-.rehab-hero-service-card p {
-  margin-top: 7px;
-  color: var(--hero-muted);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.rehab-hero-service-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 12px;
-  color: var(--hero-green);
+  border: 1px solid var(--rh-white);
+  color: var(--rh-black);
+  background: var(--rh-white);
   font-size: 12px;
   font-weight: 700;
+  text-decoration: none;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.rehab-hero-service-link svg {
-  transition: transform 200ms ease;
+.rehabics-hero__primary:hover {
+  color: var(--rh-white);
+  background: var(--rh-graphite);
+  border-color: var(--rh-graphite);
 }
 
-.rehab-hero-service-card:hover .rehab-hero-service-link svg {
+.rehabics-hero__primary svg {
+  transition: transform 0.3s ease;
+}
+
+.rehabics-hero__primary:hover svg {
   transform: translateX(4px);
 }
 
-/* Bottom assurance */
+.rehabics-hero__secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--rh-white);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+}
 
-.rehab-hero-assurance {
-  position: absolute;
-  right: 0;
-  bottom: 7px;
+.rehabics-hero__play {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.rehabics-hero__secondary:hover .rehabics-hero__play {
+  color: var(--rh-black);
+  background: var(--rh-white);
+  border-color: var(--rh-white);
+  transform: rotate(45deg);
+}
+
+/* Bottom micro label */
+
+.rehabics-hero__note {
   display: flex;
   align-items: center;
-  gap: 7px;
-  color: rgba(249, 249, 248, 0.66);
-  font-size: 12px;
-  letter-spacing: 0.8px;
+  gap: 11px;
+  margin-top: 34px;
+  color: #aeb5b9;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  animation: rh-fade-up 0.9s 0.6s both;
 }
 
-.rehab-hero-assurance svg {
-  color: var(--hero-green);
+.rehabics-hero__note-line {
+  width: 25px;
+  height: 1px;
+  background: #92999d;
 }
 
-.rehab-hero-bottom-glow {
+/* =========================================
+   RIGHT SIDE LABEL
+   ========================================= */
+
+.rehabics-hero__side-label {
   position: absolute;
-  z-index: -1;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100px;
-  background: linear-gradient(0deg, rgba(124, 214, 7, 0.055), transparent);
-  pointer-events: none;
+  top: 49%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 13px;
+  border-left: 1px solid rgba(255, 255, 255, 0.52);
+  color: #e0e2e3;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  animation: rh-fade-in 1.2s 0.8s both;
 }
 
-/* Compact desktop */
+/* =========================================
+   BOTTOM BENEFITS
+   ========================================= */
 
-@media (max-height: 780px) and (min-width: 1001px) {
-  .rehab-hero {
-    min-height: 620px;
-    padding: 12px 0;
+.rehabics-hero__benefits {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 17px 6% 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  animation: rh-fade-up 0.8s 0.65s both;
+}
+
+.rehabics-hero__benefit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 0 15px;
+  border-right: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.rehabics-hero__benefit:first-child {
+  padding-left: 0;
+}
+
+.rehabics-hero__benefit:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+
+.rehabics-hero__benefit-icon {
+  display: grid;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: var(--rh-white);
+  transition: transform 0.35s ease;
+}
+
+.rehabics-hero__benefit:hover .rehabics-hero__benefit-icon {
+  transform: translateY(-3px);
+}
+
+.rehabics-hero__benefit-copy {
+  min-width: 0;
+}
+
+.rehabics-hero__benefit-copy h2 {
+  margin: 0;
+  color: var(--rh-white);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.rehabics-hero__benefit-copy p {
+  margin: 3px 0 0;
+  color: #aeb5b9;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.1px;
+  line-height: 1.5;
+}
+
+/* Scroll label */
+
+.rehabics-hero__scroll {
+  padding-bottom: 20px;
+  position: absolute;
+  right: 18px;
+  bottom: 132px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #c5c9cb;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  writing-mode: vertical-rl;
+}
+
+.rehabics-hero__scroll-line {
+  
+  width: 1px;
+  height: 30px;
+  background: #aeb5b9;
+  transform-origin: top;
+  animation: rh-scroll-pulse 2s ease-in-out infinite;
+}
+
+/* =========================================
+   ANIMATION KEYFRAMES
+   ========================================= */
+
+@keyframes rh-image-enter {
+  from {
+    opacity: 0.5;
+    transform: scale(1.09);
   }
 
-  .rehab-hero-main {
-    padding-top: 20px;
-  }
-
-  .rehab-hero-eyebrow {
-    margin-bottom: 12px;
-  }
-
-  .rehab-hero-copy h1 {
-    font-size: clamp(39px, 4vw, 56px);
-  }
-
-  .rehab-hero-description {
-    max-width: 470px;
-    margin-top: 11px;
-    font-size: 13px;
-  }
-
-  .rehab-hero-actions {
-    margin-top: 14px;
-  }
-
-  .rehab-hero-stats {
-    margin-top: 22px;
-  }
-
-  .rehab-hero-service-card {
-    min-height: 145px;
-    padding: 12px;
-  }
-
-  .rehab-hero-service-top {
-    margin-bottom: 9px;
-  }
-
-  .rehab-hero-service-icon {
-    width: 37px;
-    height: 37px;
-    flex-basis: 37px;
-  }
-
-  .rehab-hero-image-note {
-    top: 31%;
-  }
-
-  .rehab-hero-story {
-    top: 49%;
+  to {
+    opacity: 1;
+    transform: scale(1.04);
   }
 }
 
-/* Tablet */
-
-@media (max-width: 1000px) {
-  .rehab-hero {
-    height: auto;
-    min-height: 760px;
-    max-height: none;
+@keyframes rh-image-drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
   }
 
-  .rehab-hero-inner {
-    height: auto;
-    min-height: 720px;
-  }
-
-  .rehab-hero-main {
-    width: 76%;
-    padding-top: 35px;
-  }
-
-  .rehab-hero-copy h1 {
-    font-size: clamp(40px, 5.6vw, 58px);
-    letter-spacing: -2px;
-  }
-
-  .rehab-hero-image {
-    width: 72%;
-    height: 600px;
-  }
-
-  .rehab-hero-image-note {
-    top: 39%;
-    right: 0;
-  }
-
-  .rehab-hero-story {
-    top: 53%;
-    right: 0;
-  }
-
-  .rehab-hero-services {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    bottom: 0;
-  }
-
-  .rehab-hero-service-card {
-    min-height: 145px;
-  }
-
-  .rehab-hero-assurance {
-    bottom: 8px;
+  to {
+    transform: scale(1.09) translate3d(-0.6%, -0.3%, 0);
   }
 }
 
-/* Mobile */
-
-@media (max-width: 650px) {
-  .rehab-hero {
-    height: auto;
-    min-height: 0;
-    padding: 12px 0 20px;
-    overflow: hidden;
+@keyframes rh-smoke-drift {
+  0% {
+    transform: translate3d(-5%, 3%, 0) scale(1);
+    opacity: 0.18;
   }
 
-  .rehab-hero-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    width: calc(100% - 32px);
-    min-height: 0;
+  50% {
+    opacity: 0.3;
   }
 
-  .rehab-hero-image {
-    top: 0;
-    right: -10%;
-    width: 100%;
-    height: 450px;
-    opacity: 0.72;
+  100% {
+    transform: translate3d(5%, -4%, 0) scale(1.12);
+    opacity: 0.23;
+  }
+}
+
+@keyframes rh-smoke-drift-two {
+  0% {
+    transform: translate3d(5%, -4%, 0) scale(1.05);
+    opacity: 0.12;
   }
 
-  .rehab-hero-image img {
-    object-position: 58% center;
+  100% {
+    transform: translate3d(-5%, 4%, 0) scale(1.16);
+    opacity: 0.23;
+  }
+}
+
+@keyframes rh-spotlight {
+  from {
+    background-position: 0% 50%;
+    opacity: 0.5;
   }
 
-  .rehab-hero-image-overlay {
+  to {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+@keyframes rh-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rh-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rh-line-grow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes rh-scroll-pulse {
+  0%, 100% {
+    transform: scaleY(0.55);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   LAPTOP
+   ========================================= */
+
+@media (max-width: 1100px) {
+  .rehabics-hero__content {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .rehabics-hero__copy {
+    width: 74%;
+  }
+
+  .rehabics-hero__title {
+    font-size: clamp(46px, 6.6vw, 70px);
+    letter-spacing: -2.8px;
+  }
+
+  .rehabics-hero__side-label {
+    right: 3%;
+  }
+
+  .rehabics-hero__benefits {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .rehabics-hero__benefit {
+    gap: 8px;
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .rehabics-hero__benefit-copy h2 {
+    font-size: 10px;
+  }
+
+  .rehabics-hero__benefit-copy p {
+    font-size: 8px;
+    letter-spacing: 0.7px;
+  }
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 800px) {
+  .rehabics-hero {
+    min-height: 580px;
+  }
+
+  .rehabics-hero__image {
+    background-position: 58% center;
+  }
+
+  .rehabics-hero__overlay {
     background:
-      linear-gradient(90deg, #101112 0%, rgba(16, 17, 18, 0.75) 32%, rgba(16, 17, 18, 0.12) 100%),
-      linear-gradient(0deg, #101112 0%, rgba(16, 17, 18, 0.3) 35%, transparent 100%);
+      linear-gradient(
+        90deg,
+        rgba(11, 13, 14, 0.95) 0%,
+        rgba(11, 13, 14, 0.8) 43%,
+        rgba(11, 13, 14, 0.32) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(11, 13, 14, 0.98),
+        transparent 50%
+      );
   }
 
-  .rehab-hero-watermark {
-    top: 25px;
-    right: -8px;
-    font-size: 75px;
-    letter-spacing: -4px;
+  .rehabics-hero__copy {
+    width: 82%;
   }
 
-  .rehab-hero-main {
-    width: 100%;
-    padding-top: 22px;
-  }
-
-  .rehab-hero-eyebrow {
-    gap: 12px;
-    margin-bottom: 14px;
-    letter-spacing: 1.2px;
-  }
-
-  .rehab-hero-copy h1 {
-    font-size: clamp(34px, 8.6vw, 48px);
-    line-height: 1.12;
-    letter-spacing: -1.5px;
-  }
-
-  .rehab-hero-desktop-break {
+  .rehabics-hero__side-label,
+  .rehabics-hero__scroll {
     display: none;
   }
 
-  .rehab-hero-heading-second {
-    display: inline;
+  .rehabics-hero__benefits {
+    padding-top: 13px;
+    padding-bottom: 17px;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+  .rehabics-hero {
+    height: auto;
+    height: auto;
+    min-height: calc(100svh - 68px);
+    max-height: none;
+    overflow: hidden;
   }
 
-  .rehab-hero-description {
-    max-width: 430px;
-    margin-top: 14px;
+  .rehabics-hero__image {
+    inset: 0;
+    background-position: 61% center;
+    animation: rh-image-enter 1.2s ease-out both;
+  }
+
+  .rehabics-hero__overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(11, 13, 14, 0.9) 0%,
+        rgba(11, 13, 14, 0.74) 65%,
+        rgba(11, 13, 14, 0.48) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(11, 13, 14, 1) 0%,
+        rgba(11, 13, 14, 0.7) 28%,
+        rgba(11, 13, 14, 0.12) 100%
+      );
+  }
+
+  .rehabics-hero::before {
+    opacity: 0.17;
+    filter: blur(35px);
+  }
+
+  .rehabics-hero::after {
+    opacity: 0.12;
+    filter: blur(40px);
+  }
+
+  .rehabics-hero__content {
+    flex: 1 0 auto;
+    align-items: center;
+    padding: 46px 22px 30px;
+  }
+
+  .rehabics-hero__copy {
+    width: 100%;
+    padding: 0;
+  }
+
+  .rehabics-hero__eyebrow {
+    gap: 7px;
+    margin-bottom: 22px;
+    font-size: 9px;
+    letter-spacing: 1.1px;
+  }
+
+  .rehabics-hero__eyebrow-line {
+    width: 24px;
+    margin-right: 3px;
+  }
+
+  .rehabics-hero__title {
+    font-size: clamp(38px, 10.5vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -1.8px;
+  }
+
+  .rehabics-hero__description {
+    max-width: 390px;
+    margin-top: 17px;
     font-size: 13px;
     line-height: 1.7;
   }
 
-  .rehab-hero-actions {
-    gap: 9px;
-    margin-top: 17px;
+  .rehabics-hero__actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 22px;
   }
 
-  .rehab-hero-button {
-    min-height: 46px;
-    gap: 9px;
-    padding: 7px 10px;
+  .rehabics-hero__primary {
+    min-height: 49px;
+    padding: 0 17px;
+  }
+
+  .rehabics-hero__secondary {
     font-size: 12px;
   }
 
-  .rehab-hero-stats {
-    width: 100%;
+  .rehabics-hero__play {
+    width: 38px;
+    height: 38px;
+  }
+
+  .rehabics-hero__note {
     margin-top: 25px;
+    font-size: 8px;
+    letter-spacing: 0.9px;
   }
 
-  .rehab-hero-stat {
-    gap: 6px;
-    padding: 12px 7px 0 0;
+  .rehabics-hero__benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 12px 22px 18px;
+    background: rgba(11, 13, 14, 0.9);
   }
 
-  .rehab-hero-stat + .rehab-hero-stat {
+  .rehabics-hero__benefit {
+    min-height: 60px;
+    gap: 7px;
+    padding: 8px 5px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .rehabics-hero__benefit:nth-child(odd) {
+    padding-left: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .rehabics-hero__benefit:nth-child(even) {
+    padding-right: 0;
     padding-left: 10px;
   }
 
-  .rehab-hero-stat strong {
-    font-size: clamp(22px, 5.8vw, 29px);
+  .rehabics-hero__benefit:nth-child(n + 3) {
+    border-bottom: none;
   }
 
-  .rehab-hero-stat span {
-    font-size: 12px;
-    line-height: 1.5;
+  .rehabics-hero__benefit-icon {
+    flex-basis: 27px;
+    width: 27px;
+    height: 30px;
   }
 
-  .rehab-hero-image-note,
-  .rehab-hero-story {
-    position: relative;
-    inset: auto;
-    align-self: flex-start;
-    margin: 0;
+  .rehabics-hero__benefit-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
-  .rehab-hero-image-note {
-    margin-top: -2px;
+  .rehabics-hero__benefit-copy h2 {
+    font-size: 9px;
   }
 
-  .rehab-hero-services {
-    position: relative;
-    inset: auto;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 0;
+  .rehabics-hero__benefit-copy p {
+    font-size: 7px;
+    letter-spacing: 0.5px;
   }
 
-  .rehab-hero-service-card {
-    min-height: 155px;
-    padding: 12px;
-    border-radius: 13px;
+  .rehabics-hero__scroll,
+  .rehabics-hero__side-label {
+    display: none;
+  }
+}
+
+/* =========================================
+   SHORT SCREENS
+   ========================================= */
+
+@media (min-width: 601px) and (max-height: 700px) {
+  .rehabics-hero__content {
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
-  .rehab-hero-service-top {
-    margin-bottom: 9px;
+  .rehabics-hero__title {
+    font-size: clamp(43px, 5.2vw, 65px);
   }
 
-  .rehab-hero-service-icon {
-    width: 38px;
-    height: 38px;
-    flex-basis: 38px;
+  .rehabics-hero__description {
+    margin-top: 15px;
+    line-height: 1.55;
   }
 
-  .rehab-hero-service-card h2 {
-    font-size: 13px;
+  .rehabics-hero__actions {
+    margin-top: 18px;
   }
 
-  .rehab-hero-service-card p {
-    font-size: 12px;
+  .rehabics-hero__note {
+    margin-top: 18px;
   }
 
-  .rehab-hero-service-link {
+  .rehabics-hero__benefits {
     padding-top: 10px;
-  }
-
-  .rehab-hero-assurance {
-    position: relative;
-    inset: auto;
-    align-self: flex-start;
-    margin-top: -4px;
-    font-size: 12px;
+    padding-bottom: 12px;
   }
 }
 
-/* Small phones */
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
 
-@media (max-width: 370px) {
-  .rehab-hero-inner {
-    width: calc(100% - 24px);
+@media (prefers-reduced-motion: reduce) {
+  .rehabics-hero *,
+  .rehabics-hero *::before,
+  .rehabics-hero *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 
-  .rehab-hero-copy h1 {
-    font-size: 32px;
-  }
-
-  .rehab-hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .rehab-hero-button {
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .rehab-hero-service-card {
-    padding: 10px;
-  }
-
-  .rehab-hero-service-card h2 {
-    font-size: 12px;
+  .rehabics-hero__image {
+    transform: none;
   }
 }
 
-/* Keyboard and motion accessibility */
+/* =========================================
+   REHABICS V5 HERO POLISH
+   ========================================= */
 
-.rehab-hero a:focus-visible {
-  outline: 2px solid var(--hero-green);
-  outline-offset: 4px;
+.rehabics-hero__copy {
+  position: relative;
+  z-index: 2;
+}
+
+.rehabics-hero__title {
+  text-wrap: balance;
+  text-shadow: 0 3px 35px rgba(0, 0, 0, 0.16);
+}
+
+.rehabics-hero__description {
+  text-wrap: pretty;
+}
+
+.rehabics-hero__primary,
+.rehabics-hero__secondary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rehabics-hero__primary:focus-visible,
+.rehabics-hero__secondary:focus-visible {
+  outline: 2px solid var(--rh-white);
+  outline-offset: 5px;
+}
+
+.rehabics-hero__benefit {
+  transition: background-color 0.3s ease;
+}
+
+.rehabics-hero__benefit-copy h2 {
+  font-size: 12px;
+}
+
+.rehabics-hero__benefit-copy p {
+  font-size: 10px;
+}
+
+.rehabics-hero__eyebrow {
+  line-height: 1.7;
+}
+
+@media (hover: hover) {
+  .rehabics-hero__benefit:hover {
+    background-color: rgba(255, 255, 255, 0.035);
+  }
+}
+
+@media (max-width: 1100px) {
+  .rehabics-hero__benefit-copy h2 {
+    font-size: 12px;
+  }
+
+  .rehabics-hero__benefit-copy p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .rehabics-hero__content {
+    padding-top: 34px;
+    padding-bottom: 26px;
+  }
+
+  .rehabics-hero__title {
+    font-size: clamp(38px, 10.5vw, 54px);
+    line-height: 1.06;
+    letter-spacing: -1.6px;
+  }
+
+  .rehabics-hero__benefit-copy h2 {
+    font-size: 12px;
+  }
+
+  .rehabics-hero__benefit-copy p {
+    font-size: 10px;
+    letter-spacing: 0.4px;
+  }
+
+  .rehabics-hero__primary {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .rehabics-hero__content {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .rehabics-hero__benefits {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .rehabics-hero__benefit {
+    gap: 5px;
+  }
+
+  .rehabics-hero__benefit-copy h2 {
+    font-size: 12px;
+  }
+
+  .rehabics-hero__benefit-copy p {
+    font-size: 9px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rehab-hero *,
-  .rehab-hero *::before,
-  .rehab-hero *::after {
-    animation: none !important;
+  .rehabics-hero__benefit,
+  .rehabics-hero__primary,
+  .rehabics-hero__secondary,
+  .rehabics-hero__benefit-icon {
     transition: none !important;
   }
 }

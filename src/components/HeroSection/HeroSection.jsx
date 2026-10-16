@@ -4,221 +4,204 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  Activity,
-  HeartPulse,
-  PersonStanding,
-  Dumbbell,
-  Footprints,
-  Play,
   ShieldCheck,
+  UsersRound,
+  Activity,
+  Heart,
 } from "lucide-react";
-import heroImg from "../../assets/home/hero.png";
 import "./HeroSection.css";
 
-const stats = [
-  { value: "500+", label: "Patients Recovered" },
-  { value: "10+", label: "Years of Experience" },
-  { value: "95%", label: "Patient Satisfaction" },
-];
-
-const services = [
+const benefits = [
   {
-    number: "01",
-    title: "Sports",
-    secondLine: "Physiotherapy",
-    description: "Return to the activities you love.",
-    icon: Footprints,
-    to: "/services/sports-physiotherapy",
+    icon: UsersRound,
+    title: "Personalised Care",
+    subtitle: "PATIENT FIRST",
   },
   {
-    number: "02",
-    title: "Pain",
-    secondLine: "Management",
-    description: "Move with greater comfort.",
-    icon: PersonStanding,
-    to: "/services/pain-management",
+    icon: ShieldCheck,
+    title: "Evidence Based",
+    subtitle: "PROVEN APPROACH",
   },
   {
-    number: "03",
-    title: "Injury",
-    secondLine: "Rehabilitation",
-    description: "Build strength through recovery.",
-    icon: HeartPulse,
-    to: "/services/injury-rehabilitation",
+    icon: Activity,
+    title: "Better Movement",
+    subtitle: "STRONGER LIVING",
   },
   {
-    number: "04",
-    title: "Strength",
-    secondLine: "and Mobility",
-    description: "Improve movement and control.",
-    icon: Dumbbell,
-    to: "/services/strength-mobility",
+    icon: Heart,
+    title: "Lasting Results",
+    subtitle: "CARE THAT MATTERS",
   },
 ];
 
-const easing = [0.22, 1, 0.36, 1];
+const heroCopy = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.12,
+    },
+  },
+};
+
+const createFadeUp = (reduceMotion) => ({
+  hidden: {
+    opacity: 0,
+    y: reduceMotion ? 0 : 22,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: reduceMotion ? 0 : 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+});
 
 export default function HeroSection() {
   const reduceMotion = useReducedMotion();
-
-  const reveal = (delay = 0) => ({
-    initial: reduceMotion ? false : { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: {
-      duration: reduceMotion ? 0 : 0.65,
-      delay: reduceMotion ? 0 : delay,
-      ease: easing,
-    },
-  });
+  const fadeUp = createFadeUp(reduceMotion);
 
   return (
-    <section className="rehab-hero">
-      <div className="rehab-hero-background" aria-hidden="true" />
-      <div className="rehab-hero-grid" aria-hidden="true" />
+    <section
+      className="rehabics-hero"
+      aria-labelledby="rehabics-hero-title"
+    >
+      <div
+        className="rehabics-hero__image"
+        aria-hidden="true"
+      />
 
-      <div className="rehab-hero-image" aria-hidden="true">
-        <img src={heroImg} alt="" fetchPriority="high" />
-        <div className="rehab-hero-image-overlay" />
-      </div>
+      <div
+        className="rehabics-hero__overlay"
+        aria-hidden="true"
+      />
 
-      <div className="rehab-hero-watermark" aria-hidden="true">
-        REHABICS
-      </div>
+      <div
+        className="rehabics-hero__grain"
+        aria-hidden="true"
+      />
 
-      <div className="rehab-hero-inner">
-        <div className="rehab-hero-main">
+      <div className="rehabics-hero__content">
+        <motion.div
+          className="rehabics-hero__copy"
+          variants={heroCopy}
+          initial="hidden"
+          animate="visible"
+        >
           <motion.div
-            className="rehab-hero-copy"
-            {...reveal(0.05)}
+            className="rehabics-hero__eyebrow"
+            variants={fadeUp}
           >
-            <div className="rehab-hero-eyebrow">
-              <span className="rehab-hero-eyebrow-line" />
-              <span className="rehab-hero-eyebrow-text">
-                MOVE BETTER. LIVE STRONGER.
-              </span>
-            </div>
+            <span
+              className="rehabics-hero__eyebrow-line"
+              aria-hidden="true"
+            />
 
-            <h1>
-              Expert Physiotherapy
-              <br className="rehab-hero-desktop-break" />
-              <span className="rehab-hero-heading-second">
-                for an <span>Active Life.</span>
-              </span>
-            </h1>
+            <span>PHYSIOTHERAPY</span>
 
-            <p className="rehab-hero-description">
-              Personalised physiotherapy to help you recover
-              from pain, restore movement and return to an
-              active life with confidence.
-            </p>
+            <span
+              className="rehabics-hero__dot"
+              aria-hidden="true"
+            >
+              /
+            </span>
 
-            <div className="rehab-hero-actions">
-              <Link
-                to="/appointment"
-                className="rehab-hero-button rehab-hero-button-primary"
+            <span>REHABILITATION</span>
+          </motion.div>
+
+          <motion.h1
+            id="rehabics-hero-title"
+            className="rehabics-hero__title"
+            variants={fadeUp}
+          >
+            MOVE BETTER.
+            <span>LIVE STRONGER.</span>
+          </motion.h1>
+
+          <motion.p
+            className="rehabics-hero__description"
+            variants={fadeUp}
+          >
+            Personalised physiotherapy and rehabilitation
+            to reduce pain, restore movement and help you
+            return to the activities you love.
+          </motion.p>
+
+          <motion.div
+            className="rehabics-hero__actions"
+            variants={fadeUp}
+          >
+            <Link
+              to="/contact"
+              className="rehabics-hero__primary"
+            style={{color:"black"}}>
+              <span>Book an Appointment</span>
+              <ArrowRight
+                size={19}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </Link>
+
+            <Link
+              to="/approach"
+              className="rehabics-hero__secondary"
+            >
+              <span
+                className="rehabics-hero__play"
+                aria-hidden="true"
               >
-                <span>Book a Session</span>
-                <ArrowUpRight size={19} />
-              </Link>
+                <ArrowUpRight
+                  size={19}
+                  strokeWidth={1.7}
+                />
+              </span>
 
-              <Link
-                to="/services"
-                className="rehab-hero-button rehab-hero-button-secondary"
-              >
-                <span>Explore Services</span>
-                <ArrowRight size={18} />
-              </Link>
-            </div>
+              <span>Discover Our Approach</span>
+            </Link>
           </motion.div>
 
           <motion.div
-            className="rehab-hero-stats"
-            {...reveal(0.18)}
+            className="rehabics-hero__note"
+            variants={fadeUp}
           >
-            {stats.map((stat) => (
-              <div className="rehab-hero-stat" key={stat.label}>
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </div>
-            ))}
+            <span
+              className="rehabics-hero__note-line"
+              aria-hidden="true"
+            />
+
+            <span>
+              YOUR RECOVERY. YOUR PACE. YOUR POTENTIAL.
+            </span>
           </motion.div>
-        </div>
-
-        <motion.div
-          className="rehab-hero-image-note"
-          {...reveal(0.3)}
-        >
-          <span className="rehab-hero-image-note-icon">
-            <Activity size={20} />
-          </span>
-          <span>
-            <small>YOUR RECOVERY</small>
-            <strong>Starts with movement</strong>
-          </span>
         </motion.div>
 
-        <motion.div
-          className="rehab-hero-story"
-          {...reveal(0.35)}
+        <motion.aside
+          className="rehabics-hero__side-label"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.9,
+            delay: reduceMotion ? 0 : 0.65,
+          }}
+          aria-label="Our philosophy"
         >
-          <Link to="/about" className="rehab-hero-story-link">
-            <span className="rehab-hero-story-play">
-              <Play size={16} fill="currentColor" />
-            </span>
-            <span className="rehab-hero-story-copy">
-              <small>GET TO KNOW US</small>
-              <strong>Our Story</strong>
-            </span>
-            <ArrowUpRight className="rehab-hero-story-arrow" size={18} />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          className="rehab-hero-services"
-          {...reveal(0.42)}
-        >
-          {services.map((service) => {
-            const Icon = service.icon;
-
-            return (
-              <Link
-                to={service.to}
-                className="rehab-hero-service-card"
-                key={service.number}
-              >
-                <div className="rehab-hero-service-top">
-                  <span className="rehab-hero-service-icon">
-                    <Icon size={24} strokeWidth={1.7} />
-                  </span>
-                  <span className="rehab-hero-service-number">
-                    {service.number}
-                  </span>
-                </div>
-
-                <h2>
-                  {service.title}
-                  <br />
-                  {service.secondLine}
-                </h2>
-
-                <p>{service.description}</p>
-
-                <span className="rehab-hero-service-link">
-                  <span>Explore service</span>
-                  <ArrowRight size={16} />
-                </span>
-              </Link>
-            );
-          })}
-        </motion.div>
-
-        <div className="rehab-hero-assurance">
-          <ShieldCheck size={16} />
-          <span>CARE THAT MOVES WITH YOU</span>
-        </div>
+          <span>MOVE WITH CONFIDENCE</span>
+          <span>RECOVER WITH PURPOSE</span>
+          <span>LIVE WITHOUT LIMITS</span>
+        </motion.aside>
       </div>
 
-      <div className="rehab-hero-bottom-glow" aria-hidden="true" />
+
+      <div
+        className="rehabics-hero__scroll"
+        aria-hidden="true"
+      >
+        <span>SCROLL TO EXPLORE</span>
+        <span className="rehabics-hero__scroll-line" />
+      </div>
     </section>
   );
 }

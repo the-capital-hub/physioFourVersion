@@ -1,25 +1,23 @@
 
+import { useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
 import {
+  Activity,
+  ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  Activity,
-  HeartPulse,
-  Target,
-  ShieldCheck,
-  UsersRound,
+  Check,
   CheckCircle2,
-  Sparkles,
-  MoveUpRight,
-  HandHeart,
-  Footprints,
-  Dumbbell,
-  Compass,
-  MessageCircle,
+  HeartPulse,
+  ShieldCheck,
+  Target,
+  Eye,
+  Users,
   ClipboardCheck,
+  MoveUpRight,
+  MessageCircle,
 } from "lucide-react";
-
 import "./About.css";
 
 const values = [
@@ -28,140 +26,85 @@ const values = [
     icon: HeartPulse,
     title: "People first",
     description:
-      "We listen to your concerns, understand your goals and respect your individual experience.",
+      "Every journey begins with listening to your concerns, understanding your goals and respecting your individual needs.",
   },
   {
     number: "02",
-    icon: Target,
-    title: "Purposeful care",
-    description:
-      "We focus on meaningful goals and a plan shaped around your individual needs.",
-  },
-  {
-    number: "03",
-    icon: Activity,
-    title: "Movement matters",
-    description:
-      "We help you work towards better movement and the activities that matter to your life.",
-  },
-  {
-    number: "04",
     icon: ShieldCheck,
-    title: "Trust and clarity",
+    title: "Evidence informed",
     description:
-      "Clear explanations and thoughtful guidance help you understand your next steps.",
-  },
-];
-import image1 from '../../assets/about/image1.jpeg'
-import image2 from '../../assets/about/image2.jpeg'
-import image3 from '../../assets/about/image3.jpeg'
-import image4 from '../../assets/about/image4.jpeg'
-
-
-const principles = [
-  {
-    number: "01",
-    icon: MessageCircle,
-    title: "Listen first",
-    description:
-      "We start with your experience, concerns and the things you want to do more comfortably.",
-  },
-  {
-    number: "02",
-    icon: Compass,
-    title: "Understand your needs",
-    description:
-      "We consider your movement goals and discuss a suitable direction for your care.",
+      "We value thoughtful assessment, clinical reasoning and guidance shaped around your situation.",
   },
   {
     number: "03",
-    icon: ClipboardCheck,
-    title: "Create a personal plan",
+    icon: Users,
+    title: "Care together",
     description:
-      "Your plan should reflect your needs, goals and the practical realities of your daily life.",
+      "Clear communication and consistent support help you stay involved throughout your recovery journey.",
   },
   {
     number: "04",
-    icon: HandHeart,
-    title: "Support your progress",
-    description:
-      "We help you understand each step and work towards your goals with appropriate guidance.",
-  },
-];
-
-const supportAreas = [
-  {
-    number: "01",
-    icon: Footprints,
-    title: "Everyday movement",
-    description:
-      "Work towards greater comfort and confidence in the movements your daily routine requires.",
-    image:
-      "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=900&q=85",
-    alt: "Person exercising and building movement confidence",
-  },
-  {
-    number: "02",
-    icon: Dumbbell,
-    title: "Strength and fitness",
-    description:
-      "Build a thoughtful approach to strength, mobility and your personal fitness goals.",
-    image:
-      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=85",
-    alt: "Strength training in a fitness environment",
-  },
-  {
-    number: "03",
     icon: Activity,
-    title: "Recovery and mobility",
+    title: "Meaningful progress",
     description:
-      "Explore guided movement and rehabilitation support suited to your individual needs.",
-    image:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=85",
-    alt: "Guided exercise in a rehabilitation setting",
+      "We focus on practical improvements that support movement, confidence and everyday activities.",
   },
 ];
 
-const journey = [
+const benefits = [
+  "Personalised recovery guidance",
+  "Clear exercise instructions",
+  "Goals shaped around your routine",
+  "A progress focused approach",
+];
+
+const journeySteps = [
   {
     number: "01",
-    title: "Start a conversation",
+    title: "Understand",
     description:
-      "Tell us about your concerns, routine and the goals you want to work towards.",
+      "We start by learning about your concerns, daily activities and personal goals.",
+    icon: MessageCircle,
   },
   {
     number: "02",
-    title: "Understand your needs",
+    title: "Assess",
     description:
-      "Discuss your movement needs and the options that may be appropriate for you.",
+      "We work to understand your movement needs and the challenges you experience.",
+    icon: ClipboardCheck,
   },
   {
     number: "03",
-    title: "Build your plan",
+    title: "Plan",
     description:
-      "Explore a personalised approach based on your needs and agreed goals.",
+      "We explore suitable next steps and build a plan around your individual needs.",
+    icon: Target,
   },
   {
     number: "04",
-    title: "Work towards progress",
+    title: "Progress",
     description:
-      "Follow your plan with guidance and review your progress along the way.",
+      "We review your experience and adapt your approach as your needs evolve.",
+    icon: Activity,
   },
 ];
 
-const reveal = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+const reveal = (reduceMotion, distance = 22) => ({
+  initial: reduceMotion
+    ? { opacity: 1, y: 0 }
+    : { opacity: 0, y: distance },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: {
+    duration: reduceMotion ? 0 : 0.55,
+    ease: "easeOut",
   },
-};
+});
 
-function AboutEyebrow({ children }) {
+function Eyebrow({ children, light = false }) {
   return (
-    <span className="about-eyebrow">
-      <span className="rehab-hero-eyebrow-line" />
+    <span className={`rh-about-eyebrow${light ? " is-light" : ""}`}>
+      <span className="rh-about-eyebrow-line" />
       {children}
     </span>
   );
@@ -170,601 +113,439 @@ function AboutEyebrow({ children }) {
 function About() {
   const reduceMotion = useReducedMotion();
 
-  const revealProps = (delay = 0) =>
-    reduceMotion
-      ? {}
-      : {
-          variants: reveal,
-          initial: "hidden",
-          whileInView: "visible",
-          viewport: { once: true, amount: 0.14 },
-          transition: { duration: 0.6, delay },
-        };
-
   return (
-    <main className="rehab-about">
-      {/* 01. Hero */}
-      <section className="about-hero">
-        <div className="about-hero-background" />
-        <div className="about-hero-overlay" />
-        <div className="about-hero-grid" />
-
-        <div className="about-container about-hero-layout">
-          <motion.div className="about-hero-copy" {...revealProps()}>
-            <AboutEyebrow>GET TO KNOW REHABICS</AboutEyebrow>
+    <main className="rh-about">
+      {/* HERO */}
+      <section className="rh-about-hero">
+        <div className="rh-about-hero-grid">
+          <motion.div
+            className="rh-about-hero-copy"
+            initial={
+              reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24 }
+            }
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.65 }}
+          >
+            <Eyebrow>GET TO KNOW US</Eyebrow>
 
             <h1>
-              Better care.
+              Better
               <br />
-              <span>Stronger movement.</span>
+              movement.
               <br />
-              A life in motion.
+              <span>Better living.</span>
             </h1>
 
-            <p>
-              We believe better movement can open the door to a more confident
-              life. Our approach begins with understanding you, your needs and
-              the goals you want to achieve.
+            <p className="rh-about-hero-description">
+              Recovery is about more than getting back on your feet. It is
+              about rebuilding confidence, understanding your body and
+              returning to the moments that make life meaningful.
             </p>
 
-            <div className="about-actions">
-              <Link to="/services" className="about-button-primary">
-                Explore our services <ArrowUpRight size={19} />
+            <div className="rh-about-hero-actions">
+              <Link to="/contact" className="rh-about-button">
+                <span>Start your journey</span>
+                <ArrowUpRight size={18} />
               </Link>
-              <Link to="/contact" className="about-button-secondary">
-                Talk to our team <ArrowRight size={18} />
+
+              <Link to="/services" className="rh-about-text-link">
+                Explore our services
+                <ArrowRight size={17} />
               </Link>
             </div>
 
-            {/* <div className="about-hero-footnote">
-              <span className="about-live-dot" />
-              YOUR MOVEMENT. YOUR GOALS. YOUR JOURNEY.
-            </div> */}
+            <div className="rh-about-hero-footnote">
+              <span className="rh-about-status-dot" />
+              <span>INDIVIDUAL CARE. PURPOSEFUL MOVEMENT.</span>
+            </div>
           </motion.div>
 
           <motion.div
-            className="about-hero-visual"
-            {...revealProps(0.12)}
-          >
-            <div className="about-hero-photo">
-              <img
-                src={image1}
-                alt="Guided exercise in a fitness and rehabilitation setting"
-                fetchPriority="high"
-              />
-              <div className="about-photo-overlay" />
-
-              <div className="about-photo-caption">
-                <span className="about-photo-icon">
-                  <Activity size={21} />
-                </span>
-                <span>
-                  <strong>Movement with meaning</strong>
-                  <small>Focused on what matters to you</small>
-                </span>
-              </div>
-
-              <span className="about-photo-index">REHABICS / 01</span>
-            </div>
-
-            <div className="about-hero-floating-card">
-              <Sparkles size={20} />
-              <span>
-                <strong>Care built around you</strong>
-                <small>Every journey is personal</small>
-              </span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* <div className="about-hero-bottom">
-          <span>ABOUT REHABICS</span>
-          <span className="about-bottom-line" />
-          <span>MOVE BETTER. LIVE STRONGER.</span>
-        </div> */}
-      </section>
-
-      {/* 02. Story */}
-      <section className="about-story about-section">
-        <div className="about-container about-story-grid">
-          <motion.div className="about-story-visual" {...revealProps()}>
-            <div className="about-story-image">
-              <img
-                src={image2}
-                alt="Person working towards strength and movement goals"
-                loading="lazy"
-              />
-            </div>
-
-            <div className="about-story-corner" />
-
-            <div className="about-story-card">
-              <span className="about-story-card-icon">
-                <HeartPulse size={22} />
-              </span>
-              <span>
-                <strong>Every journey is different</strong>
-                <small>Your care should be personal too.</small>
-              </span>
-            </div>
-
-            <span className="about-vertical-label">
-              THE REHABICS PHILOSOPHY
-            </span>
-          </motion.div>
-
-          <motion.div className="about-story-copy" {...revealProps(0.08)}>
-            <AboutEyebrow>OUR STORY</AboutEyebrow>
-
-            <h2>
-              Recovery is personal.
-              <br />
-              <span>Your care should be too.</span>
-            </h2>
-
-            <p className="about-lead">
-              At Rehabics, we see more than an injury or a movement challenge.
-              We see a person with goals, routines and a life they want to get
-              back to.
-            </p>
-
-            <p>
-              That is why we believe physiotherapy should begin with
-              understanding. Your experience, your daily activities and your
-              goals all matter when thinking about the right direction for your
-              care.
-            </p>
-
-            <p>
-              Our approach is centred on making the process more personal,
-              easier to understand and focused on meaningful progress. We want
-              you to feel informed about your options and supported as you
-              work towards your goals.
-            </p>
-
-            <p>
-              Every journey is different. We believe the care you receive
-              should recognise those differences rather than treat every
-              person the same way.
-            </p>
-
-            <div className="about-signoff">
-              <span className="about-signoff-icon">
-                <Activity size={23} />
-              </span>
-              <span>
-                <strong>Move better. Live stronger.</strong>
-                <small>The Rehabics approach</small>
-              </span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 03. The difference */}
-      <section className="about-difference about-section">
-        <div className="about-container about-difference-grid">
-          <motion.div className="about-difference-copy" {...revealProps()}>
-            <AboutEyebrow>THE REHABICS DIFFERENCE</AboutEyebrow>
-
-            <h2>
-              More than a plan.
-              <br />
-              <span>A partner in progress.</span>
-            </h2>
-
-            <p>
-              A good care experience should help you understand what you are
-              working towards and why it matters. We put your goals at the
-              centre of the conversation.
-            </p>
-
-            <ul className="about-check-list">
-              <li>
-                <CheckCircle2 size={19} />
-                <span>Care shaped around individual needs</span>
-              </li>
-              <li>
-                <CheckCircle2 size={19} />
-                <span>Clear conversations about your goals</span>
-              </li>
-              <li>
-                <CheckCircle2 size={19} />
-                <span>Guidance that helps you understand each step</span>
-              </li>
-              <li>
-                <CheckCircle2 size={19} />
-                <span>A focus on meaningful movement and daily life</span>
-              </li>
-            </ul>
-
-            <Link to="/services" className="about-text-link">
-              Discover our services <ArrowRight size={18} />
-            </Link>
-          </motion.div>
-
-          <motion.div
-            className="about-difference-visual"
-            {...revealProps(0.1)}
+            className="rh-about-hero-visual"
+            initial={
+              reduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.98 }
+            }
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.8,
+              delay: reduceMotion ? 0 : 0.1,
+            }}
           >
             <img
-              src={image3}
-              alt="A guided movement session"
+              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=85"
+              alt="Guided exercise and physical movement training"
+              fetchPriority="high"
+            />
+
+            <div className="rh-about-image-shade" />
+
+            <div className="rh-about-image-topline">
+              <span>REHABICS / ABOUT</span>
+              <span>01 — 04</span>
+            </div>
+
+            <div className="rh-about-image-caption">
+              <span className="rh-about-caption-icon">
+                <Activity size={20} />
+              </span>
+              <div>
+                <strong>Recovery with purpose</strong>
+                <span>Small steps. Meaningful progress.</span>
+              </div>
+            </div>
+
+            <div className="rh-about-image-side-label">
+              PEOPLE
+              <br />
+              PROCESS
+              <br />
+              PROGRESS
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="rh-about-hero-bottom">
+          <span>BUILT AROUND YOU</span>
+          <a href="#our-story" aria-label="Scroll to our story">
+            <ArrowDown size={18} />
+          </a>
+          <span>SCROLL TO EXPLORE</span>
+        </div>
+      </section>
+
+      {/* STORY */}
+      <section
+        id="our-story"
+        className="rh-about-section rh-about-story"
+      >
+        <div className="rh-about-container rh-about-story-grid">
+          <motion.div
+            className="rh-about-story-visual"
+            {...reveal(reduceMotion)}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1000&q=85"
+              alt="A guided physiotherapy and recovery session"
               loading="lazy"
             />
-            <div className="about-difference-shade" />
-            <div className="about-difference-label">
-              <span>OUR FOCUS</span>
-              <strong>Understand. Plan. Progress.</strong>
+
+            <div className="rh-about-story-index">
+              <span>OUR BELIEF</span>
+              <strong>Every person has a different starting point.</strong>
             </div>
-            <span className="about-difference-number">03</span>
+          </motion.div>
+
+          <motion.div
+            className="rh-about-story-content"
+            {...reveal(reduceMotion, 16)}
+          >
+            <Eyebrow>OUR STORY</Eyebrow>
+
+            <h2>
+              More than treatment.
+              <span>A broader perspective.</span>
+            </h2>
+
+            <p>
+              Movement challenges can affect how we work, rest, exercise
+              and enjoy everyday life. We believe physiotherapy should
+              feel understandable, supportive and connected to the things
+              that matter to you.
+            </p>
+
+            <p>
+              Rehabics is built around a thoughtful approach to movement
+              and recovery. We bring together practical education,
+              individual goals and structured guidance to help people
+              take a more active role in their wellbeing.
+            </p>
+
+            <Link to="/approach" className="rh-about-inline-link">
+              Discover our approach
+              <ArrowUpRight size={18} />
+            </Link>
+
+            <div className="rh-about-story-signature">
+              <span className="rh-about-signature-line" />
+              <span>CARE THAT STARTS WITH UNDERSTANDING</span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* 04. Mission and vision */}
-      <section className="about-purpose about-section">
-        <div className="about-container">
-          <motion.div className="about-section-heading" {...revealProps()}>
-            <AboutEyebrow>WHAT GUIDES US</AboutEyebrow>
+      {/* MISSION AND VISION */}
+      <section className="rh-about-purpose">
+        <div className="rh-about-container">
+          <motion.div
+            className="rh-about-section-heading"
+            {...reveal(reduceMotion)}
+          >
+            <Eyebrow>OUR PURPOSE</Eyebrow>
             <h2>
-              Care with direction.
-              <br />
-              <span>Progress with purpose.</span>
+              A clearer path
+              <span> towards better movement.</span>
             </h2>
             <p>
-              Our purpose is rooted in making movement care personal,
-              understandable and focused on each individual's goals.
+              Our purpose shapes how we listen, educate and support
+              people through their individual recovery journeys.
             </p>
           </motion.div>
 
-          <div className="about-purpose-grid">
+          <div className="rh-about-purpose-grid">
             <motion.article
-              className="about-purpose-card about-mission"
-              {...revealProps()}
+              className="rh-about-purpose-card"
+              {...reveal(reduceMotion)}
             >
-              <div className="about-card-top">
-                <span className="about-icon-box">
-                  <Target size={25} />
-                </span>
-                <span className="about-card-label">01 / OUR MISSION</span>
+              <div className="rh-about-purpose-card-top">
+                <span className="rh-about-card-index">01 / MISSION</span>
+                <Target size={23} strokeWidth={1.7} />
               </div>
 
-              <h3>Make movement a meaningful part of life.</h3>
+              <h3>Make recovery more accessible.</h3>
 
               <p>
-                To support people with thoughtful, individualised
-                physiotherapy care that helps them work towards better
-                movement and personal goals.
+                Make physiotherapy guidance more approachable through
+                useful education, individual plans and support that can
+                fit into everyday routines.
               </p>
 
-              <div className="about-purpose-decoration">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
+              <span className="rh-about-card-bottom">
+                GUIDANCE WITH PURPOSE
+              </span>
             </motion.article>
 
             <motion.article
-              className="about-purpose-card about-vision"
-              {...revealProps(0.1)}
+              className="rh-about-purpose-card rh-about-purpose-card-featured"
+              {...reveal(reduceMotion)}
             >
-              <div className="about-card-top">
-                <span className="about-icon-box">
-                  <MoveUpRight size={25} />
-                </span>
-                <span className="about-card-label">02 / OUR VISION</span>
+              <div className="rh-about-purpose-card-top">
+                <span className="rh-about-card-index">02 / VISION</span>
+                <Eye size={23} strokeWidth={1.7} />
               </div>
 
-              <h3>A more confident way to move forward.</h3>
+              <h3>A future with better movement.</h3>
 
               <p>
-                To make personalised movement care more approachable, easier
-                to understand and connected to the activities that matter in
-                everyday life.
+                Help more people understand their bodies, develop
+                healthier movement habits and feel more confident in
+                their everyday lives.
               </p>
 
-              <div className="about-purpose-bottom">
-                <span>YOUR GOALS LEAD THE WAY</span>
-                <ArrowUpRight size={19} />
-              </div>
+              <span className="rh-about-card-bottom">
+                PROGRESS THAT MATTERS
+              </span>
             </motion.article>
           </div>
         </div>
       </section>
 
-      {/* 05. Care philosophy */}
-      <section className="about-philosophy about-section">
-        <div className="about-container">
-          <motion.div className="about-philosophy-heading" {...revealProps()}>
-            <div>
-              <AboutEyebrow>OUR CARE PHILOSOPHY</AboutEyebrow>
+      {/* VALUES */}
+      <section className="rh-about-section rh-about-values">
+        <div className="rh-about-container">
+          <div className="rh-about-values-heading">
+            <motion.div {...reveal(reduceMotion)}>
+              <Eyebrow>WHAT GUIDES US</Eyebrow>
               <h2>
-                Personal care.
-                <br />
-                <span>A thoughtful process.</span>
+                Principles
+                <span> that matter.</span>
               </h2>
-            </div>
-            <p>
-              We believe the way forward starts with listening, understanding
-              and making the next step clear.
-            </p>
-          </motion.div>
+            </motion.div>
 
-          <div className="about-principles-grid">
-            {principles.map((item, index) => {
-              const Icon = item.icon;
+            <motion.p {...reveal(reduceMotion, 12)}>
+              Good care begins with listening, honest communication and
+              a shared understanding of what progress means to you.
+            </motion.p>
+          </div>
+
+          <div className="rh-about-values-grid">
+            {values.map((value, index) => {
+              const Icon = value.icon;
 
               return (
                 <motion.article
-                  className="about-principle-card"
-                  key={item.number}
-                  {...revealProps(index * 0.07)}
+                  className="rh-about-value-card"
+                  key={value.number}
+                  {...reveal(reduceMotion, 18)}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.45,
+                    delay: reduceMotion ? 0 : index * 0.07,
+                  }}
                 >
-                  <div className="about-principle-top">
-                    <span className="about-icon-box">
-                      <Icon size={23} />
-                    </span>
-                    <span>{item.number}</span>
+                  <div className="rh-about-value-top">
+                    <span>{value.number}</span>
+                    <Icon size={23} strokeWidth={1.6} />
                   </div>
 
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <h3>{value.title}</h3>
+                  <p>{value.description}</p>
 
-                  <div className="about-principle-bottom">
-                    <span />
+                  <div className="rh-about-value-rule" />
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* OUR PROCESS */}
+      <section className="rh-about-journey">
+        <div className="rh-about-container">
+          <div className="rh-about-journey-heading">
+            <motion.div {...reveal(reduceMotion)}>
+              <Eyebrow light>YOUR JOURNEY</Eyebrow>
+              <h2>
+                A clear process.
+                <span>An individual journey.</span>
+              </h2>
+            </motion.div>
+
+            <motion.p {...reveal(reduceMotion, 12)}>
+              Everyone has a different starting point. Our approach
+              creates space for understanding, practical planning and
+              ongoing progress.
+            </motion.p>
+          </div>
+
+          <div className="rh-about-journey-grid">
+            {journeySteps.map((step, index) => {
+              const Icon = step.icon;
+
+              return (
+                <motion.article
+                  className="rh-about-journey-card"
+                  key={step.number}
+                  {...reveal(reduceMotion, 16)}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.45,
+                    delay: reduceMotion ? 0 : index * 0.07,
+                  }}
+                >
+                  <div className="rh-about-journey-top">
+                    <span>{step.number}</span>
+                    <Icon size={23} strokeWidth={1.6} />
+                  </div>
+
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+
+                  <div className="rh-about-journey-bottom">
+                    <span>STEP {step.number}</span>
                     <ArrowUpRight size={17} />
                   </div>
                 </motion.article>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* 06. Values */}
-      <section className="about-values about-section">
-        <div className="about-container">
-          <motion.div className="about-values-heading" {...revealProps()}>
-            <div>
-              <AboutEyebrow>WHAT WE BELIEVE</AboutEyebrow>
-              <h2>
-                The values behind
-                <br />
-                <span>every step.</span>
-              </h2>
-            </div>
-
-            <p>
-              Thoughtful care is about more than a plan. It is also about how
-              you are heard, guided and supported along the way.
-            </p>
-          </motion.div>
-
-          <div className="about-values-grid">
-            {values.map((value, index) => {
-              const Icon = value.icon;
-
-              return (
-                <motion.article
-                  className="about-value-card"
-                  key={value.number}
-                  {...revealProps(index * 0.07)}
-                >
-                  <div className="about-value-top">
-                    <span className="about-icon-box">
-                      <Icon size={23} />
-                    </span>
-                    <span className="about-value-number">{value.number}</span>
-                  </div>
-
-                  <h3>{value.title}</h3>
-                  <p>{value.description}</p>
-
-                  <div className="about-value-bottom">
-                    <span />
-                    <CheckCircle2 size={17} />
-                  </div>
-                </motion.article>
-              );
-            })}
+          <div className="rh-about-journey-footer">
+            <span className="rh-about-status-dot" />
+            <span>INDIVIDUAL NEEDS. THOUGHTFUL GUIDANCE. MEANINGFUL GOALS.</span>
           </div>
         </div>
       </section>
 
-      {/* 07. Who we support */}
-      <section className="about-support about-section">
-        <div className="about-container">
-          <motion.div className="about-support-heading" {...revealProps()}>
-            <div>
-              <AboutEyebrow>WHO WE SUPPORT</AboutEyebrow>
-              <h2>
-                Your goals.
-                <br />
-                <span>Your kind of progress.</span>
-              </h2>
-            </div>
-            <p>
-              Different people have different movement goals. Our approach
-              starts by understanding what matters to you.
-            </p>
-          </motion.div>
-
-          <div className="about-support-grid">
-            {supportAreas.map((item, index) => {
-              const Icon = item.icon;
-
-              return (
-                <motion.article
-                  className="about-support-card"
-                  key={item.number}
-                  {...revealProps(index * 0.08)}
-                >
-                  <div className="about-support-image">
-                    <img src={item.image} alt={item.alt} loading="lazy" />
-                    <span className="about-support-image-shade" />
-                    <span className="about-support-number">{item.number}</span>
-                    <span className="about-support-icon">
-                      <Icon size={22} />
-                    </span>
-                  </div>
-
-                  <div className="about-support-content">
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                    <Link
-                      to="/services"
-                      className="about-support-link"
-                      aria-label={`Explore services for ${item.title}`}
-                    >
-                      Explore services <ArrowUpRight size={17} />
-                    </Link>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 08. Journey */}
-      <section className="about-journey about-section">
-        <div className="about-journey-background" />
-        <div className="about-journey-overlay" />
-
-        <div className="about-container about-journey-inner">
-          <motion.div className="about-journey-heading" {...revealProps()}>
-            <AboutEyebrow>YOUR JOURNEY WITH US</AboutEyebrow>
+      {/* PRACTICAL APPROACH */}
+      <section className="rh-about-section rh-about-approach">
+        <div className="rh-about-container rh-about-approach-grid">
+          <motion.div
+            className="rh-about-approach-content"
+            {...reveal(reduceMotion)}
+          >
+            <Eyebrow>YOUR GOALS COME FIRST</Eyebrow>
 
             <h2>
-              A clearer path
-              <br />
-              <span>towards progress.</span>
+              Recovery that
+              <span> considers the whole picture.</span>
             </h2>
 
             <p>
-              Knowing what comes next can make the process easier to navigate.
-              Here is how we approach the conversation and your care journey.
+              Your routine, your movement needs and your goals all matter.
+              We believe guidance should be clear, practical and shaped
+              around the individual rather than a one size fits all plan.
             </p>
+
+            <div className="rh-about-benefits">
+              {benefits.map((benefit) => (
+                <div className="rh-about-benefit" key={benefit}>
+                  <span className="rh-about-benefit-check">
+                    <Check size={14} strokeWidth={2.4} />
+                  </span>
+                  <span>{benefit}</span>
+                </div>
+              ))}
+            </div>
+
+            <Link to="/services" className="rh-about-button">
+              <span>Explore our services</span>
+              <ArrowUpRight size={18} />
+            </Link>
           </motion.div>
 
-          <div className="about-journey-grid">
-            {journey.map((step, index) => (
-              <motion.article
-                className="about-journey-card"
-                key={step.number}
-                {...revealProps(index * 0.08)}
-              >
-                <div className="about-journey-top">
-                  <span>{step.number}</span>
-                  <span className="about-journey-line" />
-                  <CheckCircle2 size={18} />
-                </div>
-
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 09. Commitment */}
-      <section className="about-commitment about-section">
-        <div className="about-container about-commitment-grid">
-          <motion.div className="about-commitment-visual" {...revealProps()}>
+          <motion.div
+            className="rh-about-approach-visual"
+            {...reveal(reduceMotion, 18)}
+          >
             <img
-              src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1100&q=85"
-              alt="Training environment focused on movement and strength"
+              src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1100&q=85"
+              alt="Stretching and mindful movement practice"
               loading="lazy"
             />
-            <div className="about-commitment-image-overlay" />
-            <div className="about-commitment-image-caption">
-              <span>OUR COMMITMENT</span>
-              <strong>Thoughtful care at every step.</strong>
-            </div>
-          </motion.div>
 
-          <motion.div className="about-commitment-copy" {...revealProps(0.1)}>
-            <AboutEyebrow>OUR COMMITMENT TO YOU</AboutEyebrow>
-
-            <h2>
-              You deserve to feel
-              <br />
-              <span>heard and supported.</span>
-            </h2>
-
-            <p>
-              We want every conversation to help you better understand your
-              needs, your options and the next steps in your care.
-            </p>
-
-            <div className="about-commitment-points">
-              <div>
-                <CheckCircle2 size={20} />
-                <span>
-                  <strong>Listen with care</strong>
-                  <small>Your questions and concerns matter.</small>
-                </span>
+            <div className="rh-about-approach-note">
+              <div className="rh-about-approach-note-icon">
+                <ClipboardCheck size={22} />
               </div>
-
               <div>
-                <CheckCircle2 size={20} />
-                <span>
-                  <strong>Explain the process</strong>
-                  <small>Understand the purpose behind each step.</small>
-                </span>
-              </div>
-
-              <div>
-                <CheckCircle2 size={20} />
-                <span>
-                  <strong>Respect your goals</strong>
-                  <small>Your needs help guide the conversation.</small>
-                </span>
+                <strong>Built around your goals</strong>
+                <span>Thoughtful guidance, one step at a time.</span>
               </div>
             </div>
+
+            <span className="rh-about-approach-image-label">
+              MOVEMENT / CONFIDENCE / PROGRESS
+            </span>
           </motion.div>
         </div>
       </section>
 
-      {/* 10. Final CTA */}
-      {/* <section className="about-cta about-section">
-        <div className="about-container">
-          <motion.div className="about-cta-panel" {...revealProps()}>
-            <div className="about-cta-glow" />
+      {/* FINAL CTA */}
+      <section className="rh-about-cta">
+        <div className="rh-about-cta-image" />
 
-            <div className="about-cta-copy">
-              <AboutEyebrow>YOUR NEXT STEP STARTS HERE</AboutEyebrow>
+        <div className="rh-about-container rh-about-cta-inner">
+          <motion.div {...reveal(reduceMotion)}>
+            <Eyebrow light>YOUR NEXT STEP</Eyebrow>
 
-              <h2>
-                Let us work towards
-                <br />
-                <span>better movement.</span>
-              </h2>
+            <h2>
+              Start with a conversation.
+              <span>Move forward with purpose.</span>
+            </h2>
 
-              <p>
-                Tell us what you want to achieve. Start a conversation about
-                the care and guidance that may be right for you.
-              </p>
-            </div>
+            <p>
+              Have questions about physiotherapy or the next step in
+              your journey? Get in touch with our team.
+            </p>
 
-            <div className="about-cta-actions">
-              <Link to="/appointment" className="about-button-primary">
-                Book an appointment <ArrowUpRight size={19} />
+            <div className="rh-about-cta-actions">
+              <Link to="/contact" className="rh-about-button">
+                <span>Talk to our team</span>
+                <ArrowUpRight size={18} />
               </Link>
 
-              <Link to="/contact" className="about-cta-contact">
-                Have a question? <span>Contact us</span>
+              <Link to="/appointment" className="rh-about-cta-secondary">
+                Book an appointment
+                <ArrowRight size={17} />
               </Link>
             </div>
-
-            <span className="about-cta-watermark">REHABICS</span>
           </motion.div>
+
+          <div className="rh-about-cta-mark">
+            <Activity size={39} strokeWidth={1.25} />
+            <span>REHABICS</span>
+            <small>MOVEMENT. RECOVERY. PERFORMANCE.</small>
+          </div>
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }
