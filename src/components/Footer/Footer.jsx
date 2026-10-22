@@ -1,45 +1,36 @@
+
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import {
-  Activity,
+  FaInstagram,
+  FaLinkedinIn,
+  FaFacebookF,
+  FaYoutube,
+} from "react-icons/fa";
+import {
   ArrowUpRight,
+  ArrowRight,
+  ArrowUp,
   MapPin,
   Phone,
   Mail,
-  ArrowUp,
 } from "lucide-react";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaLinkedinIn,
-  FaYoutube,
-} from "react-icons/fa";
+
 import "./Footer.css";
 
-const services = [
-  {
-    label: "Sports Physiotherapy",
-    to: "/services/sports-physiotherapy",
-  },
-  {
-    label: "Pain Management",
-    to: "/services/pain-management",
-  },
-  {
-    label: "Injury Rehabilitation",
-    to: "/services/injury-rehabilitation",
-  },
-  {
-    label: "Strength and Mobility",
-    to: "/services/strength-mobility",
-  },
+const quickLinks = [
+  { label: "Home", path: "/" },
+  { label: "About Us", path: "/about" },
+  { label: "Conditions", path: "/conditions" },
+  { label: "Our Approach", path: "/approach" },
+  { label: "Contact Us", path: "/contact" },
 ];
 
-const exploreLinks = [
-  { label: "Home", to: "/" },
-  { label: "Our Story", to: "/about" },
-  { label: "For Patients", to: "/patients" },
-  { label: "All Services", to: "/services" },
-  { label: "Contact Us", to: "/contact" },
+const services = [
+  { label: "Physiotherapy", path: "/services" },
+  { label: "Sports Rehabilitation", path: "/services" },
+  { label: "Pain Management", path: "/conditions" },
+  { label: "Strength and Mobility", path: "/services" },
 ];
 
 const socialLinks = [
@@ -49,14 +40,14 @@ const socialLinks = [
     Icon: FaInstagram,
   },
   {
-    label: "Facebook",
-    href: "https://www.facebook.com/",
-    Icon: FaFacebookF,
-  },
-  {
     label: "LinkedIn",
     href: "https://www.linkedin.com/",
     Icon: FaLinkedinIn,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/",
+    Icon: FaFacebookF,
   },
   {
     label: "YouTube",
@@ -65,105 +56,107 @@ const socialLinks = [
   },
 ];
 
-export default function Footer() {
+const Footer = () => {
+  const reduceMotion = useReducedMotion();
   const currentYear = new Date().getFullYear();
+
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: reduceMotion ? 0 : 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.55 },
+    },
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: reduceMotion ? "auto" : "smooth",
     });
   };
 
   return (
-    <footer className="rehab-footer">
-      <div className="rehab-footer-top-line" />
+    <footer className="rehabics-footer">
 
-      <div className="container rehab-footer-container">
-        {/* Appointment CTA */}
-
-        <section className="rehab-footer-cta">
-          <div className="rehab-footer-cta-glow" />
-
-          <div className="rehab-footer-cta-copy">
-            <span className="rehab-footer-eyebrow">
+      {/* Appointment CTA */}
+      <section className="footer-cta">
+        <motion.div
+          className="footer-cta-inner"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <div className="footer-cta-content">
+            <span className="footer-eyebrow">
               YOUR JOURNEY STARTS HERE
             </span>
 
             <h2>
-              Get back to
+              Move better.
               <br />
-              <span>what moves you.</span>
+              <span>Live stronger.</span>
             </h2>
 
             <p>
-              Personalised care. Purposeful recovery. Stronger movement.
-              Take your next step with Rehabics.
+              Take a confident step towards better movement,
+              personalised care and lasting progress.
             </p>
           </div>
 
           <Link
-            to="/appointment"
-            className="rehab-footer-main-cta"
+            to="/contact"
+            className="footer-cta-button"
           >
-            <span>Book Your Session</span>
-            <span className="rehab-footer-main-cta-icon">
-              <ArrowUpRight size={20} />
-            </span>
+            <span>Book an Appointment</span>
+            <ArrowUpRight size={19} />
           </Link>
+        </motion.div>
+      </section>
 
-          <Activity
-            className="rehab-footer-cta-watermark"
-            aria-hidden="true"
-            strokeWidth={0.8}
-          />
-        </section>
+      {/* Main Footer */}
+      <div className="footer-main">
+        <div className="footer-grid">
 
-        {/* Main footer */}
-
-        <div className="rehab-footer-main">
-          {/* Brand and social media */}
-
-          <div className="rehab-footer-brand-column">
+          {/* Brand Column */}
+          <div className="footer-brand-column">
             <Link
               to="/"
-              className="rehab-footer-brand"
+              className="footer-brand"
               aria-label="Rehabics home"
             >
-              <span className="rehab-footer-brand-mark">
-                <Activity size={25} strokeWidth={2.5} />
-                <span className="rehab-footer-brand-dot" />
+              <span className="footer-brand-symbol">
+                R<span>.</span>
               </span>
 
-              <span className="rehab-footer-brand-copy">
-                <span className="rehab-footer-brand-name">
-                  rehabics
-                </span>
-                <span className="rehab-footer-brand-tagline">
-                  PERFORMANCE CARE
-                </span>
+              <span className="footer-brand-name">
+                REHABICS
               </span>
             </Link>
 
-            <p className="rehab-footer-description">
-              Recover with purpose. Rebuild with confidence.
-              Move towards a stronger, more active life with
-              personalised physiotherapy care.
+            <p className="footer-description">
+              Personalised physiotherapy and rehabilitation
+              to help you move with confidence, rebuild
+              strength and return to the activities you love.
             </p>
 
-            <div className="rehab-footer-social-heading">
+            <div className="footer-social-heading">
               FOLLOW OUR JOURNEY
             </div>
 
-            <div className="rehab-footer-socials">
+            <div className="footer-socials">
               {socialLinks.map(({ label, href, Icon }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
-                  title={label}
+                  aria-label={`Visit Rehabics on ${label}`}
+                  className="footer-social-link"
                 >
                   <Icon aria-hidden="true" />
                 </a>
@@ -171,17 +164,16 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Explore links */}
-
-          <div className="rehab-footer-column">
+          {/* Explore */}
+          <div className="footer-column">
             <h3>Explore</h3>
 
-            <ul>
-              {exploreLinks.map((item) => (
-                <li key={item.to}>
-                  <Link to={item.to}>
-                    <span>{item.label}</span>
-                    <ArrowUpRight size={15} />
+            <ul className="footer-link-list">
+              {quickLinks.map(({ label, path }) => (
+                <li key={label}>
+                  <Link to={path}>
+                    <span>{label}</span>
+                    <ArrowUpRight size={14} />
                   </Link>
                 </li>
               ))}
@@ -189,16 +181,15 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-
-          <div className="rehab-footer-column">
+          <div className="footer-column">
             <h3>Our Services</h3>
 
-            <ul>
-              {services.map((item) => (
-                <li key={item.to}>
-                  <Link to={item.to}>
-                    <span>{item.label}</span>
-                    <ArrowUpRight size={15} />
+            <ul className="footer-link-list">
+              {services.map(({ label, path }) => (
+                <li key={label}>
+                  <Link to={path}>
+                    <span>{label}</span>
+                    <ArrowUpRight size={14} />
                   </Link>
                 </li>
               ))}
@@ -206,82 +197,84 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-
-          <div className="rehab-footer-column rehab-footer-contact">
+          <div className="footer-contact-column">
             <h3>Get in Touch</h3>
 
-            <p className="rehab-footer-contact-intro">
-              Need help choosing the right care? Connect with
-              our team to discuss your next step.
+            <p className="footer-contact-description">
+              Have a question about physiotherapy or your
+              recovery journey? Get in touch with our team.
             </p>
 
-            <Link
-              to="/contact"
-              className="rehab-footer-contact-item"
-            >
-              <span className="rehab-footer-contact-icon">
-                <MapPin size={17} />
-              </span>
-              <span>
-                <strong>Our Clinic</strong>
-                <small>Find our location</small>
-              </span>
-            </Link>
+            <div className="footer-contact-list">
+              <a
+                href="tel:+910000000000"
+                className="footer-contact-item"
+              >
+                <span className="footer-contact-icon">
+                  <Phone size={17} />
+                </span>
+                <span>Call our team</span>
+              </a>
+
+              <a
+                href="mailto:hello@rehabics.com"
+                className="footer-contact-item"
+              >
+                <span className="footer-contact-icon">
+                  <Mail size={17} />
+                </span>
+                <span>hello@rehabics.com</span>
+              </a>
+
+              <Link
+                to="/contact"
+                className="footer-contact-item"
+              >
+                <span className="footer-contact-icon">
+                  <MapPin size={17} />
+                </span>
+                <span>Find our clinic</span>
+              </Link>
+            </div>
 
             <Link
               to="/contact"
-              className="rehab-footer-contact-item"
+              className="footer-contact-cta"
             >
-              <span className="rehab-footer-contact-icon">
-                <Phone size={17} />
-              </span>
-              <span>
-                <strong>Get in Touch</strong>
-                <small>Speak with our team</small>
-              </span>
-            </Link>
-
-            <Link
-              to="/contact"
-              className="rehab-footer-contact-item"
-            >
-              <span className="rehab-footer-contact-icon">
-                <Mail size={17} />
-              </span>
-              <span>
-                <strong>Send an Enquiry</strong>
-                <small>We are here to help</small>
-              </span>
+              Let's talk
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>
 
-        {/* Bottom bar */}
-
-        <div className="rehab-footer-bottom">
-          <p className="rehab-footer-copyright">
-            © {currentYear} Rehabics Performance Care.
-            All rights reserved.
+        {/* Bottom Bar */}
+        <div className="footer-bottom">
+          <p className="footer-copyright">
+            © {currentYear} Rehabics. All rights reserved.
           </p>
 
-          <div className="rehab-footer-legal">
-            <Link to="/privacy">Privacy Policy</Link>
-            <Link to="/terms">Terms of Use</Link>
+          <div className="footer-legal-links">
+            <Link to="/privacy-policy">
+              Privacy Policy
+            </Link>
+
+            <Link to="/terms">
+              Terms of Use
+            </Link>
           </div>
 
           <button
             type="button"
-            className="rehab-footer-top"
+            className="footer-back-to-top"
             onClick={scrollToTop}
-            aria-label="Scroll back to top"
           >
             <span>Back to top</span>
-            <span className="rehab-footer-top-icon">
-              <ArrowUp size={16} />
-            </span>
+            <ArrowUp size={16} />
           </button>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
   ArrowRight,
+  ArrowUpRight,
   Eye,
   EyeOff,
   HeartPulse,
@@ -15,8 +16,20 @@ import {
   LockKeyhole,
   Phone,
   CheckCircle2,
+  Fingerprint,
+  Sparkles,
 } from "lucide-react";
 import "./Auth.css";
+
+const initialForm = {
+  name: "",
+  email: "",
+  phone: "",
+  password: "",
+  confirmPassword: "",
+  remember: true,
+  agree: false,
+};
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -26,6 +39,7 @@ const Auth = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("success");
+<<<<<<< HEAD
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -36,6 +50,9 @@ const Auth = () => {
     remember: true,
     agree: false,
   });
+=======
+  const [form, setForm] = useState(initialForm);
+>>>>>>> 727846113aa27c3f2c8d474c6c5fb9f5faa47ebf
 
   const isRegister = mode === "register";
 
@@ -53,14 +70,41 @@ const Auth = () => {
   const switchMode = (nextMode) => {
     setMode(nextMode);
     setMessage("");
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+  };
+
+  const showError = (text) => {
+    setMessageType("error");
+    setMessage(text);
+  };
+
+  const handleForgotPassword = () => {
+    setMessageType("error");
+    setMessage(
+      "Password recovery will be available after authentication backend integration."
+    );
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage("");
 
+    const email = form.email.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!form.password) {
+      showError("Please enter your password.");
+      return;
+    }
+
     if (isRegister) {
       if (form.name.trim().length < 2) {
+<<<<<<< HEAD
         setMessageType("error");
         setMessage("Please enter your full name.");
         return;
@@ -68,24 +112,25 @@ const Auth = () => {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
         setMessageType("error");
         setMessage("Please enter a valid email address.");
+=======
+        showError("Please enter your full name.");
+>>>>>>> 727846113aa27c3f2c8d474c6c5fb9f5faa47ebf
         return;
       }
       if (!/^\+?[0-9\s()]{10,16}$/.test(form.phone.trim())) {
-        setMessageType("error");
-        setMessage("Please enter a valid phone number.");
+        showError("Please enter a valid phone number.");
         return;
       }
       if (form.password.length < 8) {
-        setMessageType("error");
-        setMessage("Your password must contain at least 8 characters.");
+        showError("Your password must contain at least 8 characters.");
         return;
       }
       if (form.password !== form.confirmPassword) {
-        setMessageType("error");
-        setMessage("Your passwords do not match.");
+        showError("Your passwords do not match.");
         return;
       }
       if (!form.agree) {
+<<<<<<< HEAD
         setMessageType("error");
         setMessage("Please accept the terms to continue.");
         return;
@@ -161,111 +206,157 @@ const Auth = () => {
     } finally {
       setIsSubmitting(false);
     }
+=======
+        showError("Please accept the terms to continue.");
+        return;
+      }
+    }
+
+    setMessageType("success");
+    setMessage(
+      isRegister
+        ? `Your ${role} registration form is valid. Connect the backend to create your account.`
+        : "Your form is valid. Connect the backend to sign in securely."
+    );
+>>>>>>> 727846113aa27c3f2c8d474c6c5fb9f5faa47ebf
   };
 
   return (
     <main className="rehabAuth">
-      <div className="authBackdrop authBackdropOne" />
-      <div className="authBackdrop authBackdropTwo" />
+      <div className="authNoise" aria-hidden="true" />
+      <div className="authGlow authGlowOne" aria-hidden="true" />
+      <div className="authGlow authGlowTwo" aria-hidden="true" />
 
       <div className="authShell">
+        {/* LEFT CINEMATIC PANEL */}
         <motion.section
           className="authVisual"
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.65 }}
         >
+          <div className="authVisualImage" aria-hidden="true" />
+          <div className="authVisualOverlay" aria-hidden="true" />
+
           <Link to="/" className="authBrand" aria-label="Rehabics home">
             <span className="authBrandIcon">
-              <Activity size={25} strokeWidth={2.4} />
+              <Activity size={24} strokeWidth={2.2} />
             </span>
-            <span>
-              <strong>rehabics</strong>
+            <span className="authBrandText">
+              <strong>rehabics<span>.</span></strong>
               <small>MOVE BETTER. LIVE BETTER.</small>
             </span>
           </Link>
 
           <div className="authVisualContent">
-            <span className="authEyebrow">
-              <HeartPulse size={15} />
-              YOUR WELLNESS JOURNEY
-            </span>
+            <div className="authEyebrow">
+              <span className="authEyebrowIcon">
+                <HeartPulse size={15} />
+              </span>
+              <span>YOUR MOVEMENT. YOUR FUTURE.</span>
+            </div>
 
             <h1>
-              Every step
+              Recovery is
               <br />
-              brings you
+              not the end.
               <br />
-              <span>closer to better.</span>
+              <span>It is a new beginning.</span>
             </h1>
 
-            <p>
-              Connect with trusted physiotherapy professionals and take the
-              next step towards a healthier, more active life.
+            <p className="authVisualDescription">
+              Better movement starts with the right support. Build strength,
+              restore confidence and take your next step with Rehabics.
             </p>
 
             <div className="authBenefits">
               <div className="authBenefit">
                 <span className="authBenefitIcon">
-                  <ShieldCheck size={21} />
+                  <ShieldCheck size={19} />
                 </span>
                 <div>
                   <strong>Care you can trust</strong>
-                  <small>Your wellness comes first</small>
+                  <small>Your wellbeing comes first</small>
                 </div>
               </div>
 
               <div className="authBenefit">
                 <span className="authBenefitIcon">
-                  <UserRound size={21} />
+                  <UserRound size={19} />
                 </span>
                 <div>
                   <strong>Care made personal</strong>
-                  <small>Support for your unique needs</small>
+                  <small>Support built around you</small>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="authVisualFooter">
-            <span className="authFooterDot" />
-            Your journey to better movement starts here
+            <span className="authFooterLine" />
+            <span>STRONGER MOVEMENT. BETTER LIVING.</span>
+            <span className="authFooterNumber">01 / 03</span>
           </div>
 
-          <div className="authDecor authDecorOne" />
-          <div className="authDecor authDecorTwo" />
+          <div className="authVisualTag">
+            <Activity size={15} />
+            <span>BUILT AROUND YOUR RECOVERY</span>
+          </div>
         </motion.section>
 
+        {/* RIGHT AUTH PANEL */}
         <motion.section
           className="authFormPanel"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.55, delay: 0.12 }}
         >
           <div className="authMobileBrand">
-            <span className="authBrandIcon">
-              <Activity size={23} />
-            </span>
-            <strong>rehabics</strong>
+            <Link to="/" className="authBrand">
+              <span className="authBrandIcon">
+                <Activity size={22} />
+              </span>
+              <span className="authBrandText">
+                <strong>rehabics<span>.</span></strong>
+                <small>MOVE BETTER. LIVE BETTER.</small>
+              </span>
+            </Link>
           </div>
 
           <div className="authFormTop">
-            <span className="authFormEyebrow">
-              {isRegister ? "JOIN OUR COMMUNITY" : "WELCOME BACK"}
-            </span>
+            <div className="authFormEyebrow">
+              <span className="authStatusDot" />
+              {isRegister ? "BECOME PART OF REHABICS" : "YOUR JOURNEY CONTINUES"}
+            </div>
 
             <h2>
-              {isRegister ? "Create your account" : "Welcome back"}
+              {isRegister ? (
+                <>
+                  Create your
+                  <br />
+                  <span>account.</span>
+                </>
+              ) : (
+                <>
+                  Welcome
+                  <br />
+                  <span>back.</span>
+                </>
+              )}
             </h2>
 
             <p>
               {isRegister
-                ? "Start your journey towards better health."
-                : "Sign in to continue your wellness journey."}
+                ? "One small step towards a stronger, healthier you."
+                : "Sign in and continue your journey towards better movement."}
             </p>
           </div>
 
-          <div className="authModeSwitch" role="tablist" aria-label="Account access">
+          <div
+            className="authModeSwitch"
+            role="tablist"
+            aria-label="Account access"
+          >
             <button
               type="button"
               role="tab"
@@ -273,7 +364,7 @@ const Auth = () => {
               className={!isRegister ? "active" : ""}
               onClick={() => switchMode("login")}
             >
-              Sign In
+              Sign in
             </button>
 
             <button
@@ -283,7 +374,7 @@ const Auth = () => {
               className={isRegister ? "active" : ""}
               onClick={() => switchMode("register")}
             >
-              Create Account
+              Create account
             </button>
           </div>
 
@@ -295,12 +386,15 @@ const Auth = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.22 }}
               noValidate
             >
               {isRegister && (
                 <>
-                  <div className="authRoleLabel">I want to join as</div>
+                  <div className="authRoleLabel">
+                    <span>01</span>
+                    I want to join as
+                  </div>
 
                   <div className="authRoleOptions">
                     <button
@@ -314,7 +408,7 @@ const Auth = () => {
                       <span className="authRoleIcon">
                         <HeartPulse size={20} />
                       </span>
-                      <span>
+                      <span className="authRoleText">
                         <strong>Patient</strong>
                         <small>Find better care</small>
                       </span>
@@ -332,32 +426,34 @@ const Auth = () => {
                       <span className="authRoleIcon">
                         <Stethoscope size={20} />
                       </span>
-                      <span>
+                      <span className="authRoleText">
                         <strong>Physiotherapist</strong>
-                        <small>Help people recover</small>
+                        <small>Support recovery</small>
                       </span>
                       <span className="authRoleRadio" />
                     </button>
                   </div>
-
-                  <div className="authField">
-                    <label htmlFor="authName">Full name</label>
-                    <div className="authInputWrap">
-                      <UserRound size={18} />
-                      <input
-                        id="authName"
-                        name="name"
-                        type="text"
-                        placeholder="Enter your full name"
-                        autoComplete="name"
-                        value={form.name}
-                        onChange={updateField}
-                        required
-                        minLength={2}
-                      />
-                    </div>
-                  </div>
                 </>
+              )}
+
+              {isRegister && (
+                <div className="authField">
+                  <label htmlFor="authName">Full name</label>
+                  <div className="authInputWrap">
+                    <UserRound size={18} />
+                    <input
+                      id="authName"
+                      name="name"
+                      type="text"
+                      placeholder="Enter your full name"
+                      autoComplete="name"
+                      value={form.name}
+                      onChange={updateField}
+                      minLength={2}
+                      required
+                    />
+                  </div>
+                </div>
               )}
 
               <div className="authField">
@@ -403,12 +499,7 @@ const Auth = () => {
                     <button
                       type="button"
                       className="authTextButton"
-                      onClick={() => {
-                        setMessageType("error");
-                        setMessage(
-                          "Password recovery will be available after backend integration."
-                        );
-                      }}
+                      onClick={handleForgotPassword}
                     >
                       Forgot password?
                     </button>
@@ -422,7 +513,7 @@ const Auth = () => {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     placeholder={
-                      isRegister ? "At least 8 characters" : "Enter your password"
+                      isRegister ? "At least 8 characters" : "Enter password"
                     }
                     autoComplete={
                       isRegister ? "new-password" : "current-password"
@@ -438,21 +529,27 @@ const Auth = () => {
                     aria-label={showPassword ? "Hide password" : "Show password"}
                     onClick={() => setShowPassword((value) => !value)}
                   >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    {showPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
                   </button>
                 </div>
               </div>
 
               {isRegister && (
                 <div className="authField">
-                  <label htmlFor="authConfirmPassword">Confirm password</label>
+                  <label htmlFor="authConfirmPassword">
+                    Confirm password
+                  </label>
                   <div className="authInputWrap">
                     <LockKeyhole size={18} />
                     <input
                       id="authConfirmPassword"
                       name="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
-                      placeholder="Enter your password again"
+                      placeholder="Enter password again"
                       autoComplete="new-password"
                       value={form.confirmPassword}
                       onChange={updateField}
@@ -501,31 +598,42 @@ const Auth = () => {
                     onChange={updateField}
                   />
                   <span>
-                    I agree to the <a href="/terms">Terms of Service</a> and{" "}
-                    <a href="/privacy">Privacy Policy</a>.
+                    I agree to the{" "}
+                    <Link to="/terms">Terms of Service</Link> and{" "}
+                    <Link to="/privacy">Privacy Policy</Link>.
                   </span>
                 </label>
               )}
 
               {message && (
-                <div
+                <motion.div
                   className={`authMessage ${
                     messageType === "error" ? "error" : "success"
                   }`}
                   role="status"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
                 >
-                  {messageType === "success" && <CheckCircle2 size={17} />}
+                  {messageType === "success" && (
+                    <CheckCircle2 size={18} />
+                  )}
                   <span>{message}</span>
-                </div>
+                </motion.div>
               )}
 
               <button type="submit" className="authSubmit" disabled={isSubmitting}>
                 <span>
+<<<<<<< HEAD
                   {isSubmitting
                     ? (isRegister ? "Creating account..." : "Signing in...")
                     : (isRegister ? "Create my account" : "Sign in to your account")}
+=======
+                  {isRegister ? "Create my account" : "Sign in to Rehabics"}
                 </span>
-                <ArrowRight size={19} />
+                <span className="authSubmitIcon">
+                  <ArrowRight size={19} />
+>>>>>>> 727846113aa27c3f2c8d474c6c5fb9f5faa47ebf
+                </span>
               </button>
 
               <div className="authSecureNote">
@@ -536,14 +644,24 @@ const Auth = () => {
           </AnimatePresence>
 
           <p className="authBottomText">
-            {isRegister ? "Already have an account?" : "New to Rehabics?"}{" "}
+            {isRegister
+              ? "Already have an account?"
+              : "New to Rehabics?"}{" "}
             <button
               type="button"
               onClick={() => switchMode(isRegister ? "login" : "register")}
             >
               {isRegister ? "Sign in" : "Create an account"}
+              <ArrowUpRight size={14} />
             </button>
           </p>
+
+          <div className="authCopyright">
+            <span>© {new Date().getFullYear()} Rehabics</span>
+            <span className="authCopyrightDivider" />
+            <span>Move with confidence</span>
+            <Fingerprint size={15} />
+          </div>
         </motion.section>
       </div>
     </main>
