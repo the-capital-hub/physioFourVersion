@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
@@ -19,12 +19,14 @@ import {
 import "./Auth.css";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [role, setRole] = useState("patient");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("success");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -53,7 +55,7 @@ const Auth = () => {
     setMessage("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage("");
 
@@ -63,50 +65,102 @@ const Auth = () => {
         setMessage("Please enter your full name.");
         return;
       }
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
         setMessageType("error");
         setMessage("Please enter a valid email address.");
         return;
       }
-
       if (!/^\+?[0-9\s()]{10,16}$/.test(form.phone.trim())) {
         setMessageType("error");
         setMessage("Please enter a valid phone number.");
         return;
       }
-
       if (form.password.length < 8) {
         setMessageType("error");
         setMessage("Your password must contain at least 8 characters.");
         return;
       }
-
       if (form.password !== form.confirmPassword) {
         setMessageType("error");
         setMessage("Your passwords do not match.");
         return;
       }
-
       if (!form.agree) {
         setMessageType("error");
         setMessage("Please accept the terms to continue.");
         return;
       }
-    } else {
-      if (!form.email.trim() || !form.password) {
-        setMessageType("error");
-        setMessage("Please enter your email and password.");
-        return;
-      }
+    } else if (!form.email.trim() || !form.password) {
+      setMessageType("error");
+      setMessage("Please enter your email and password.");
+      return;
     }
 
-    setMessageType("success");
-    setMessage(
-      isRegister
-        ? `Your ${role === "patient" ? "patient" : "physiotherapist"} registration form is valid. Connect the backend to create your account.`
-        : "Your form is valid. Connect the backend to sign in securely."
-    );
+    setIsSubmitting(true);
+    try {
+      const endpoint = isRegister
+        ? "http://localhost:5000/api/auth/register"
+        : "http://localhost:5000/api/auth/login";
+
+      const payload = isRegister
+        ? {
+            name: form.name.trim(),
+            email: form.email.trim().toLowerCase(),
+            phone: form.phone.trim(),
+            password: form.password,
+            role,
+          }
+        : {
+            email: form.email.trim().toLowerCase(),
+            password: form.password,
+          };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || "Authentication failed. Please try again.");
+      }
+      if (!data.token || !data.user) {
+        throw new Error("The server response did not include a token and user profile.");
+      }
+
+      // Use localStorage only when the user selected Remember me.
+      const storage = !isRegister && form.remember ? localStorage : sessionStorage;
+      storage.setItem("rehabics_token", data.token);
+      storage.setItem("rehabics_user", JSON.stringify(data.user));
+
+      setMessageType("success");
+      setMessage(isRegister
+        ? "Account created successfully. You are now signed in."
+        : "Signed in successfully.");
+
+      const destination =
+        data.user.role === "physiotherapist"
+          ? "/dashboard/physiotherapist"
+          : "/dashboard/patient";
+
+      setForm((previous) => ({
+        ...previous,
+        password: "",
+        confirmPassword: "",
+      }));
+
+      navigate(destination, { replace: true });
+    } catch (error) {
+      setMessageType("error");
+      setMessage(
+        error instanceof TypeError
+          ? "Cannot reach the server. Make sure the backend is running on port 5000."
+          : error.message || "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -465,9 +519,11 @@ const Auth = () => {
                 </div>
               )}
 
-              <button type="submit" className="authSubmit">
+              <button type="submit" className="authSubmit" disabled={isSubmitting}>
                 <span>
-                  {isRegister ? "Create my account" : "Sign in to your account"}
+                  {isSubmitting
+                    ? (isRegister ? "Creating account..." : "Signing in...")
+                    : (isRegister ? "Create my account" : "Sign in to your account")}
                 </span>
                 <ArrowRight size={19} />
               </button>

@@ -1,0 +1,60 @@
+
+.dashboardNavItem { width:100%; border:0; background:transparent; cursor:pointer; text-align:left; font:inherit; }
+.dashboardDot { color:var(--pistachio); padding:0 7px; }
+.dashboardAlert { display:flex; align-items:center; gap:9px; padding:12px 14px; border-radius:10px; margin:0 0 14px; font-size:12px; }
+.dashboardAlert.error { color:#ffb8b8; background:#321d20; border:1px solid #714044; }
+.dashboardAlert.success { color:#d5f7b4; background:#1b2a17; border:1px solid #3d5b2c; }
+.dashboardAlert button { margin-left:auto; display:grid; place-items:center; border:0; background:transparent; color:inherit; cursor:pointer; }
+.dashboardTextButton { display:flex; align-items:center; gap:6px; border:0; background:transparent; color:var(--pistachio); cursor:pointer; font-size:12px; }
+.dashboardPrimaryButton,.dashboardSecondaryButton { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid var(--pistachio); border-radius:9px; padding:10px 13px; font-size:12px; font-weight:700; cursor:pointer; }
+.dashboardPrimaryButton { background:var(--pistachio); color:#101112; }
+.dashboardPrimaryButton:disabled { opacity:.65; cursor:wait; }
+.dashboardSecondaryButton { background:transparent; color:var(--ivory); border-color:var(--border); margin-top:16px; }
+.dashboardPanelSubtext { color:var(--muted); font-size:12px; line-height:1.5; margin:7px 0 0; }
+.dashboardEmpty { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px; min-height:170px; text-align:center; color:var(--muted); font-size:12px; }
+.dashboardEmpty > svg { color:var(--pistachio); }
+.dashboardEmpty strong { color:var(--ivory); font-size:14px; }
+.dashboardEmpty p { margin:0 0 5px; }
+.dashboardAppointmentsPanel { margin-top:2px; }
+.dashboardAppointmentList { display:grid; gap:10px; margin-top:16px; }
+.dashboardAppointmentItem { display:grid; grid-template-columns:minmax(150px,.7fr) minmax(0,1.6fr) auto; align-items:center; gap:16px; padding:16px; border:1px solid #30353d; border-radius:12px; background:#111314; }
+.dashboardAppointmentDate { display:flex; flex-direction:column; gap:8px; color:var(--pistachio); }
+.dashboardAppointmentDate strong { color:var(--ivory); font-size:12px; }
+.dashboardAppointmentDate span { display:flex; align-items:center; gap:5px; color:var(--muted); font-size:11px; }
+.dashboardAppointmentInfo > strong { display:block; font-size:13px; margin-bottom:7px; }
+.dashboardAppointmentInfo p { display:flex; align-items:flex-start; gap:5px; color:var(--muted); font-size:11px; line-height:1.5; margin:0 0 9px; overflow-wrap:anywhere; }
+.dashboardStatus { display:inline-flex; padding:5px 8px; border-radius:20px; font-size:10px; background:#292e37; color:#d9dce1; }
+.dashboardStatus.pending { color:#f5d48b; background:#352d1b; }
+.dashboardStatus.confirmed { color:#d5f7b4; background:#1b2a17; }
+.dashboardStatus.cancelled { color:#ffb8b8; background:#321d20; }
+.dashboardStatus.completed { color:#c7d8ff; background:#202b3d; }
+.dashboardCancelButton { border:1px solid #714044; color:#ffb8b8; background:transparent; border-radius:8px; padding:8px 10px; cursor:pointer; font-size:11px; }
+.dashboardBookingForm { display:grid; gap:14px; padding:17px; margin:16px 0; border:1px solid var(--border); border-radius:12px; background:#101213; }
+.dashboardBookingForm label { display:grid; gap:7px; color:var(--muted); font-size:11px; font-weight:700; }
+.dashboardBookingForm input,.dashboardBookingForm select,.dashboardBookingForm textarea { width:100%; box-sizing:border-box; background:#1b1e21; color:var(--ivory); border:1px solid #424954; border-radius:8px; padding:11px; font:inherit; font-size:12px; outline:none; }
+.dashboardBookingForm input:focus,.dashboardBookingForm select:focus,.dashboardBookingForm textarea:focus { border-color:var(--pistachio); }
+.dashboardFormRow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.dashboardFormFooter { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.dashboardFormFooter > span { color:var(--muted); font-size:10px; line-height:1.5; }
+.dashboardRecoveryPanel { max-width:780px; }
+.dashboardRecoveryPanel h2 { margin:12px 0 8px; font-size:20px; }
+.dashboardRecoveryPanel > p { color:var(--muted); font-size:13px; line-height:1.7; }
+.dashboardRecoveryNotice { display:flex; gap:12px; align-items:flex-start; padding:14px; border:1px solid var(--border); border-radius:10px; margin:18px 0; color:var(--pistachio); }
+.dashboardRecoveryNotice span { display:grid; gap:5px; }
+.dashboardRecoveryNotice strong { color:var(--ivory); font-size:12px; }
+.dashboardRecoveryNotice small { color:var(--muted); font-size:11px; line-height:1.5; }
+.dashboardProfileDetails { max-width:700px; }
+.dashboardProfileDetailsAvatar { display:grid; place-items:center; width:64px; height:64px; border-radius:50%; margin:12px 0 18px; color:var(--pistachio); background:var(--graphite); font-size:24px; font-weight:800; }
+.dashboardDetailRow { display:flex; justify-content:space-between; gap:20px; padding:14px 0; border-top:1px solid #30353d; font-size:12px; }
+.dashboardDetailRow span { color:var(--muted); }
+.dashboardDetailRow strong { text-align:right; overflow-wrap:anywhere; }
+.spin { animation:dashboardSpin 1.2s linear infinite; }
+@keyframes dashboardSpin { to { transform:rotate(360deg); } }
+@media (max-width:700px) {
+  .dashboardAppointmentItem { grid-template-columns:1fr; gap:12px; }
+  .dashboardAppointmentDate { display:grid; grid-template-columns:auto 1fr auto; align-items:center; }
+  .dashboardFormRow { grid-template-columns:1fr; }
+  .dashboardFormFooter { align-items:stretch; flex-direction:column; }
+  .dashboardFormFooter .dashboardPrimaryButton { width:100%; }
+  .dashboardPanelHeading { align-items:flex-start; flex-wrap:wrap; }
+}

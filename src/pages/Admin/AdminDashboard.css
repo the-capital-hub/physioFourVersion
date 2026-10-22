@@ -1,0 +1,240 @@
+.rehab-admin {
+  --ra-carbon: #101112;
+  --ra-bg: #0B0C0C;
+  --ra-lime: #7CD607;
+  --ra-graphite: #292E37;
+  --ra-ivory: #F9F9F8;
+  --ra-muted: #AEB4BE;
+  --ra-border: #3B414C;
+  --ra-panel: #101112;
+  min-height: 100vh;
+  background: var(--ra-bg);
+  color: var(--ra-ivory);
+  display: grid;
+  grid-template-columns: 254px minmax(0, 1fr);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  isolation: isolate;
+}
+.rehab-admin * { box-sizing: border-box; }
+.rehab-admin button, .rehab-admin input, .rehab-admin select { font: inherit; }
+.rehab-admin button { -webkit-tap-highlight-color: transparent; }
+.rehab-admin-side {
+  min-height: 100vh; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 24px; padding: 24px 15px 16px;
+  background: var(--ra-carbon); border-right: 1px solid var(--ra-border);
+}
+.rehab-admin-brand { display: flex; align-items: center; gap: 11px; padding: 0 8px; }
+.rehab-admin-mark { width: 42px; height: 42px; flex: 0 0 42px; display: grid; place-items: center; border-radius: 12px; background: var(--ra-lime); color: var(--ra-carbon); }
+.rehab-admin-brand b { display: block; color: var(--ra-ivory); font-size: 15px; letter-spacing: 2px; }
+.rehab-admin-brand small { display: block; margin-top: 5px; color: var(--ra-muted); font-size: 10px; letter-spacing: 1.5px; }
+.rehab-admin-close-nav, .rehab-admin-menu { display: none; }
+.rehab-admin-navlabel { padding: 0 12px; margin-bottom: -15px; color: #737D87; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
+.rehab-admin-side nav { display: grid; gap: 5px; }
+.rehab-admin-side nav button {
+  display: flex; align-items: center; gap: 12px; min-height: 43px; width: 100%; padding: 11px 12px;
+  border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--ra-muted);
+  font-size: 12px; text-align: left; cursor: pointer; transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.rehab-admin-side nav button span { flex: 1; }
+.rehab-admin-side nav button em { display: grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 7px; background: #252B20; color: var(--ra-lime); font-size: 10px; font-style: normal; }
+.rehab-admin-side nav button:hover { background: #1A1E22; color: var(--ra-ivory); }
+.rehab-admin-side nav button.active { background: #20251C; border-color: #3D4A2D; color: var(--ra-ivory); }
+.rehab-admin-side nav button.active svg { color: var(--ra-lime); }
+.rehab-admin-sidebottom { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 13px 10px; border-top: 1px solid #252A30; color: var(--ra-muted); }
+.rehab-admin-secure-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: var(--ra-graphite); color: var(--ra-lime); }
+.rehab-admin-sidebottom b, .rehab-admin-sidebottom small { display: block; }
+.rehab-admin-sidebottom b { color: var(--ra-ivory); font-size: 11px; font-weight: 600; }
+.rehab-admin-sidebottom small { margin-top: 4px; font-size: 10px; }
+.rehab-admin-main { min-width: 0; padding: 30px clamp(18px, 3vw, 38px) 18px; }
+.rehab-admin-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 26px; }
+.rehab-admin-heading { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+.rehab-admin-eyebrow { color: var(--ra-muted); font-size: 10px; letter-spacing: 1.5px; }
+.rehab-admin-top h1 { margin: 8px 0 6px; color: var(--ra-ivory); font-size: clamp(25px, 2.5vw, 34px); font-weight: 650; letter-spacing: -1.2px; line-height: 1.1; }
+.rehab-admin-top p { margin: 0; color: var(--ra-muted); font-size: 12px; line-height: 1.6; }
+.rehab-admin-topactions { display: flex; align-items: center; gap: 12px; }
+.rehab-admin-sync { display: flex; align-items: center; gap: 8px; color: var(--ra-muted); font-size: 11px; white-space: nowrap; }
+.rehab-admin-live-dot, .rehab-admin-kicker > span { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: var(--ra-lime); box-shadow: 0 0 0 4px #7CD60719; }
+.rehab-admin-live-dot.is-loading { animation: rehabPulse 1s infinite; }
+.rehab-admin-refresh { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 39px; padding: 0 13px; border: 1px solid var(--ra-border); border-radius: 10px; background: var(--ra-carbon); color: var(--ra-ivory); font-size: 12px; cursor: pointer; transition: border-color .18s, background .18s; }
+.rehab-admin-refresh:hover:not(:disabled) { border-color: #64734B; background: var(--ra-graphite); }
+.rehab-admin-refresh:disabled { opacity: .65; cursor: wait; }
+.rehab-admin-spin { animation: rehabSpin 1s linear infinite; }
+.rehab-admin-welcome { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; min-height: 176px; margin-bottom: 28px; padding: 27px 30px; border: 1px solid #3B414C; border-radius: 17px; background: radial-gradient(ellipse at 85% 50%, #7CD60715, transparent 44%), linear-gradient(115deg, #15191C, #101112 72%); }
+.rehab-admin-welcome > div:first-child { position: relative; z-index: 1; }
+.rehab-admin-kicker { display: flex; align-items: center; gap: 9px; color: var(--ra-muted); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+.rehab-admin-welcome h2 { margin: 15px 0 8px; font-size: clamp(21px, 2.3vw, 30px); letter-spacing: -1px; line-height: 1.2; }
+.rehab-admin-welcome h2 em { color: var(--ra-lime); font-style: normal; }
+.rehab-admin-welcome p { margin: 0; color: var(--ra-muted); font-size: 12px; line-height: 1.7; }
+.rehab-admin-welcome-art { position: absolute; right: 8%; top: 50%; display: grid; place-items: center; width: 140px; height: 140px; transform: translateY(-50%); border: 1px solid #7CD6072E; border-radius: 50%; color: #7CD60765; }
+.rehab-admin-welcome-art::before, .rehab-admin-welcome-art::after { position: absolute; content: ""; inset: 12px; border: 1px solid #7CD60722; border-radius: 50%; }
+.rehab-admin-welcome-art::after { inset: -13px; }
+.rehab-admin-sectiontitle { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; margin: 0 0 14px; }
+.rehab-admin-sectiontitle h2 { margin: 0; font-size: 16px; letter-spacing: -.3px; }
+.rehab-admin-sectiontitle p { margin: 5px 0 0; color: var(--ra-muted); font-size: 11px; }
+.rehab-admin-updated { display: flex; align-items: center; gap: 6px; color: var(--ra-muted); font-size: 10px; white-space: nowrap; }
+.rehab-admin-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
+.rehab-admin-stat { min-width: 0; display: grid; gap: 10px; padding: 17px; border: 1px solid var(--ra-border); border-radius: 14px; background: linear-gradient(145deg, #15191C, #101112 75%); transition: border-color .18s ease, transform .18s ease; }
+.rehab-admin-stat:hover { transform: translateY(-2px); border-color: #596344; }
+.rehab-admin-stathead { display: flex; align-items: center; justify-content: space-between; }
+.rehab-admin-stathead > span { display: grid; place-items: center; width: 37px; height: 37px; border: 1px solid #7CD60726; border-radius: 10px; background: #7CD60712; color: var(--ra-lime); }
+.rehab-admin-stat-arrow { color: #707A83; }
+.rehab-admin-stat > small { color: var(--ra-muted); font-size: 11px; }
+.rehab-admin-stat strong { display: block; overflow-wrap: anywhere; color: var(--ra-ivory); font-size: clamp(23px, 2.2vw, 29px); font-weight: 650; letter-spacing: -1px; }
+.rehab-admin-stat > p { margin: -4px 0 0; color: #828D96; font-size: 10px; line-height: 1.5; }
+.rehab-admin-stat.is-compact strong { font-size: clamp(17px, 1.6vw, 23px); letter-spacing: -.5px; }
+.rehab-admin-panel { min-width: 0; margin-bottom: 18px; padding: 19px; border: 1px solid var(--ra-border); border-radius: 15px; background: var(--ra-panel); }
+.rehab-admin-panelhead { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 17px; }
+.rehab-admin-panelhead h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -.2px; }
+.rehab-admin-panelhead p { margin: 5px 0 0; color: var(--ra-muted); font-size: 11px; line-height: 1.5; }
+.rehab-admin-panelhead > button { display: inline-flex; align-items: center; gap: 5px; padding: 7px 0 7px 8px; border: 0; background: transparent; color: var(--ra-lime); font-size: 11px; cursor: pointer; white-space: nowrap; }
+.rehab-admin-panelhead > button:hover { color: #B2F35A; }
+.rehab-admin-overviewgrid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, .9fr); gap: 0 16px; align-items: stretch; }
+.rehab-admin-overviewgrid .rehab-admin-panel { min-width: 0; }
+.rehab-admin-snapshot { display: grid; gap: 0; }
+.rehab-admin-snapshotrow { display: flex; align-items: center; gap: 11px; padding: 12px 0; border-bottom: 1px solid #282E34; }
+.rehab-admin-snapshotrow:last-child { border-bottom: 0; }
+.rehab-admin-snapshotrow > span { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 34px; border-radius: 9px; background: var(--ra-graphite); color: var(--ra-lime); }
+.rehab-admin-snapshotrow div { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rehab-admin-snapshotrow small { color: var(--ra-muted); font-size: 10px; line-height: 1.5; }
+.rehab-admin-snapshotrow strong { color: var(--ra-ivory); font-size: 15px; }
+.rehab-admin-quickactions { display: grid; gap: 5px; margin-top: 14px; padding-top: 13px; border-top: 1px solid #282E34; }
+.rehab-admin-quickactions button { display: flex; align-items: center; gap: 9px; padding: 10px 8px; border: 0; border-radius: 8px; background: transparent; color: var(--ra-muted); text-align: left; font-size: 11px; cursor: pointer; }
+.rehab-admin-quickactions button svg:first-child { color: var(--ra-lime); }
+.rehab-admin-quickactions button svg:last-child { margin-left: auto; }
+.rehab-admin-quickactions button:hover { background: #1A1E22; color: var(--ra-ivory); }
+.rehab-admin-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 15px; }
+.rehab-admin-search { display: flex; align-items: center; gap: 9px; min-width: 220px; flex: 1; height: 39px; padding: 0 11px; border: 1px solid var(--ra-border); border-radius: 9px; background: var(--ra-bg); color: var(--ra-muted); }
+.rehab-admin-search input { min-width: 0; width: 100%; padding: 0; border: 0; outline: 0; background: transparent; color: var(--ra-ivory); font-size: 11px; }
+.rehab-admin-search input::placeholder { color: #78828B; }
+.rehab-admin-search kbd { color: #707A83; font-size: 13px; }
+.rehab-admin-filter { position: relative; display: inline-flex; align-items: center; gap: 7px; min-height: 39px; padding: 0 10px; border: 1px solid var(--ra-border); border-radius: 9px; background: var(--ra-bg); color: var(--ra-muted); }
+.rehab-admin-filter select { min-width: 95px; max-width: 180px; appearance: none; border: 0; outline: 0; padding: 0 18px 0 0; background: transparent; color: var(--ra-ivory); font-size: 11px; cursor: pointer; }
+.rehab-admin-filter option, .rehab-admin-selectwrap option { background: var(--ra-carbon); color: var(--ra-ivory); }
+.rehab-admin-filter > svg:last-child { position: absolute; right: 9px; pointer-events: none; }
+.rehab-admin-tablewrap { width: 100%; overflow-x: auto; }
+.rehab-admin table { width: 100%; min-width: 660px; border-collapse: collapse; text-align: left; }
+.rehab-admin th { padding: 12px 10px; border-bottom: 1px solid var(--ra-border); color: #858F99; font-size: 9px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; white-space: nowrap; }
+.rehab-admin td { padding: 12px 10px; border-bottom: 1px solid #272D33; color: #DDE0DF; font-size: 11px; white-space: nowrap; }
+.rehab-admin tbody tr { transition: background .15s ease; }
+.rehab-admin tbody tr:hover { background: #171B1E; }
+.rehab-admin tbody tr:last-child td { border-bottom: 0; }
+.rehab-admin-person { display: flex; align-items: center; gap: 9px; min-width: 145px; }
+.rehab-admin-person > span { display: grid; place-items: center; width: 31px; height: 31px; flex: 0 0 31px; border: 1px solid var(--ra-border); border-radius: 9px; background: var(--ra-graphite); color: var(--ra-muted); }
+.rehab-admin-person b, .rehab-admin-person small, .rehab-admin-contact span, .rehab-admin-contact small { display: block; }
+.rehab-admin-person b { max-width: 180px; overflow: hidden; color: var(--ra-ivory); font-size: 11px; font-weight: 550; text-overflow: ellipsis; }
+.rehab-admin-person small, .rehab-admin-contact small { margin-top: 4px; color: #858F99; font-size: 9px; }
+.rehab-admin-contact span { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+.rehab-admin-role { display: inline-flex; padding: 5px 8px; border-radius: 6px; background: var(--ra-graphite); color: #D3D8DB; font-size: 10px; text-transform: capitalize; }
+.rehab-admin-role.role-admin { background: #282B31; color: var(--ra-ivory); }
+.rehab-admin-role.role-physiotherapist { background: #20291A; color: #B9ED78; }
+.rehab-admin-pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 20px; background: var(--ra-graphite); color: #D0D5D8; font-size: 10px; text-transform: capitalize; }
+.rehab-admin-pill::before { width: 5px; height: 5px; content: ""; border-radius: 50%; background: currentColor; opacity: .85; }
+.rehab-admin-pill.active, .rehab-admin-pill.paid, .rehab-admin-pill.confirmed, .rehab-admin-pill.completed { background: #20291A; color: #B9ED78; }
+.rehab-admin-pill.pending { background: #342E1B; color: #F1D58A; }
+.rehab-admin-pill.suspended, .rehab-admin-pill.failed, .rehab-admin-pill.cancelled { background: #382323; color: #FFB5AE; }
+.rehab-admin-selectwrap { position: relative; display: inline-flex; align-items: center; }
+.rehab-admin-selectwrap select { max-width: 140px; appearance: none; padding: 7px 25px 7px 9px; border: 1px solid #3B414C; border-radius: 8px; outline: 0; background: #0B0C0C; color: var(--ra-ivory); font-size: 10px; cursor: pointer; }
+.rehab-admin-selectwrap > svg { position: absolute; right: 8px; color: var(--ra-muted); pointer-events: none; }
+.rehab-admin-amount { color: var(--ra-ivory) !important; font-weight: 600; }
+.rehab-admin-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.rehab-admin-form label { display: grid; gap: 7px; color: var(--ra-muted); font-size: 11px; }
+.rehab-admin-form input, .rehab-admin-form select { width: 100%; min-width: 0; min-height: 41px; padding: 10px 12px; border: 1px solid var(--ra-border); border-radius: 9px; outline: 0; background: var(--ra-bg); color: var(--ra-ivory); font-size: 12px; }
+.rehab-admin-form input::placeholder { color: #737D87; }
+.rehab-admin-form input:focus, .rehab-admin-form select:focus { border-color: var(--ra-lime); }
+.rehab-admin-form-wide { grid-column: 1 / -1; }
+.rehab-admin-form > button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 11px 14px; border: 0; border-radius: 9px; background: var(--ra-lime); color: #101112; font-size: 12px; font-weight: 750; cursor: pointer; }
+.rehab-admin-form > button:hover { filter: brightness(1.06); }
+.rehab-admin-form > button:disabled { opacity: .6; cursor: wait; }
+.rehab-admin-alert { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding: 12px 14px; border: 1px solid #3C5128; border-radius: 10px; background: #192216; color: #D7F6B5; font-size: 12px; }
+.rehab-admin-alert > span { flex: 1; line-height: 1.5; }
+.rehab-admin-alert > button { display: grid; place-items: center; padding: 4px; border: 0; background: transparent; color: inherit; cursor: pointer; }
+.rehab-admin-alert.error { border-color: #693A35; background: #291917; color: #FFC0B9; }
+.rehab-admin-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; padding: 35px 14px; text-align: center; color: var(--ra-muted); }
+.rehab-admin-empty > span { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 3px; border: 1px solid var(--ra-border); border-radius: 12px; background: var(--ra-graphite); }
+.rehab-admin-empty b { color: var(--ra-ivory); font-size: 12px; }
+.rehab-admin-empty p { margin: 0; color: var(--ra-muted); font-size: 11px; }
+.rehab-admin-note { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; padding: 13px; border: 1px solid #4B4828; border-radius: 10px; background: #25251A; color: #E6DCA4; font-size: 11px; line-height: 1.7; }
+.rehab-admin-settings .rehab-admin-settingrow { display: flex; align-items: center; gap: 13px; padding: 16px 0; border-bottom: 1px solid #282E34; }
+.rehab-admin-settingrow:last-of-type { border-bottom: 0; }
+.rehab-admin-settingicon { display: grid; place-items: center; width: 39px; height: 39px; flex: 0 0 39px; border-radius: 10px; background: var(--ra-graphite); color: var(--ra-lime); }
+.rehab-admin-settingrow > div { flex: 1; min-width: 0; }
+.rehab-admin-settingrow b { font-size: 12px; }
+.rehab-admin-settingrow p { margin: 5px 0 0; color: var(--ra-muted); font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+.rehab-admin-settingrow code { color: var(--ra-lime); overflow-wrap: anywhere; }
+.rehab-admin-footer { display: flex; justify-content: space-between; gap: 12px; padding: 16px 2px 0; color: #6F7982; font-size: 9px; letter-spacing: .5px; }
+.rehab-admin-footer span:first-child { color: var(--ra-muted); font-weight: 700; letter-spacing: 1.3px; }
+.rehab-admin-footer i { color: var(--ra-lime); font-style: normal; }
+.rehab-admin-loading { position: fixed; z-index: 30; right: 18px; bottom: 18px; display: flex; align-items: center; gap: 9px; padding: 11px 14px; border: 1px solid var(--ra-border); border-radius: 10px; background: var(--ra-graphite); color: var(--ra-ivory); font-size: 11px; box-shadow: 0 12px 35px #0005; }
+@keyframes rehabSpin { to { transform: rotate(360deg); } }
+@keyframes rehabPulse { 50% { opacity: .4; box-shadow: 0 0 0 7px #7CD6070D; } }
+@media (max-width: 1180px) {
+  .rehab-admin { grid-template-columns: 225px minmax(0, 1fr); }
+  .rehab-admin-main { padding: 24px 20px 16px; }
+  .rehab-admin-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rehab-admin-overviewgrid { grid-template-columns: minmax(0, 1fr); }
+  .rehab-admin-charts { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .rehab-admin { display: block; }
+  .rehab-admin-side { position: fixed; z-index: 50; inset: 0 auto 0 0; width: min(290px, 88vw); height: 100dvh; min-height: 0; transform: translateX(-105%); transition: transform .22s ease; box-shadow: 20px 0 50px #0007; }
+  .rehab-admin-side.is-open { transform: translateX(0); }
+  .rehab-admin-close-nav { display: grid; place-items: center; margin-left: auto; width: 32px; height: 32px; border: 1px solid var(--ra-border); border-radius: 8px; background: transparent; color: var(--ra-ivory); }
+  .rehab-admin-main { padding: 19px 14px 16px; }
+  .rehab-admin-menu { display: grid; place-items: center; flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid var(--ra-border); border-radius: 9px; background: var(--ra-carbon); color: var(--ra-ivory); cursor: pointer; }
+  .rehab-admin-top { align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+  .rehab-admin-heading { gap: 9px; }
+  .rehab-admin-eyebrow { font-size: 8px; letter-spacing: 1px; }
+  .rehab-admin-top h1 { font-size: 24px; }
+  .rehab-admin-top p { max-width: 260px; font-size: 11px; }
+  .rehab-admin-topactions { flex-direction: column; align-items: flex-end; gap: 7px; }
+  .rehab-admin-sync { display: none; }
+  .rehab-admin-refresh { min-height: 35px; padding: 0 10px; font-size: 11px; }
+  .rehab-admin-welcome { min-height: 155px; padding: 21px 18px; margin-bottom: 22px; }
+  .rehab-admin-welcome h2 { max-width: 290px; font-size: 23px; }
+  .rehab-admin-welcome-art { right: -38px; opacity: .5; transform: translateY(-50%) scale(.8); }
+  .rehab-admin-sectiontitle { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .rehab-admin-cards { gap: 9px; }
+  .rehab-admin-stat { padding: 13px; gap: 9px; }
+  .rehab-admin-stathead > span { width: 32px; height: 32px; }
+  .rehab-admin-stat strong { font-size: 23px; }
+  .rehab-admin-stat.is-compact strong { font-size: 17px; }
+  .rehab-admin-panel { padding: 14px; margin-bottom: 13px; }
+  .rehab-admin-panelhead { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .rehab-admin-toolbar { align-items: stretch; }
+  .rehab-admin-search { flex-basis: 100%; }
+  .rehab-admin-filter { flex: 1; }
+  .rehab-admin-filter select { min-width: 0; width: 100%; }
+  .rehab-admin-form { grid-template-columns: minmax(0, 1fr); }
+  .rehab-admin-form-wide { grid-column: auto; }
+  .rehab-admin-settingrow { flex-wrap: wrap; }
+  .rehab-admin-settingrow .rehab-admin-pill { margin-left: 52px; }
+  .rehab-admin-footer { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rehab-admin *, .rehab-admin *::before, .rehab-admin *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Analytics charts and session logout */
+.rehab-admin-logout { display: flex; align-items: center; justify-content: flex-start; gap: 11px; width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid #3B414C; border-radius: 10px; background: #151719; color: #AEB4BE; font-size: 12px; cursor: pointer; transition: background .18s ease, color .18s ease, border-color .18s ease; }
+.rehab-admin-logout:hover { background: #2A1C1C; border-color: #70413D; color: #FFB5AE; }
+.rehab-admin-secure-copy { min-width: 0; }
+.rehab-admin-charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-bottom: 16px; }
+.rehab-admin-chartpanel { min-width: 0; margin-bottom: 0; }
+.rehab-admin-bars { display: grid; gap: 17px; padding: 12px 0 4px; }
+.rehab-admin-barlabel { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; color: var(--ra-muted); font-size: 11px; }
+.rehab-admin-barlabel b { color: var(--ra-ivory); font-weight: 650; }
+.rehab-admin-bartrack { width: 100%; height: 8px; overflow: hidden; border-radius: 99px; background: #252A30; }
+.rehab-admin-bartrack span { display: block; height: 100%; min-width: 0; border-radius: inherit; background: var(--ra-lime); transition: width .35s ease; }
+.rehab-admin-bartrack span.status-pending { background: #D7B85B; }
+.rehab-admin-bartrack span.status-confirmed { background: #7CD607; }
+.rehab-admin-bartrack span.status-completed { background: #AEB4BE; }
+.rehab-admin-bartrack span.status-cancelled { background: #D47770; }
+.rehab-admin-revenuechart { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 9px; align-items: end; min-height: 180px; padding-top: 14px; }
+.rehab-admin-revenuecol { display: grid; grid-template-rows: 25px 1fr 18px; gap: 8px; min-width: 0; height: 180px; text-align: center; }
+.rehab-admin-revenuecol > b { overflow: hidden; color: var(--ra-muted); font-size: 9px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.rehab-admin-revenue-track { display: flex; align-items: flex-end; justify-content: center; height: 100%; border-bottom: 1px solid var(--ra-border); background: linear-gradient(180deg, #7CD60705, transparent); }
+.rehab-admin-revenue-track span { display: block; width: min(28px, 72%); border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #9AE53E, #7CD607); box-shadow: 0 0 20px #7CD60712; }
+.rehab-admin-revenuecol small { color: var(--ra-muted); font-size: 10px; }
+@media (max-width: 1180px) { .rehab-admin-charts { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { .rehab-admin-logout { margin-top: 0; } .rehab-admin-revenuechart { gap: 5px; } .rehab-admin-revenuecol > b { font-size: 8px; } }
